@@ -2,4 +2,4 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Roelcode.com';
-export const SITE_DESCRIPTION = 'Bienvenido a mi Página!';
+export const SITE_DESCRIPTION = 'Bienvenido a mi Roelcode.com donde encontrarás curso de Udemy, tutoriales y artículos sobre programación y desarrollo web.';
