@@ -1,3 +1,6 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="500.000000pt" height="500.000000pt" viewBox="0 0 500.000000 500.000000"
  preserveAspectRatio="xMidYMid meet">
@@ -37,14 +40,4 @@ fill="#000000" stroke="none">
 41 21 66 18 123 -3 64 -8 80 -52 156 -162 280 -416 489 -716 591 -151 51 -264
 68 -439 67 -86 -1 -165 -3 -176 -5z"/>
 </g>
-<style>
-        path { fill: #17202a; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #eaecee; }
-        }
-    </style>
 </svg>
-
-    
-
-
