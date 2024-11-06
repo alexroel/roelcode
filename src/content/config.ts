@@ -44,7 +44,7 @@ const authorCollection = defineCollection({
             name: z.string(),
             avatar: image(),
             facebook: z.string(),
-            linkedIn: z.string(),
+            youtube: z.string(),
             github: z.string(),
             bio: z.string(),
             subtitle: z.string(),
