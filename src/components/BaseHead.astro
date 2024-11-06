@@ -1,9 +1,6 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
-import '@/styles/normalize.css';
-import '@/styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
+import '../styles/global.css';
 
 interface Props {
 	title: string;
@@ -13,7 +10,7 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/open-graph-roelcode.jpg' } = Astro.props;
+const { title, description, image = '/open-graph-reolcode.jpg' } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -22,6 +19,7 @@ const { title, description, image = '/open-graph-roelcode.jpg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Font preloads -->
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

@@ -1,10 +1,21 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
-
-
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import MainLayout from '@/layouts/MainLayout.astro';
+import CoursesPopulares from '@/sections/CoursesPopulares.astro';
+import Featured from '@/sections/Featured.astro';
+import HomeHero from '@/sections/HomeHero.astro';
+import Testimonials from '@/sections/Testimonials.astro';
 ---
 
-<MainLayout title="RoelCode" description="Blog de RoelCode">
-	<h1>RoelCode</h1>
-	<p>Blog de RoelCode</p>
+<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+
+	<HomeHero />
+
+	<Featured />
+
+	<CoursesPopulares />
+
+	<Testimonials />
+
 </MainLayout>
+

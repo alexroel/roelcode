@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon/components"
+
+const data = Astro.props;
+const testimony= data.testimony;
+---
+
+<div class:list={[
+    "grid justify-center items-center gap-4",
+    "p-3 text-center"
+]}>
+    <div class="flex justify-center">
+        <Icon name="quote-icon" size={100} class="text-emerald-500"/>
+    </div>
+    <div class="text-center">
+        <p class="text-slate-800 text-lg mb-3">{testimony.description}</p>
+        <div class="flex justify-center items-center gap-2 mb-4">
+            <Icon name="user-icon" size={25} class="text-slate-600"/>
+            <p class="text-slate-600"> {testimony.name}</p>
+        </div>
+        <span class="flex gap-1 justify-center">
+            {
+                Array.from({length: testimony.calification}, () => (
+                    <Icon name="star-icon" size={25} class="text-emerald-500"/>
+                ))
+            }
+        </span>
+    </div>
+</div>
+

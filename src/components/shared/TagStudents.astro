@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+
+const students = "+150K"  
+
+import profile1 from "@/assets/images/profile/01.jpg";
+import profile2 from "@/assets/images/profile/02.jpg";
+import profile3 from "@/assets/images/profile/03.jpg";
+import profile4 from "@/assets/images/profile/04.jpg";
+import profile5 from "@/assets/images/profile/05.jpg";
+
+---
+
+<div class="bg-slate-300 students-tag">
+    <div class="students-profiles">
+        <span class="student-count font-bold">{ students } </span>
+ 
+        <Image src={profile1} width="50" alt="Imagen de Perfil 1" />
+        <Image src={profile2} width="50" alt="Imagen de Perfil 2" />
+        <Image src={profile3} width="50" alt="Imagen de Perfil 3" />
+        <Image src={profile4} width="50" alt="Imagen de Perfil 4" />
+        <Image src={profile5} width="50" alt="Imagen de Perfil 5" />
+         
+    </div>
+    <div class="text-slate-700 udemy-info">
+        <p>Mas 150 Mil estudiantes en Udemy</p>
+    </div>
+</div>
+
+<style>
+    .students-tag{
+        display: inline-grid;
+        gap: 10px;
+        padding:15px;
+        border-radius: 10px;
+    }
+
+    .students-profiles{
+        display: flex;
+        align-items: center;
+    }
+
+    .students-profiles img{
+        border-radius: 50%;
+        margin-left: -15px;
+        width: 50px;
+    }
+
+    .student-count{
+        margin-right: 25px;
+        font-size: 20px;
+    }
+
+    .udemy-info{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .udemy-info p{
+        font-size: 14px;
+        margin: 0;
+    }
+
+</style>

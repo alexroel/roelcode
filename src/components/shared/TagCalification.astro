@@ -1,0 +1,47 @@
+---
+import { Icon } from "astro-icon/components";
+
+
+---
+
+<div class="calification-tag bg-slate-700 text-slate-50">
+    <p class="tag">Calificaciones</p>
+    <div class="stars">
+        {
+            Array.from({ length: 4 }).map(() => (
+                <Icon name="star-icon" size={28} class="text-yellow-400" />
+            ))
+            
+        }
+        <Icon name="star-half-icon" size={28} class="text-yellow-400" />
+        <span>4.6/5.0</span>
+    </div>
+    <p class="info">Mas de 10K reseñas en Udemy.</p>
+</div>
+
+<style>
+    .calification-tag{
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .tag, .info{
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .stars{
+        display: flex;
+        align-items: center;
+    }
+
+    .stars i {
+        font-size: 28px;
+    }
+
+    .stars span{
+        font-size: 28px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+</style>

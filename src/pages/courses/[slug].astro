@@ -1,0 +1,109 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+
+export const getStaticPaths = (async () => {
+
+    const courses = await getCollection('courses');
+    return courses.map((course:any) => ({
+        params: {
+            slug: course.slug
+        },
+        props: {
+            course
+        }
+    }))
+}) satisfies GetStaticPaths;
+
+const { course } = Astro.props;
+const content = course.data;
+
+const { Content, headings} = await course.render()
+---
+
+<MainLayout title = {content.title} description = {content.description}>
+    <main class="course py-10">
+        <div class="container mx-auto p-3 mb-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="order-2 md:order-1">
+                    {
+                        content.popular && (
+                            <div class:list={[
+                                "bg-yellow-400 text-slate-900 font-semibold py-2 px-4 rounded",
+                                "text-center lg:text-start inline-block my-4"
+                            ]}>
+                                Popular
+                            </div>
+                        )
+                    }
+                    {
+                        content.new && (
+                            <div class:list={[
+                                "bg-emerald-400 text-slate-900 font-semibold py-2 px-4 rounded",
+                                "text-center lg:text-start inline-block my-4"
+                            ]}>
+                                Nuevo
+                            </div>
+                        )
+                    }
+                     <h1 class="text-2xl font-semibold mb-5 text-center md:text-start">
+                        {content.title}
+                    </h1>
+                     <p class="text-slate-600 text-center md:text-start">
+                        {content.description}
+                    </p>
+                     <div class="flex justify-center md:justify-start">
+                        <a href={content.url} target="_blank" class:list={[
+                            "bg-emerald-500 hover:bg-emerald-600 text-slate-100 font-semibold py-2 px-4 rounded",
+                            "text-center lg:text-start inline-block my-4"
+                        ]}>
+                            Ir al curso
+                        </a>
+                     </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <Image src={content.image} alt="Imagen de Cursos" class="w-full h-auto" 
+                    transition:name={`${course.slug}-image`}/>
+                </div>
+            </div>
+        </div>
+
+        <article class="py-5">
+            <div class="container mx-auto p-3">
+                <div class="grid gap-5">
+                    <div class="my-5">
+                        <h3 class="mb-4 border-b-2 inline-block border-emerald-600 text-lg">
+                            Tabla de contenidos
+                        </h3>
+                        <ol class="">
+                            {
+                                headings.map((heading:any, index:any) => (
+                                    <li>
+                                        <a href={`#${heading.slug}`} class:list={[
+                                            "text-slate-600 hover:text-emerald-600",
+                                            "block"
+                                        ]}>
+                                            {index + 1} - {heading.text}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ol>
+                    </div>
+                    <div class="col-12 col-lg-8 order-1">
+                        <Content />
+                        <a href="/courses">Ver más curso</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    
+</MainLayout>
+
+<style>
+
+</style>
+

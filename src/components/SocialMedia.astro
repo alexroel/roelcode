@@ -1,0 +1,52 @@
+---
+import { Icon } from "astro-icon/components"
+
+const socialMedia = [
+    {
+        name: 'Facebook',
+        url: 'https://www.facebook.com/alexroelcode',
+        icon: 'facebook-icon',
+    },
+    {
+        name: 'YouTube',
+        url: 'https://twitter.com/username',
+        icon: 'youtube-icon',
+    },
+    {
+        name: 'TikTok',
+        url: 'https://www.tiktok.com/@username',
+        icon: 'tiktok-icon',
+    },
+    {
+        name: 'GitHub',
+        url: 'https://github.com/alexroel',
+        icon: 'github-icon',
+    }
+]
+
+---
+
+<style>
+    .link-social{
+        transition: all 0.5s ease;
+    }
+
+    .link-social:hover{
+        transform: scale(1.2);
+    }
+</style>
+
+{
+    socialMedia.map(({ url, icon }) => (
+        <a href={url} target="_blank"
+        class:list={[
+            "inline-flex items-center justify-center w-10 h-10 rounded-full",
+            "text-emerald-600 border-2 border-emerald-600",
+            "hover:bg-emerald-600 hover:text-slate-100 hover:scale-110",
+            "link-social"
+        ]}>
+            <Icon name={icon} class="text-xl" />
+        </a>
+    ))
+}
+

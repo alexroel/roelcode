@@ -1,0 +1,119 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import heroImage from "@/assets/images/hero-img.png";
+import TagStudents from "@/components/shared/TagStudents.astro";
+import TagCalification from "@/components/shared/TagCalification.astro";
+import TypedText from "@/components/shared/TypedText.astro";
+
+
+const content = {
+	slogam: "📚 Aprende sin límites con nuestros cursos.",
+	title: "Mejora tus habilidades",
+	description: "Descubre mis nuestros cursos de Udemy, tutoriales en YouTube y contenido exclusivo en Facebook y TikTok. Conviertenete en un experto en programación y aplicación web con recursos creados especialmente para ti.",
+	list: [
+		"Cursos de Udemy para todos los niveles",
+		"Tutoriales prácticos en YouTube",
+		"Cupones de descuento especiales en Facebook",
+	],
+	udemy: "https://www.udemy.com/user/alex-roel/",
+}
+---
+
+<section class="hero py-5">
+    <div class="xl:container mx-auto p-2">
+        <div class="grid xl:grid-cols-2 place-items-center">
+            <div class="text-center xl:text-start">
+                <p class="border-emerald-500 border-2 rounded-lg p-2 px-4 inline-block mb-4 text-sm lg:text-base">
+					{content.slogam}
+				</p>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-emerald-500">
+					<span class="text-slate-800">
+						{content.title} <br>en 
+					</span>
+					<TypedText />
+				</h1>
+
+                <p class="text-sm md:text-base lg:text-lg text-slate-600 my-7">
+					{content.description}
+				</p>
+
+                <ul class="grid gap-4 my-7 ">
+					{
+						content.list.map((item) => (
+							<li class="flex items-center gap-2 justify-center xl:justify-start">
+								<Icon name="check-icon" size={25} class="text-emerald-500"/>
+								<span>{item}</span>
+							</li>
+						))
+					}
+				</ul>
+                <div>
+                    <a href="/courses" class:list={[
+                        "bg-emerald-500 text-slate-100 rounded-3xl inline-block",
+                        "font-semibold hover:bg-emerald-600 py-3 px-5",
+						"text-base xl:text-xl"
+                    ]}>
+                        COMIENZA AHORA
+                    </a>
+                </div>
+            </div>
+            <div class="relative">
+                <Image src={heroImage} alt="Imagen de Hero" class:list={[
+                    "h-auto block mx-auto sm:w-2/3"
+                ]}/>
+
+				<div class="tag-students">
+					<TagStudents />
+				</div>
+
+				<div class="tag-calification">
+					<TagCalification />
+				</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+	.tag-students{
+		position: absolute;
+		left: 0;
+		bottom: 15%;
+		animation: scaleCard 5s ease-in-out infinite;
+	}
+
+	.tag-calification{
+		position: absolute;
+		right: 0;
+		top: 10%;
+		animation: floatCard 5s ease-in-out infinite;
+	}
+
+	@keyframes floatCard {
+		0% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(50px);
+		}
+		100% {
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes scaleCard {
+		0% {
+			transform: scale(1) translateY(0);
+		}
+		50% {
+			transform: scale(1.1) translateY(-30px);
+		}
+		100% {
+			transform: scale(1) translateY(0);
+		}
+		
+	}
+
+
+</style>

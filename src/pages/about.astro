@@ -1,10 +1,118 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
+import roelcodeLogo from "@/assets/logos/roelcode-logo1.png";
+import CoursesPopulares from "@/sections/CoursesPopulares.astro";
+import Testimonials from "@/sections/Testimonials.astro";
 
+const title = "Acerca de | Roelcode";
+const description = "Roelcode es una una marca personal de Alex Roel, un apasionado de la tecnología y la programación. Donde comparte sus conocimientos y experiencias en el desarrollo web y sobre la programación en general, también tutoriales y guías para aprender a configurar y personalizar herramientas y tecnologías de desarrollo web.";
+
+const medias = [
+	{
+		name: 'Facebook',
+		data:{
+			description: "Seguidores",
+			value: "+15K"
+		},
+		url: 'https://www.facebook.com/alexroelcode',
+		icon: 'facebook-icon',
+	},
+	{
+		name: 'YouTube',
+		data : {
+			description: "Subcriptores",
+			value: "+35K"
+		},
+		url: 'https://www.youtube.com/roelcode',
+		icon: 'youtube-icon',
+	},
+	{
+		name: 'TikTok',
+		data: {
+			description: "Seguidores",
+			value: "+10K"
+		},
+		url: 'https://www.tiktok.com/@alexroelcode',
+		icon: 'tiktok-icon',
+	},
+	{
+		name: "Udemy",
+		data: {
+			description: "Estudiantes",
+			value: "+160K"
+		},
+		url: "https://www.udemy.com/user/alex-roel/",
+		icon: "udemy-icon"
+	}
+];
+
+const clasLink = [
+	"text-center text-xl font-semibold",
+	"flex flex-col items-center justify-center",
+	"hover:text-slate-700",
+]
 ---
 
-<MainLayout title="RoelCode" description="Blog de RoelCode">
-	<h1>RoelCode</h1>
-	<p>Acerca de Roelcode</p>
+<MainLayout title={title} description={description}>
+	<section class="hero-about">
+		<div class="mycontainer" class:list={[
+			"text-center lg:text-left",
+			"lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center",
+		]}>
+			<div class="p-5 lg:p-10 flex justify-center items-center">
+				<Image src={ roelcodeLogo } alt="Roelcode Logo" class="w-[80%] roelcode-logo" />
+			</div>
+			<div class="">
+				<h1 class="mb-6 font-semibold text-4xl lg:text-7xl">
+					Acerca de <span class="font-bold underline">Roelcode</span>
+				</h1>
+				<p class="text-sm lg:text-xl">{ description }</p>
+				<div class="grid grid-cols-2 xl:grid-cols-4 py-5 mt-10"> 
+					{
+						medias.map((media) => ( 
+							<a href={media.url} target="_blank" rel="noopener noreferrer" class:list={clasLink}>
+								<Icon name={media.icon} class="text-7xl" />
+								<p class="text-3xl font-bold mt-5">{media.data.value}</p>
+								<p class="text-sm">{media.data.description}</p>
+							</a>
+						))
+					}
+				</div>
+			</div>
+			
+		</div>
+	</section>
+
+	<section class="mycontainer">
+		<h2>Acerca de Alex Roel</h2>
+		<p>Desarrollador web y programador autodidacta, apasionado por la tecnología y la programación. Con más de 5 años de experiencia en el desarrollo web, creando aplicaciones y sitios web con tecnologías modernas y herramientas de desarrollo web.</p>
+	</section>
+	
+	<CoursesPopulares />
+	
+	<Testimonials />
+
+
 </MainLayout>
+
+<style>
+	.roelcode-logo{
+		animation: imageScale 5s infinite;
+
+	}
+
+	@keyframes imageScale {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.05);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+</style>

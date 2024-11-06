@@ -1,0 +1,59 @@
+---
+import CourseCard from "@/components/CourseCard.astro";
+import { getCollection } from "astro:content";
+const coursePosts = await getCollection('courses');
+const popularCoursesAndNew = coursePosts.filter((course: any) => course.data.popular || course.data.new);
+
+const headingContent = {
+	slogan: "🎓 Cursos disponibles para todos los niveles de programador.",
+	title: "Mis cursos más populares y nuevos",
+}
+---
+
+<section class="courses bg-slate-100 py-8 pb-20">
+	<div class="xl:container mx-auto p-3">
+		<div class="flex justify-center py-5">
+			<p class="border-emerald-500 border-2 rounded-lg p-2 px-4 inline-block mb-4 text-sm lg:text-base">
+				{headingContent.slogan}
+			</p>
+		</div>
+		<h2 class="text-4xl font-bold text-center">
+			{headingContent.title}
+		</h2>
+
+		<div class="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-10">
+			{
+				popularCoursesAndNew.map((course: any) => (
+					<CourseCard course={course} />
+				))
+			}	
+		</div>
+
+		<div class:list={[
+			"grid grid-cols-1 lg:grid-cols-2 gap-5 justify-between mt-10",
+			"bg-slate-900 rounded-lg text-slate-100 p-5 lg:p-10",
+		]}>
+			<div class="mb-8 lg:mb-0">
+				<h3 class="text-3xl text-slate-200 lg:text-5xl font-bold mb-5 text-center lg:text-start">
+					¡Inscríbite Ahora! 
+				</h3>
+				<p class="text-xl text-slate-400 text-center lg:text-start">
+					¡Aprende a tu propio ritmo! <br>
+					¡Cursos certificados por Udemy! <br>
+					¡Cupones de descuento especiales! <br>
+				</p>
+			</div>
+			<div class="flex items-center justify-center">
+				<a href="/courses" class:list={[
+					"bg-emerald-500 py-5 px-8 rounded-lg flex items-center gap-2",
+					"text-slate-900 font-semibold hover:bg-emerald-600",
+					"text-lg lg:text-2xl"
+				]}>
+					Todos los curosos
+				</a>
+			</div>
+
+		</div>
+	</div>
+</section>
+

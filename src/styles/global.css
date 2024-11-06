@@ -1,81 +1,126 @@
-/* Variables de colores
-============================================*/
-:root {
-	--color-slate-50: #f8fafc;
-	--color-slate-100: #f1f5f9;
-	--color-slate-200: #e2e8f0;
-	--color-slate-300: #d1d5db;
-	--color-slate-400: #9ca3af;
-	--color-slate-500: #64748b;
-	--color-slate-600: #475569;
-	--color-slate-700: #334155;
-	--color-slate-800: #1e293b;
-	--color-slate-900: #0f172a;
-	--color-slate-950: #020617;
-
-	/* Color Emerald */
-	--color-emerald-300: #6ee7b7;
-	--color-emerald-400: #34d399;
-	--color-emerald-500: #10b981;
-	--color-emerald-600: #059669;
-	--color-emerald-700: #047857;
-	--color-emerald-800: #065f46;
-
-}
-
-
-/*Configuraciones iniciales
-============================================*/
-html{
-	font-size: 62.5%;
-	box-sizing: border-box;
-}
-
-*, *::before, *::after{
-	box-sizing: inherit;
-}
-
 body {
-	font-family: 'Inter Variable', sans-serif;
-	font-size: 1.4rem;
-	line-height: 1.6;
-	color: var(--color-slate-950);
-	background-color: var(--color-slate-50);
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	line-height: 1.7;
 }
 
-@media (min-width: 768px){
-	body{
-		font-size: 1.6rem;
-	}
+/* Utilidades
+============================================*/
+.mycontainer {
+	@apply container mx-auto p-2 h-full;
 }
 
-h1{
-	font-size: 3.5rem;
+main {
+	width: 920px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 3em 1em;
 }
 
-@media (min-width: 768px){
-	h1{
-		font-size: 4.2rem;
-	}
-	
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 20px 0;
+	@apply text-slate-800;
+	line-height: 1.2;
 }
 
-h2{
-	font-size: 2.9rem;
+h1 {
+	font-size: 3.052em;
 }
 
-@media (min-width: 768px){
-	h2{
-		font-size: 3.5rem;
-	}
+h2 {
+	font-size: 2.441em;
 }
 
-h3{
-	font-size: 2.4rem;
+h3 {
+	font-size: 1.953em;
 }
 
-@media (max-width: 768px){
-	h3{
-		font-size: 2.9rem;
-	}
+h4 {
+	font-size: 1.563em;
+}
+
+h5 {
+	font-size: 1.25em;
+}
+
+p {
+	margin-bottom: 10px;
+}
+
+a {
+	@apply text-emerald-600
+}
+
+
+strong,
+b {
+	font-weight: 700;
+}
+
+textarea {
+	width: 100%;
+	font-size: 16px;
+}
+
+input {
+	font-size: 16px;
+}
+
+table {
+	width: 100%;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+pre{
+	position: relative;
+	padding: 20px 10px;
+	border-radius: 0px 10px 10px 0;
+	border-left: 5px solid transparent;
+	@apply border-emerald-500;	
+	margin: 15px 0;
+}
+
+
+
+
+
+/* Boton de copiar 
+============================================*/
+/* Estilo básico del botón de copiar */
+.copy-button {
+	@apply bg-slate-900;
+	border: none;
+	@apply text-emerald-500;
+	padding: 5px 10px;
+	margin-bottom: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	border-radius: 4px;
+	display: inline-flex;
+	align-items: center;
+	transition: all 0.3s ease;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-weight: 600;
+}
+
+.copy-button i {
+	font-size: 20px;
+}
+
+.copy-button:hover {
+	@apply bg-slate-950;
 }

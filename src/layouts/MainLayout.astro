@@ -1,7 +1,9 @@
 ---
 import BaseHead from "@/components/BaseHead.astro";
+import NavBar from "@/components/NavBar.astro";
+import Footer from "@/sections/Footer.astro";
 
-const { title, description } = Astro.props;
+const {title, description } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -10,13 +12,14 @@ const { title, description } = Astro.props;
     <BaseHead title={title} description={description} />
 </head>
 <body>
-    <!-- Header -->
+    <header>
+        <NavBar />
+    </header>
 
-    <!-- Content -->
     <slot />
 
+    <Footer />
 
-    <!-- Footer -->
+    <script src="../scripts/copy-btn.js"></script>
 </body>
 </html>
-
