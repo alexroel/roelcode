@@ -1,68 +1,45 @@
-# Astro Starter Kit: Blog
+# Roelcode website
 
-```sh
-npm create astro@latest -- --template blog
-```
+Este es el sitio web de Roelcode, una página personal donde comparto mis cursos de Udemy, tutoriales, artículos y más.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+## 🚀 Estructura del proyecto 
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Este proyecto está construido con [Astro](https://astro.build), un marco de trabajo moderno para la creación de sitios web. 
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
-
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+Dentro de tu proyecto Astro, verás las siguientes carpetas y archivos:
 
 ```text
 ├── public/
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
 ├── astro.config.mjs
 ├── README.md
 ├── package.json
 └── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro busca archivos `.astro` o `.md` en el directorio `src/pages/`. Cada página se expone como una ruta basada en su nombre de archivo.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+No hay nada especial en `src/components/`, pero ahí es donde nos gusta poner cualquier componente de Astro/React/Vue/Svelte/Preact.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+El directorio `src/content/` contiene "colecciones" de documentos relacionados en Markdown y MDX. Utiliza `getCollection()` para recuperar publicaciones de `src/content/blog/`, y verifica el tipo de tu metadatos utilizando un esquema opcional. Consulta la [documentación de Astro sobre colecciones de contenido](https://docs.astro.build/en/guides/content-collections/) para obtener más información.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🧞 Comandos
 
-## 🧞 Commands
+Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal:
 
-All commands are run from the root of the project, from a terminal:
+- `bun install` - Instala las dependencias
+- `bun run dev` - Inicia el servidor de desarrollo local en `localhost:4321`
+- `bun run build` - Construye tu sitio de producción en `./dist/`
+- `bun run preview` - Previsualiza tu construcción localmente, antes de implementar.
+- `bun run astro ...` - Ejecuta comandos de la CLI como `astro add`, `astro check`
+- `bun run astro -- --help` - Obtén ayuda usando la CLI de Astro
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 👀 ¿Quieres aprender más?
 
-## 👀 Want to learn more?
+Consulta [nuestra documentación](https://docs.astro.build) o únete a nuestro [servidor de Discord](https://astro.build/chat).
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
