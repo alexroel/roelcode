@@ -32,16 +32,16 @@ const featured = [
 ---
 
 
-<section class="bg-slate-900 py-5 lg:py-28 featured">
+<section class="bg-gray-200 dark:bg-gray-900 py-5 lg:py-28 featured">
     <div class="2xl:container mx-auto p-3">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-20">
             {
                 featured.map((item) => (
-                    <div class="flex gap-4 items-start border-l-4 border-emerald-500 border-dotted ps-5">
+                    <div class="flex gap-4 items-start border-l-4 border-teal-500 border-dotted ps-5">
                         <Image src={item.image} alt={item.title} class="w-28 h-auto"/>
                         <div class="">
-                            <h3 class="text-2xl text-slate-50 font-semibold mb-2">{item.title}</h3>
-                            <p class="text-slate-200">{item.description}</p>
+                            <h3 class="text-2xl text-gray-950 dark:text-gray-100 font-semibold mb-2">{item.title}</h3>
+                            <p class="text-gray-900 dark:text-gray-200">{item.description}</p>
                         </div>
                     </div>
                 ))
@@ -50,24 +50,6 @@ const featured = [
     </div>
 </section>
 
-
-        <!-- <div class="d-flex justify-content-center">
-			<p class="alert alert-light d-inline-block p-2">
-                🚀 Soluciones innovadoras, resultados medibles.
-			</p>
-		</div>
-
-        <h2 class="text-center mb-5 fw-semibold display-5">
-            Aprende a <span class="text-success">Programar</span>
-        </h2>
-
-        <p class="text-secondary-emphasis">
-            Aprender a programar va más allá de dominar la sintaxis de un solo lenguaje. Para convertirte en un programador excepcional, es fundamental desarrollar un pensamiento computacional. Personalmente, sostengo firmemente que la mejor forma de adquirir este enfoque es a través de la práctica activa, no simplemente consumiendo más tutoriales sobre cómo crear una aplicación básica.
-        </p>
-
-        <p class="text-secondary-emphasis mb-5">
-            Cada uno de mis cursos de programación se centra en proyectos significativos que reflejan aplicaciones del mundo real. Aquí, aprendemos mediante la acción directa. Construimos soluciones tangibles y listas para ser implementadas en entornos reales. ¡Comencemos ya mismo!
-        </p> -->
 
 
 

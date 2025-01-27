@@ -14,11 +14,11 @@ import logoUdemy from "@/assets/logos/logo-udemy.webp";
 import { Icon } from 'astro-icon/components';
 ---
 
-<div class="relative rounded-lg border border-slate-800 flex flex-col card">
+<div class="relative rounded-lg border border-gray-200 dark:border-gray-800 flex flex-col card">
     {
         content.new && (
             <div class:list={[
-                "absolute top-2 start-2 bg-emerald-800 text-slate-100",
+                "absolute top-2 start-2 bg-emerald-800 text-gray-100",
                 "rounded-md py-1 px-3 z-10"
             ]}>
                 <p class="font-semibold pb-1 m-0">Nuevo</p>
@@ -29,7 +29,7 @@ import { Icon } from 'astro-icon/components';
     {
         content.popular && (
             <div class:list={[
-                "absolute top-2 start-2 bg-yellow-500 text-slate-900",
+                "absolute top-2 start-2 bg-yellow-500 text-gray-900",
                 "rounded-md py-1 px-3 z-10"
             ]}>
                 <p class="font-semibold pb-1 m-0">Popular</p>
@@ -42,8 +42,8 @@ import { Icon } from 'astro-icon/components';
     
     <div class="p-3 grid card-body h-full place-content-between">
         <div class="grid h-full">
-            <a href={ `/courses/${ course.id }` } class="hover:text-emerald-600">
-                <h5 class="text-lg font-semibold mb-0 text-slate-300">{ content.title }</h5>
+            <a href={ `/courses/${ course.id }` } class="hover:text-teal-600">
+                <h5 class="text-lg font-semibold mb-0 text-gray-700 dark:text-gray-300">{ content.title }</h5>
             </a>
             <!-- <p class="text-slate-600 my-2">{ content.description }</p> -->
             <p class="flex items-center mt-2">
@@ -56,27 +56,27 @@ import { Icon } from 'astro-icon/components';
                     }
                     <Icon name="star-half-icon" size={20} class="text-yellow-600"/>
                 </span>
-                <span class="text-slate-400">({content.qualifications})</span>
+                <span class="text-gray-500">({content.qualifications})</span>
             </p>
-            <p class="mb-2 text-slate-400">{ content.hours } horas de {content.class} clases</p>
+            <p class="mb-2 text-gray-500">{ content.hours } horas de {content.class} clases</p>
         </div>
         <div class="grid grid-cols-2 gap-4 mt-2">
             <a href={ `/courses/${ course.id }` } 
             class:list={[
-                "flex items-center justify-center gap-2 bg-emerald-500 text-slate-900",
-                "rounded-lg py-1 px-3 hover:bg-emerald-400",
+                "flex items-center justify-center gap-2 bg-teal-500 text-gray-900",
+                "rounded-lg py-1 px-3 hover:bg-teal-400",
                 "font-semibold text-sm"
             ]}>
                 Leer Más
             </a>
             <a href={ content.url } target="_blank" class:list={[
                 "flex items-center justify-center gap-2 text-purple-600",
-                "rounded-lg py-1 px- border-2 border-purple-600 hover:bg-purple-500 hover:text-slate-100",
+                "rounded-lg py-1 px- border-2 border-purple-600 hover:bg-purple-500 hover:text-gray-100",
                 "font-semibold text-sm",
                 "btn-udemy"
             ]}>
                 <Image src={ logoUdemy } alt="Logo de udemy" class="logo-udemy"/>
-                <span class="text-slate-100">Tomar curso</span>
+                <span class="text-gray-100">Tomar curso</span>
             </a>
         </div>
     </div>
@@ -100,7 +100,7 @@ import { Icon } from 'astro-icon/components';
     }
 
     .card:hover{
-        box-shadow: 0 0 0.5rem #2d3745;
+        box-shadow: 0 0 0.5rem #0b182982;
     }
 
     .card:hover .curso-img{

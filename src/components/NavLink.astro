@@ -16,7 +16,7 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
 	</a>
 	{
 		isActive ? (
-            <div transition:name="link-line" class="hidden lg:block border-b-2 border-emerald-500"/>
+            <div transition:name="link-line" class="hidden lg:block border-b-2 border-teal-500"/>
         ) : (
             <div class="hidden lg:block border-b-2 border-transparent" />
         )
@@ -28,9 +28,9 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
 		@apply font-semibold text-slate-100;
 	}
 	a:hover{
-		@apply text-emerald-400;
+		@apply text-teal-400;
 	}
 	a.active {
-		@apply text-emerald-500;
+		@apply text-teal-500;
 	}
 </style>

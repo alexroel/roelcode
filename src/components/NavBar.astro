@@ -4,6 +4,7 @@ import NavLink from '@/components/NavLink.astro';
 import SocialMedia from './SocialMedia.astro';
 import logoRoelcode from '@/assets/logos/logo-roelcode.svg';
 import { Image } from 'astro:assets';
+import ThemeToggle from './ThemeToggle.astro';
 
 const links = [
 	{ href: '/', text: 'Inicio' },
@@ -14,7 +15,7 @@ const links = [
 ---
 
 
-<nav class="shadow bg-slate-900 h-16">
+<nav class="shadow bg-gray-900 h-16">
 	<div class="mycontainer flex justify-between items-center gap-5">
 		<h2 class="flex items-center">
 			<a href="/">
@@ -29,7 +30,7 @@ const links = [
             <span class="line line-3 bg-slate-400 block w-5 h-1 my-1 mx-auto" ></span>
         </label>
 
-		<div class="bg-slate-800 lg:bg-transparent hidden menu shadow">
+		<div class="bg-gray-900 lg:bg-transparent hidden menu shadow">
 			{links.map(({ href, text }) => (
 				<NavLink href={href}>
 					{text}
@@ -41,6 +42,8 @@ const links = [
 			</div>
 		</div>
 		<div class="hidden lg:flex gap-3">
+			<ThemeToggle />
+			<div class="border-l-2 border-gray-500 px-2"></div>
 			<SocialMedia />
 		</div>
 	</div>
