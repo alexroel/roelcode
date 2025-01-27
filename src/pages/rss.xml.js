@@ -10,10 +10,8 @@ export async function GET(context) {
     description: SITE_DESCRIPTION,
     site: context.site,
     items: posts.map((post) => ({
-      title: post.data.title || 'Sin título', // Verifica que el título esté presente
-      description: post.data.description || 'Sin descripción', // Verifica que la descripción esté presente
-      pubDate: post.data.pubDate || new Date(), // Opcional pero recomendable
-      link: `/tutorials/${post.slug}/`,
+      ...post.data,
+      link: `/tutorials/${post.id}/`,
     })),
   });
 }

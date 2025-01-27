@@ -3,13 +3,14 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { render } from "astro:content";
 
 export const getStaticPaths = (async () => {
 
     const courses = await getCollection('courses');
     return courses.map((course:any) => ({
         params: {
-            slug: course.slug
+            slug: course.id
         },
         props: {
             course
@@ -20,7 +21,7 @@ export const getStaticPaths = (async () => {
 const { course } = Astro.props;
 const content = course.data;
 
-const { Content, headings} = await course.render()
+const { Content, headings} = await render(course);
 ---
 
 <MainLayout title = {content.title} description = {content.description}>
@@ -65,7 +66,7 @@ const { Content, headings} = await course.render()
                 </div>
                 <div class="order-1 md:order-2">
                     <Image src={content.image} alt="Imagen de Cursos" class="w-full h-auto" 
-                    transition:name={`${course.slug}-image`}/>
+                    transition:name={`${course.id}-image`}/>
                 </div>
             </div>
         </div>
@@ -81,7 +82,7 @@ const { Content, headings} = await course.render()
                             {
                                 headings.map((heading:any, index:any) => (
                                     <li>
-                                        <a href={`#${heading.slug}`} class:list={[
+                                        <a href={`#${heading.id}`} class:list={[
                                             "text-slate-600 hover:text-emerald-600",
                                             "block"
                                         ]}>

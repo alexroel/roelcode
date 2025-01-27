@@ -16,7 +16,7 @@ const content = tutorial.data;
 const author = (await getEntry(tutorial.data.author)).data;
 ---
 
-<div class="flex flex-col shadow-lg rounded-lg overflow-hidden border border-slate-800">
+<div class="flex flex-col shadow-lg rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800">
     <a href={`/tutorials/${tutorial.id}/`}>
         {content.image && <Image src={content.image} alt={content.title} class="h-full object-cover object-right" 
         transition:name={`${tutorial.id}-image`} />}
@@ -25,11 +25,11 @@ const author = (await getEntry(tutorial.data.author)).data;
     <div class="flex flex-col justify-between py-4 lg:mx-6 h-full">
         <div>
             <h3 class="leading-3">
-                <a href={`/tutorials/${tutorial.id}/`} class="text-xl font-semibold text-slate-300 hover:underline  ">
+                <a href={`/tutorials/${tutorial.id}/`} class="text-xl font-semibold text-gray-800 dark:text-gray-200 hover:underline  ">
                     {content.title}
                 </a>
             </h3>
-            <p class="mt-3 text-slate-400">
+            <p class="mt-3 text-gray-600 dark:text-gray-300">
                 {content.description}
             </p>
         </div>
