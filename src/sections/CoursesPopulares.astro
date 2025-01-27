@@ -1,7 +1,9 @@
 ---
 import CourseCard from "@/components/CourseCard.astro";
 import { getCollection } from "astro:content";
+
 const coursePosts = await getCollection('courses');
+
 const popularCoursesAndNew = coursePosts.filter((course: any) => course.data.popular || course.data.new);
 
 const headingContent = {
@@ -49,7 +51,7 @@ const headingContent = {
 					"text-slate-900 font-semibold hover:bg-emerald-400",
 					"text-lg lg:text-2xl"
 				]}>
-					Todos los curosos
+					Todos los cursos
 				</a>
 			</div>
 

@@ -5,6 +5,7 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import FormattedDate from '@/components/FormattedDate.astro';
+import { render } from 'astro:content';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('tutorials');
@@ -16,9 +17,9 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'tutorials'>;
 
 const post = Astro.props;
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 
-const author = (await getEntry('authors', post.data.author.id)).data;
+const author = (await getEntry(post.data.author)).data;
 ---
 
 
@@ -43,7 +44,7 @@ const author = (await getEntry('authors', post.data.author.id)).data;
                 </div>
 
                 {post.data.image && <Image src={post.data.image} alt={post.data.title} 
-                class="object-cover w-full h-[250px] my-5 rounded-md" transition:name={`${post.slug}-image`}/>}
+                class="object-cover w-full h-[250px] my-5 rounded-md" transition:name={`${post.id}-image`}/>}
             </div>
             <h3 class="font-semibold text-2xl mt-6 border-b-2 border-emerald-500 pb-2">
                 Contenido de Tutorial
@@ -76,7 +77,7 @@ const author = (await getEntry('authors', post.data.author.id)).data;
         class="inline-flex h-7 w-9 items-center rounded-md tutorial-link justify-end">
             <Icon name="back-icon" size={28} class="text-emerald-500 arrow-icon"/>
         </button>
-        <button id="btn-favorite" class="" data-title={post.data.title} data-slug={post.slug}>
+        <button id="btn-favorite" class="" data-title={post.data.title} data-slug={post.id}>
             <Icon name="heart-line-icon" size={30} class=" text-emerald-500" data-outline/>
             <Icon name="heart-icon" size={30} class="text-emerald-500 hidden" data-full/>
         </button>

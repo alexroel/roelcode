@@ -1,13 +1,12 @@
 import { defineCollection, reference, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const courseCollection = defineCollection ({
-    type: 'content',
+    loader: glob({ base: './src/content/courses', pattern: '**/*.{md,mdx}' }),
     schema: ({ image }) => z.object({
         title: z.string(),
         description: z.string(),
-        image: image().refine((img) => img.width > 50, {
-            message: 'La imagen debe ser de 1200px de ancho',
-        }),
+        image: image(),
         popular: z.boolean(),
         new: z.boolean(),
         url: z.string(),
@@ -20,7 +19,7 @@ const courseCollection = defineCollection ({
 });
 
 const tutorialCollections = defineCollection({
-	type: 'content',
+	loader: glob({ base: './src/content/tutorials', pattern: '**/*.{md,mdx}' }),
 	// Type-check frontmatter using a schema
 	schema: ({ image }) => z.object({
 		title: z.string(),
@@ -29,16 +28,14 @@ const tutorialCollections = defineCollection({
 		pubDate: z.coerce.date(),
         author: reference('authors'),
 		updatedDate: z.coerce.date().optional(),
-		image: image().refine((img) => img.width > 50, {
-            message: 'La imagen debe ser de 1200px de ancho',
-        }).optional(),
+		image: image(),
 		video: z.string().optional(),
 		tag: z.array(z.string()).optional(),
 	}),
 });
 
 const authorCollection = defineCollection({
-    type: 'data',
+    loader: glob({ pattern: '**/[^_]*.yml', base: "./src/content/authors" }),
     schema: ({ image }) =>
         z.object({
             name: z.string(),
