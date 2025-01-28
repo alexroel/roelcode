@@ -14,6 +14,8 @@ const courseCollection = defineCollection ({
         qualifications: z.string(),
         hours: z.number(),
         class: z.number(),
+        price: z.string(),
+        discount: z.string(),
         tag: z.array(z.string()),
     }),
 });

@@ -24,7 +24,7 @@ const content = course.data;
 const { Content, headings} = await render(course);
 ---
 
-<MainLayout title = {content.title} description = {content.description}>
+<MainLayout title = {content.title} description = {content.description} image = {content.image}>
     <main class="course py-10">
         <div class="container mx-auto p-3 mb-5">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -56,10 +56,7 @@ const { Content, headings} = await render(course);
                         {content.description}
                     </p>
                      <div class="flex justify-center md:justify-start">
-                        <a href={content.url} target="_blank" class:list={[
-                            "bg-emerald-500 hover:bg-emerald-600 text-slate-100 font-semibold py-2 px-4 rounded",
-                            "text-center lg:text-start inline-block my-4"
-                        ]}>
+                        <a href={content.url} target="_blank" class="btn-primary">
                             Ir al curso
                         </a>
                      </div>
@@ -82,7 +79,7 @@ const { Content, headings} = await render(course);
                             {
                                 headings.map((heading:any, index:any) => (
                                     <li>
-                                        <a href={`#${heading.id}`} class:list={[
+                                        <a href={`#${heading.slug}`} class:list={[
                                             "text-slate-600 hover:text-emerald-600",
                                             "block"
                                         ]}>
@@ -95,7 +92,7 @@ const { Content, headings} = await render(course);
                     </div>
                     <div class="col-12 col-lg-8 order-1">
                         <Content />
-                        <a href="/courses">Ver más curso</a>
+                        <a href="/courses" class="btn-primary">Ver más curso</a>
                     </div>
                 </div>
             </div>
@@ -104,7 +101,4 @@ const { Content, headings} = await render(course);
     
 </MainLayout>
 
-<style>
-
-</style>
 

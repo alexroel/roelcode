@@ -23,8 +23,11 @@ body {
 	@apply container mx-auto p-2 h-full;
 }
 
+.btn-primary {
+	@apply bg-teal-500 hover:bg-teal-600 text-gray-100 font-semibold py-2 px-4 rounded text-center lg:text-start inline-block my-4;
+}
 main {
-	width: 920px;
+	width: 1200px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
@@ -37,7 +40,7 @@ h4,
 h5,
 h6 {
 	margin: 20px 0;
-	@apply text-slate-200;
+	@apply text-slate-800 dark:text-slate-200;
 	line-height: 1.2;
 }
 
@@ -66,7 +69,7 @@ p {
 }
 
 a {
-	@apply text-emerald-400
+	@apply text-teal-500
 }
 
 
@@ -101,9 +104,6 @@ pre{
 	@apply border-emerald-500;	
 	margin: 15px 0;
 }
-
-
-
 
 
 /* Boton de copiar 
