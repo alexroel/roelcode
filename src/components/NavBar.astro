@@ -15,7 +15,7 @@ const links = [
 ---
 
 
-<nav class="shadow bg-gray-900 h-16">
+<nav class="shadow bg-gray-100 dark:bg-gray-900 h-16">
 	<div class="mycontainer flex justify-between items-center gap-5">
 		<h2 class="flex items-center">
 			<a href="/">
@@ -25,12 +25,12 @@ const links = [
 
 		<input type="checkbox" id="menu-toggle" hidden />
         <label for="menu-toggle" class="menu-btn inline-block cursor-pointer order-3 lg:order-2" >
-            <span class="line line-1 bg-slate-400 block w-5 h-1 my-1 mx-auto" ></span>
-            <span class="line line-2 bg-slate-400 block w-5 h-1 my-1 mx-auto" ></span>
-            <span class="line line-3 bg-slate-400 block w-5 h-1 my-1 mx-auto" ></span>
+            <span class="line line-1 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
+            <span class="line line-2 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
+            <span class="line line-3 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
         </label>
 
-		<div class="bg-gray-900 lg:bg-transparent hidden menu shadow">
+		<div class="bg-gray-200 dark:bg-gray-900 lg:bg-transparent hidden menu shadow">
 			{links.map(({ href, text }) => (
 				<NavLink href={href}>
 					{text}
