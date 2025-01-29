@@ -1,20 +1,19 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import MainLayout from '@/layouts/MainLayout.astro';
-import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
-import { getEntry } from 'astro:content';
-import FormattedDate from '@/components/FormattedDate.astro';
-import { render } from 'astro:content';
+import { type CollectionEntry, getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+import { render } from "astro:content";
 
 export async function getStaticPaths() {
-	const posts = await getCollection('tutorials');
-	return posts.map((post:any) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+  const posts = await getCollection("tutorials");
+  return posts.map((post: any) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
 }
-type Props = CollectionEntry<'tutorials'>;
+type Props = CollectionEntry<"tutorials">;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
@@ -22,158 +21,212 @@ const { Content, headings } = await render(post);
 const author = (await getEntry(post.data.author)).data;
 ---
 
+<MainLayout {...post.data}>
+  <main
+    class="max-w-7xl mx-auto px-4 py-7 pb-14 lg:px-0 mt-10 grid grid-cols-1 lg:grid-cols-12 gap-20"
+  >
+    <div class="lg:col-span-8">
+      <header class="text-base lg:text-lg">
+        <div>
+          <div class="text-md text-slate-600 mb-0 flex flex-row mt-2">
+            {
+              author.avatar && (
+                <Image
+                  src={author.avatar}
+                  alt={author.name}
+                  class="rounded-full"
+                  width={50}
+                  height={50}
+                />
+              )
+            }
 
-<MainLayout {...post.data} >
-
-	<main>
-		<header class="text-base lg:text-lg">
-			<div>
-                <h1 class:list={[
-                    "mb-6 font-semibold text-4xl text-center",
-                    "text-gray-900 dark:text-gray-100"
-                ]}>
-                    { post.data.title }
-                </h1>
-
-                <div class="text-md text-slate-600 mb-0 flex flex-row mt-2">
-                    {author.avatar && <Image src={author.avatar} alt={author.name} class="rounded-full" width={50} height={50} />}
-
-                    <div class="flex flex-col ml-5">
-                        <a href={`/authors/${post.data.author.id}`} class="font-semibold">{author.name}</a>
-                        <span class="text-xs text-slate-400">
-                            <FormattedDate date={post.data.pubDate} />
-                        </span>
-                    </div>
-                </div>
-
-                {post.data.image && <Image src={post.data.image} alt={post.data.title} 
-                class="object-cover w-full h-[250px] my-5 rounded-md" transition:name={`${post.id}-image`}/>}
+            <div class="flex flex-col ml-5">
+              <a href={`/authors/${post.data.author.id}`} class="font-semibold"
+                >{author.name}</a
+              >
+              <span class="text-xs text-slate-400">
+                <FormattedDate date={post.data.pubDate} />
+              </span>
             </div>
-            <h3 class="font-semibold text-2xl mt-6 border-b-2 border-emerald-500 pb-2">
-                Contenido de Tutorial
-            </h3>
-            <ol class="list-decimal pl-5 mb-7">
-                
-                {headings.map((heading) => (
-                    <li class="list-item">
-                        <a href={`#${heading.slug}`} class="text-emerald-700 hover:underline">
-                            {heading.text}
-                        </a>
-                    </li>
-                ))}
-            </ol>
+          </div>
 
-			<!-- <p class="text-secondary-emphasis my-3 mb-5">{post.data.description}</p> -->
+          {
+            post.data.image && (
+              <Image
+                src={post.data.image}
+                alt={post.data.title}
+                class="object-cover w-full h-[250px] my-5 rounded-md"
+                transition:name={`${post.id}-image`}
+              />
+            )
+          }
 
-			<!-- <iframe width="560" height="315" src={ post.data.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
-		</header>
+          <h1
+            class:list={[
+              "mb-6 font-semibold text-4xl text-center",
+              "text-gray-900 dark:text-gray-100 py-9",
+            ]}
+          >
+            {post.data.title}
+          </h1>
+        </div>
 
-        <article class="text-base lg:text-lg">
-            <Content />
-        </article>
-		
-	</main>
+        <!-- <p class="text-secondary-emphasis my-3 mb-5">{post.data.description}</p> -->
 
-    <div id="card-bottom" 
-    class="fixed bottom-2 bg-slate-800 z-50 flex items-center justify-center gap-5 p-3 px-5 rounded-lg card-bottom">
-        <button onclick="history.back()" 
-        class="inline-flex h-7 w-9 items-center rounded-md tutorial-link justify-end">
-            <Icon name="back-icon" size={28} class="text-emerald-500 arrow-icon"/>
-        </button>
-        <button id="btn-favorite" class="" data-title={post.data.title} data-slug={post.id}>
-            <Icon name="heart-line-icon" size={30} class=" text-emerald-500" data-outline/>
-            <Icon name="heart-icon" size={30} class="text-emerald-500 hidden" data-full/>
-        </button>
+        <!-- <iframe width="560" height="315" src={ post.data.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+      </header>
+
+      <article class="text-base lg:text-lg">
+        <Content />
+      </article>
     </div>
-	
+
+    <div class="hidden lg:block lg:col-span-4">
+      <aside class="sticky top-20">
+        <h3
+          class="font-semibold text-2xl mt-6 border-b-2 border-emerald-500 pb-2"
+        >
+          Contenido de Tutorial
+        </h3>
+        <ol class="list-decimal pl-5 mb-7">
+          {
+            headings.map((heading) => (
+              <li class="list-item">
+                <a
+                  href={`#${heading.slug}`}
+                  class="text-emerald-700 hover:underline"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <!-- <div
+    id="card-bottom"
+    class="fixed bottom-2 bg-slate-800 z-50 flex items-center justify-center gap-5 p-3 px-5 rounded-lg card-bottom"
+  >
+    <button
+      onclick="history.back()"
+      class="inline-flex h-7 w-9 items-center rounded-md tutorial-link justify-end"
+    >
+      <Icon name="back-icon" size={28} class="text-emerald-500 arrow-icon" />
+    </button>
+    <button
+      id="btn-favorite"
+      class=""
+      data-title={post.data.title}
+      data-slug={post.id}
+    >
+      <Icon
+        name="heart-line-icon"
+        size={30}
+        class="text-emerald-500"
+        data-outline
+      />
+      <Icon
+        name="heart-icon"
+        size={30}
+        class="text-emerald-500 hidden"
+        data-full
+      />
+    </button>
+  </div> -->
 </MainLayout>
 
 <style>
-	iframe{
-        width: 100%;
-        max-width: 900px;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        height: 100%;
-        margin-bottom: 50px;
-    }
+  iframe {
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    height: 100%;
+    margin-bottom: 50px;
+  }
 
-    .card-bottom{
-        left: 50%;
-        transform: translateX(-50%);
-    }
+  .card-bottom {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-    .arrow-icon{
-        transition: transform 0.3s;
-    }
-    .tutorial-link:hover .arrow-icon {
-        transform: translateX(-10px);
-    }
+  .arrow-icon {
+    transition: transform 0.3s;
+  }
+  .tutorial-link:hover .arrow-icon {
+    transform: translateX(-10px);
+  }
 
-    #btn-favorite{
-        transition: transform 0.3s;
-    }
+  #btn-favorite {
+    transition: transform 0.3s;
+  }
 
-    #btn-favorite:hover{
-        transform: scale(1.1);
-    }
-    
-
+  #btn-favorite:hover {
+    transform: scale(1.1);
+  }
 </style>
 
-
-
-
 <script>
-    interface FavoriteTutorial {
-        title: string;
-        slug: string;
+  interface FavoriteTutorial {
+    title: string;
+    slug: string;
+  }
+
+  const handlePageLoad = () => {
+    let favoriteTutorials: FavoriteTutorial[] = JSON.parse(
+      localStorage.getItem("favorites") ?? "[]"
+    );
+
+    const btnFavorite = document.querySelector(
+      "#btn-favorite"
+    ) as HTMLButtonElement;
+
+    if (!btnFavorite) return;
+
+    const title = btnFavorite.dataset.title ?? "";
+    const slug = btnFavorite.dataset.slug ?? "";
+    const isFavorite = favoriteTutorials.some(
+      (favorite) => favorite.slug === slug
+    );
+
+    const heartOutline = btnFavorite.querySelector(
+      "[data-outline]"
+    ) as HTMLElement;
+    const heartFull = btnFavorite.querySelector("[data-full]") as HTMLElement;
+
+    if (isFavorite) {
+      heartOutline.classList.add("hidden");
+      heartFull.classList.remove("hidden");
     }
 
-    const handlePageLoad = () => {
-        let favoriteTutorials: FavoriteTutorial[] = JSON.parse(localStorage.getItem('favorites') ?? '[]');
+    const toggleFavorite = () => {
+      const isFavorite = favoriteTutorials.some((fav) => fav.slug === slug);
 
-        const btnFavorite = document.querySelector('#btn-favorite') as HTMLButtonElement;
-
-		if (!btnFavorite) return;
-        
-        const title = btnFavorite.dataset.title ?? '';
-        const slug = btnFavorite.dataset.slug ?? '';
-		const isFavorite = favoriteTutorials.some((favorite) => favorite.slug === slug);
-
-        const heartOutline = btnFavorite.querySelector('[data-outline]') as HTMLElement;
-        const heartFull = btnFavorite.querySelector('[data-full]') as HTMLElement;
-
-		if (isFavorite) {
-			heartOutline.classList.add('hidden');
-			heartFull.classList.remove('hidden');
-		}
-
-
-        const toggleFavorite = () => {
-            const isFavorite = favoriteTutorials.some((fav) => fav.slug === slug);
-
-            if (isFavorite) {
-                favoriteTutorials = favoriteTutorials.filter((fav) => fav.slug !== slug);
-            } else {
-                favoriteTutorials.push({
-					title: title,
-					slug: slug,
-				});
-            }
-
-            localStorage.setItem('favorites', JSON.stringify(favoriteTutorials));
-        }
-
-
-        btnFavorite.addEventListener('click', () => {
-            heartOutline.classList.toggle('hidden');
-            heartFull.classList.toggle('hidden');
-
-            toggleFavorite();
+      if (isFavorite) {
+        favoriteTutorials = favoriteTutorials.filter(
+          (fav) => fav.slug !== slug
+        );
+      } else {
+        favoriteTutorials.push({
+          title: title,
+          slug: slug,
         });
-    }
+      }
 
-    document.addEventListener('astro:page-load', handlePageLoad);
+      localStorage.setItem("favorites", JSON.stringify(favoriteTutorials));
+    };
 
+    btnFavorite.addEventListener("click", () => {
+      heartOutline.classList.toggle("hidden");
+      heartFull.classList.toggle("hidden");
+
+      toggleFavorite();
+    });
+  };
+
+  document.addEventListener("astro:page-load", handlePageLoad);
 </script>

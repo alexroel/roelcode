@@ -1,172 +1,215 @@
 ---
-import { SITE_TITLE } from '../consts';
-import NavLink from '@/components/NavLink.astro';
-import SocialMedia from './SocialMedia.astro';
-import logoRoelcode from '@/assets/logos/logo-roelcode.svg';
-import { Image } from 'astro:assets';
-import ThemeToggle from './ThemeToggle.astro';
+import { SITE_TITLE } from "../consts";
+import NavLink from "@/components/NavLink.astro";
+import SocialMedia from "./SocialMedia.astro";
+import logoRoelcode from "@/assets/logos/logo-roelcode.svg";
+import { Image } from "astro:assets";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const links = [
-	{ href: '/', text: 'Inicio' },
-	{ href: '/courses', text: 'Cursos' },
-	{ href: '/tutorials', text: 'Tutoriales' },
-	{ href: '/authors', text: 'Creadores' },
+  { href: "/", text: "Inicio" },
+  { href: "/courses", text: "Cursos" },
+  { href: "/tutorials", text: "Tutoriales" },
+  { href: "/authors", text: "Creadores" },
 ];
 ---
 
+<nav class="shadow bg-gray-100 dark:bg-gray-900 h-16 navbar" id="navbar">
+  <div class="mycontainer flex justify-between items-center gap-5">
+    <h2 class="flex items-center">
+      <a href="/">
+        <Image src={logoRoelcode} alt={SITE_TITLE} width={50} />
+      </a>
+    </h2>
 
-<nav class="shadow bg-gray-100 dark:bg-gray-900 h-16">
-	<div class="mycontainer flex justify-between items-center gap-5">
-		<h2 class="flex items-center">
-			<a href="/">
-				<Image src={logoRoelcode} alt={SITE_TITLE} width={50} />
-			</a>
-		</h2>
+    <input type="checkbox" id="menu-toggle" hidden />
+    <label
+      for="menu-toggle"
+      class="menu-btn inline-block cursor-pointer order-3 lg:order-2"
+    >
+      <span
+        class="line line-1 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto"
+      ></span>
+      <span
+        class="line line-2 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto"
+      ></span>
+      <span
+        class="line line-3 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto"
+      ></span>
+    </label>
 
-		<input type="checkbox" id="menu-toggle" hidden />
-        <label for="menu-toggle" class="menu-btn inline-block cursor-pointer order-3 lg:order-2" >
-            <span class="line line-1 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
-            <span class="line line-2 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
-            <span class="line line-3 bg-gray-600 dark:bg-gray-400 block w-5 h-1 my-1 mx-auto" ></span>
-        </label>
+    <div
+      class="bg-gray-200 dark:bg-gray-900 lg:bg-transparent hidden menu shadow"
+    >
+      {links.map(({ href, text }) => <NavLink href={href}>{text}</NavLink>)}
 
-		<div class="bg-gray-200 dark:bg-gray-900 lg:bg-transparent hidden menu shadow">
-			{links.map(({ href, text }) => (
-				<NavLink href={href}>
-					{text}
-				</NavLink>	
-			))}
-
-			<div class="flex gap-3 my-5 lg:hidden">
-				<SocialMedia />
-			</div>
-		</div>
-		<div class="hidden lg:flex gap-3">
-			<ThemeToggle />
-			<div class="border-l-2 border-gray-500 px-2"></div>
-			<SocialMedia />
-		</div>
-	</div>
+      <div class="flex gap-3 my-5 lg:hidden">
+        <SocialMedia />
+      </div>
+    </div>
+    <div class="hidden lg:flex gap-3">
+      <ThemeToggle />
+      <div class="border-l-2 border-gray-500 px-2"></div>
+      <SocialMedia />
+    </div>
+  </div>
 </nav>
 
 <style>
-	.line {
-	  border-radius: 5px;
-	  transition: all 0.3s ease;
-	}
-  
-	#menu-toggle:checked ~ .menu {
-	  display: grid;
-	  gap: 5px;
-	  align-content: start;
-	  position: absolute;
-	  top: 64px;
-	  left: 0;
-	  width: 100%;
-	  padding: 20px 10px;
-	  z-index: 1000;
-	}
-  
-	@media (min-width: 1024px) {
-	  .menu {
-		all: unset;
-		display: flex;
-		gap: 10px;
-	  }
-  
-	  .menu-btn {
-		display: none;
-	  }
-	}
-  
-	#menu-toggle:checked + .menu-btn .line-1 {
-	  animation: line1 0.3s forwards;
-	}
-  
-	#menu-toggle:checked + .menu-btn .line-2 {
-	  animation: line2 0.3s forwards;
-	}
-  
-	#menu-toggle:checked + .menu-btn .line-3 {
-	  animation: line3 0.3s forwards;
-	}
-  
-	@keyframes line1 {
-	  0% {
-		transform: translateY(0) rotate(0);
-	  }
-  
-	  50% {
-		transform: translateY(8px) rotate(0);
-	  }
-  
-	  100% {
-		transform: translateY(8px) rotate(45deg);
-	  }
-	}
-  
-	@keyframes line2 {
-	  0% {
-		opacity: 1;
-	  }
-  
-	  50% {
-		opacity: 0.5;
-	  }
-  
-	  100% {
-		opacity: 0;
-	  }
-	}
-  
-	@keyframes line3 {
-	  0% {
-		transform: translateY(0) rotate(0);
-	  }
-  
-	  50% {
-		transform: translateY(-8px) rotate(0);
-	  }
-  
-	  100% {
-		transform: translateY(-8px) rotate(-45deg);
-	  }
-	}
-  
-	#menu-toggle:not(:checked) + .menu-btn .line-1 {
-	  animation: line1-r 0.3s forwards;
-	}
-  
-	#menu-toggle:not(:checked) + .menu-btn .line-3 {
-	  animation: line3-r 0.3s forwards;
-	}
-  
-	@keyframes line1-r {
-	  0% {
-		transform: translateY(8px) rotate(45deg);
-	  }
-  
-	  50% {
-		transform: translateY(8px) rotate(0);
-	  }
-  
-	  100% {
-		transform: translateY(0) rotate(0);
-	  }
-	}
-  
-	@keyframes line3-r {
-	  0% {
-		transform: translateY(-8px) rotate(-45deg);
-	  }
-  
-	  50% {
-		transform: translateY(-8px) rotate(0);
-	  }
-  
-	  100% {
-		transform: translateY(0) rotate(0);
-	  }
-	}
-  </style>
+  .line {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
 
+  #menu-toggle:checked ~ .menu {
+    display: grid;
+    gap: 5px;
+    align-content: start;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px;
+    z-index: 1000;
+  }
+
+  @media (min-width: 1024px) {
+    .menu {
+      all: unset;
+      display: flex;
+      gap: 10px;
+    }
+
+    .menu-btn {
+      display: none;
+    }
+  }
+
+  #menu-toggle:checked + .menu-btn .line-1 {
+    animation: line1 0.3s forwards;
+  }
+
+  #menu-toggle:checked + .menu-btn .line-2 {
+    animation: line2 0.3s forwards;
+  }
+
+  #menu-toggle:checked + .menu-btn .line-3 {
+    animation: line3 0.3s forwards;
+  }
+
+  @keyframes line1 {
+    0% {
+      transform: translateY(0) rotate(0);
+    }
+
+    50% {
+      transform: translateY(8px) rotate(0);
+    }
+
+    100% {
+      transform: translateY(8px) rotate(45deg);
+    }
+  }
+
+  @keyframes line2 {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes line3 {
+    0% {
+      transform: translateY(0) rotate(0);
+    }
+
+    50% {
+      transform: translateY(-8px) rotate(0);
+    }
+
+    100% {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  #menu-toggle:not(:checked) + .menu-btn .line-1 {
+    animation: line1-r 0.3s forwards;
+  }
+
+  #menu-toggle:not(:checked) + .menu-btn .line-3 {
+    animation: line3-r 0.3s forwards;
+  }
+
+  @keyframes line1-r {
+    0% {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    50% {
+      transform: translateY(8px) rotate(0);
+    }
+
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+  }
+
+  @keyframes line3-r {
+    0% {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    50% {
+      transform: translateY(-8px) rotate(0);
+    }
+
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+  }
+</style>
+
+<style>
+  .navbar.fijo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-100%);
+    animation: fadeInSlide 0.8s ease-in-out forwards;
+  }
+
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    // Navbar scroll effect
+    window.addEventListener("scroll", function () {
+      var navbar = document.getElementById("navbar");
+      if (window.scrollY > 500) {
+        navbar.classList.add("fijo");
+      } else {
+        navbar.classList.remove("fijo");
+      }
+    });
+  });
+</script>

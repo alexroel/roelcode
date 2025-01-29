@@ -1,7 +1,8 @@
 html {
 	scroll-behavior: smooth;
-  }
-  
+	scroll-padding-top: 80px;
+}
+
 .view-transition {
 	transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -26,12 +27,7 @@ body {
 .btn-primary {
 	@apply bg-teal-500 hover:bg-teal-600 text-gray-100 font-semibold py-2 px-4 rounded text-center lg:text-start inline-block my-4;
 }
-main {
-	width: 1200px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
+
 
 h1,
 h2,
@@ -49,7 +45,8 @@ h1 {
 }
 
 h2 {
-	font-size: 2.441em;
+	font-size: 2em;
+	@apply py-6;
 }
 
 h3 {
@@ -66,6 +63,7 @@ h5 {
 
 p {
 	margin-bottom: 10px;
+	line-height: 1.7;
 }
 
 a {
@@ -96,12 +94,11 @@ img {
 	height: auto;
 }
 
-pre{
+pre {
 	position: relative;
 	padding: 20px 10px;
-	border-radius: 0px 10px 10px 0;
+	border-radius: 10px;
 	border-left: 5px solid transparent;
-	@apply border-emerald-500;	
 	margin: 15px 0;
 }
 
@@ -110,9 +107,9 @@ pre{
 ============================================*/
 /* Estilo básico del botón de copiar */
 .copy-button {
-	@apply bg-slate-900;
+	@apply bg-zinc-900;
 	border: none;
-	@apply text-emerald-500;
+	@apply text-teal-500;
 	padding: 5px 10px;
 	margin-bottom: 5px;
 	cursor: pointer;
@@ -127,10 +124,7 @@ pre{
 	font-weight: 600;
 }
 
-.copy-button i {
-	font-size: 20px;
-}
 
 .copy-button:hover {
-	@apply bg-slate-950;
+	@apply bg-zinc-950;
 }
