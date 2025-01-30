@@ -5,13 +5,13 @@ import Footer from "@/sections/Footer.astro";
 import ButtonScroll from "@/components/ButtonScroll.astro";
 import { ClientRouter } from "astro:transitions";
 
-const { title, description } = Astro.props;
+const { title, description, image = '/open-graph-reolcode.jpg' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={image} />
     <script is:inline>
       // Ejecutar esto lo antes posible para evitar parpadeo
       const theme = (() => {

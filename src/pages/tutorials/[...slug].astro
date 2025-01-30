@@ -21,7 +21,7 @@ const { Content, headings } = await render(post);
 const author = (await getEntry(post.data.author)).data;
 ---
 
-<MainLayout {...post.data}>
+<MainLayout title={post.data.title} description={post.data.description} image={post.data.image.src}>
   <main
     class="max-w-7xl mx-auto px-4 py-7 pb-14 lg:px-0 mt-10 grid grid-cols-1 lg:grid-cols-12 gap-20"
   >
