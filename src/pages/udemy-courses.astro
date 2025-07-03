@@ -1,15 +1,13 @@
 ---
-import CourseCard from "@/components/CourseCard.astro";
+import CourseCardUdemy from "@/components/CourseCardUdemy.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import Testimonials from "@/sections/Testimonials.astro";
 import { Icon } from "astro-icon/components";
-import Image from "astro/components/Image.astro";
+import { Image } from "astro:assets";
+import { udemyCourses } from "@/data/udemy-courses";
 
-import { getCollection } from "astro:content";
-const coursePosts = await getCollection("courses");
-
-const popularCoursesAndNew = coursePosts.filter(
-  (course: any) => course.data.popular || course.data.new
+const popularCoursesAndNew = udemyCourses.filter(
+  (course) => course.popular || course.new
 );
 ---
 
@@ -24,12 +22,12 @@ const popularCoursesAndNew = coursePosts.filter(
                 <div class="grid grid-cols-1 lg:grid-cols-2 px-3 gap-5">
                   <div class="lg:order-2 relative">
                     <Image
-                      src={course.data.image}
-                      alt={course.data.title}
+                      src={course.image}
+                      alt={course.title}
                       class="w-full"
                     />
 
-                    {course.data.popular && (
+                    {course.popular && (
                       <div
                         class:list={[
                           "absolute top-0 left-4 bg-yellow-400 text-slate-900 font-bold py-1 px-4 rounded",
@@ -40,7 +38,7 @@ const popularCoursesAndNew = coursePosts.filter(
                       </div>
                     )}
 
-                    {course.data.new && (
+                    {course.new && (
                       <div
                         class:list={[
                           "absolute top-0 left-4 bg-emerald-400 text-slate-900 font-bold py-2 px-4 rounded",
@@ -53,14 +51,14 @@ const popularCoursesAndNew = coursePosts.filter(
                   </div>
                   <div class="lg:order-1">
                     <h2 class="text-2xl lg:text-4xl font-bold text-center lg:text-start text-gray-800 dark:text-gray-300">
-                      {course.data.title}
+                      {course.title}
                     </h2>
                     <p class="text-base lg:text-xl my-4 text-slate-500 text-center lg:text-start">
-                      {course.data.description}
+                      {course.description}
                     </p>
                     <p class="flex items-center justify-center lg:justify-start">
                       <span class="font-semibold text-xl mr-2">
-                        {course.data.qualification}
+                        {course.qualification}
                       </span>
                       {new Array(4).fill(0).map((_) => (
                         <Icon
@@ -76,12 +74,10 @@ const popularCoursesAndNew = coursePosts.filter(
                       />
                     </p>
                     <p class="my-4 text-slate-500 text-center lg:text-start">
-                      {course.data.hours} horas de {course.data.class} clases
+                      {course.hours} horas de {course.class} clases
                     </p>
                     <div class="flex justify-center lg:justify-start">
-                      <a
-                        href={ course.data.url }
-                        class="btn-primary" target="_blank">
+                      <a href={course.url} class="btn-primary" target="_blank">
                         Ver curso
                       </a>
                     </div>
@@ -113,7 +109,7 @@ const popularCoursesAndNew = coursePosts.filter(
       <div
         class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 lg:gap-y-20"
       >
-        {coursePosts.map((course: any) => <CourseCard course={course} />)}
+        {udemyCourses.map((course: any) => <CourseCardUdemy course={course} />)}
       </div>
     </div>
   </section>

@@ -1,34 +1,26 @@
 ---
-import { getCollection } from 'astro:content';
-import MainLayout from '@/layouts/MainLayout.astro';
-import TutorialCard from '@/components/TutorialCard.astro';
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import TutorialCard from "@/components/TutorialCard.astro";
 
-const tutorials = (await getCollection('tutorials')).sort(
-	(a:any, b:any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const tutorials = (await getCollection("tutorials")).sort(
+  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
 const title = "Mis Tutoriales | Roelcode";
-const description = "Mis tutoriales sobre desarrollo web, programación y tecnología";
-
+const description =
+  "Mis tutoriales sobre desarrollo web, programación y tecnología";
 ---
 
 <MainLayout title={title} description={description}>
-
-    <section class="py-9">
-        <div class="mycontainer">
-            <h1 class="text-3xl font-semibol capitalize lg:text-4xl mb-10">Mis Tutoriales</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                {tutorials.map((tutorial:any) => (
-                    <TutorialCard tutorial={tutorial} />
-                ))}
-            </div>
-
-        </div>
-    </section>
+  <section class="py-9">
+    <div class="mycontainer">
+      <h1 class="text-3xl font-semibol capitalize lg:text-4xl mb-10">
+        Mis Tutoriales
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {tutorials.map((tutorial: any) => <TutorialCard tutorial={tutorial} />)}
+      </div>
+    </div>
+  </section>
 </MainLayout>
-
-<style>
-
-</style>
-
-

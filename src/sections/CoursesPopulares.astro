@@ -1,61 +1,69 @@
 ---
-import CourseCard from "@/components/CourseCard.astro";
-import { getCollection } from "astro:content";
+import CourseCard from "@/components/CourseCardUdemy.astro";
 
-const coursePosts = await getCollection('courses');
+import { udemyCourses } from "@/data/udemy-courses";
 
-const popularCoursesAndNew = coursePosts.filter((course: any) => course.data.popular || course.data.new);
+const popularCoursesAndNew = udemyCourses.filter(
+  (course: any) => course.popular || course.new
+);
 
 const headingContent = {
-	slogan: "🎓 Cursos disponibles para todos los niveles de programador.",
-	title: "Mis cursos más populares y nuevos",
-}
+  slogan: "🎓 Cursos disponibles para todos los niveles de programador.",
+  title: "Mis cursos más populares y nuevos",
+};
 ---
 
 <section class="courses bg-gray-50 dark:bg-gray-950 py-16 pb-20">
-	<div class="xl:container mx-auto p-3">
-		<div class="flex justify-center py-5">
-			<p class="border-teal-500 border-2 rounded-lg p-2 px-4 inline-block mb-4 text-sm lg:text-base">
-				{headingContent.slogan}
-			</p>
-		</div>
-		<h2 class="text-4xl font-bold text-center text-gray-950 dark:text-gray-100">
-			{headingContent.title}
-		</h2>
+  <div class="xl:container mx-auto p-3">
+    <div class="flex justify-center py-5">
+      <p
+        class="border-teal-500 border-2 rounded-lg p-2 px-4 inline-block mb-4 text-sm lg:text-base"
+      >
+        {headingContent.slogan}
+      </p>
+    </div>
+    <h2 class="text-4xl font-bold text-center text-gray-950 dark:text-gray-100">
+      {headingContent.title}
+    </h2>
 
-		<div class="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-10">
-			{
-				popularCoursesAndNew.map((course: any) => (
-					<CourseCard course={course} />
-				))
-			}	
-		</div>
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-10">
+      {
+        popularCoursesAndNew.map((course: any) => (
+          <CourseCard course={course} />
+        ))
+      }
+    </div>
 
-		<div class:list={[
-			"grid grid-cols-1 lg:grid-cols-2 gap-5 justify-between mt-16",
-			"bg-gray-700 rounded-lg text-gray-900 p-5 lg:p-10",
-		]}>
-			<div class="mb-8 lg:mb-0">
-				<h3 class="text-3xl text-gray-300 lg:text-5xl font-bold mb-5 text-center lg:text-start">
-					¡Inscríbite Ahora! 
-				</h3>
-				<p class="text-xl text-gray-300 text-center lg:text-start">
-					¡Aprende a tu propio ritmo! <br>
-					¡Cursos certificados por Udemy! <br>
-					¡Cupones de descuento especiales! <br>
-				</p>
-			</div>
-			<div class="flex items-center justify-center">
-				<a href="/courses" class:list={[
-					"bg-teal-500 py-5 px-8 rounded-lg flex items-center gap-2",
-					"text-gray-900 font-semibold hover:bg-teal-400",
-					"text-lg lg:text-2xl"
-				]}>
-					Todos los cursos
-				</a>
-			</div>
-
-		</div>
-	</div>
+    <div
+      class:list={[
+        "grid grid-cols-1 lg:grid-cols-2 gap-5 justify-between mt-16",
+        "bg-gray-700 rounded-lg text-gray-900 p-5 lg:p-10",
+      ]}
+    >
+      <div class="mb-8 lg:mb-0">
+        <h3
+          class="text-3xl text-gray-300 lg:text-5xl font-bold mb-5 text-center lg:text-start"
+        >
+          ¡Inscríbite Ahora!
+        </h3>
+        <p class="text-xl text-gray-300 text-center lg:text-start">
+          ¡Aprende a tu propio ritmo! <br />
+          ¡Cursos certificados por Udemy! <br />
+          ¡Cupones de descuento especiales! <br />
+        </p>
+      </div>
+      <div class="flex items-center justify-center">
+        <a
+          href="/courses"
+          class:list={[
+            "bg-teal-500 py-5 px-8 rounded-lg flex items-center gap-2",
+            "text-gray-900 font-semibold hover:bg-teal-400",
+            "text-lg lg:text-2xl",
+          ]}
+        >
+          Todos los cursos
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
-

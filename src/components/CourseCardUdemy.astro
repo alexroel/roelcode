@@ -1,0 +1,126 @@
+---
+import { Image } from "astro:assets";
+
+const data = Astro.props;
+const content = data.course;
+
+import logoUdemy from "@/assets/logos/logo-udemy.webp";
+import { Icon } from "astro-icon/components";
+---
+
+<div
+  class="relative rounded-lg border border-gray-200 dark:border-gray-800 flex flex-col card"
+>
+  {
+    content.new && (
+      <div
+        class:list={[
+          "absolute top-2 start-2 bg-cyan-600 text-gray-100",
+          "rounded-md py-0 px-3 z-10 text-sm",
+        ]}
+      >
+        <p class="font-semibold pb-1 m-0">Nuevo</p>
+      </div>
+    )
+  }
+
+  {
+    content.popular && (
+      <div
+        class:list={[
+          "absolute top-2 start-2 bg-yellow-500 text-gray-900",
+          "rounded-md py-0 px-3 z-10 text-sm",
+        ]}
+      >
+        <p class="font-semibold pb-1 m-0">Lo más vendido</p>
+      </div>
+    )
+  }
+
+  <a href={content.url} target="_blank">
+    <Image src={content.image} alt="Imagen de Cursos" class="curso-img" />
+  </a>
+
+  <div class="p-3 grid card-body h-full place-content-between">
+    <div class="grid h-full">
+      <a href={content.url} target="_blank" class="hover:text-teal-600">
+        <h5 class="text-lg font-semibold mb-0 text-gray-700 dark:text-gray-300">
+          {content.title}
+        </h5>
+      </a>
+
+      <p class="flex items-center mt-2">
+        <span class="font-semibold">{content.qualification}</span>
+        <span class="flex mx-1 text-lg text-yellow-600">
+          {
+            new Array(4)
+              .fill(0)
+              .map((_) => (
+                <Icon name="star-icon" size={20} class="text-yellow-600" />
+              ))
+          }
+          <Icon name="star-half-icon" size={20} class="text-yellow-600" />
+        </span>
+        <span class="text-gray-500">({content.qualifications})</span>
+      </p>
+      <p class="mb-2 text-gray-500">
+        {content.hours} horas de {content.class} clases
+      </p>
+    </div>
+
+    <div class="grid gap-4 mt-2">
+      <p class="text-gray-600 dark:text-gray-400 text-2xl font-semibold">
+        {content.discount} Dto. - <span class="line-through"
+          >$ {content.price}</span
+        >
+      </p>
+
+      <a
+        href={content.url}
+        target="_blank"
+        class:list={[
+          "flex items-center justify-center gap-2 text-purple-600",
+          "rounded-lg py-2 px- border-2 border-purple-600 hover:bg-purple-500",
+          "font-semibold text-lg text-gray-900 hover:text-gray-100 dark:text-gray-100",
+          "btn-udemy ",
+        ]}
+      >
+        <Image src={logoUdemy} alt="Logo de udemy" class="logo-udemy" />
+        <span>Comprar <b>$12.99</b> </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .curso-img {
+    height: auto;
+    transition: all 0.5s ease;
+  }
+
+  .logo-udemy {
+    height: auto;
+    width: 25px;
+  }
+
+  .card {
+    overflow: hidden;
+    transition: all 0.5s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 0.5rem #0b182982;
+  }
+
+  .card:hover .curso-img {
+    transform: scale(1.05);
+  }
+
+  .btn-udemy {
+    transition: all 0.5s ease;
+  }
+
+  .btn-udemy:hover {
+    background-color: #a435f0;
+  }
+</style>
