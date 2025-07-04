@@ -3,9 +3,15 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import FreeCourseCard from "@/components/FreeCourseCard.astro";
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
+import { getCategoryUrl } from "@/consts";
 
 // Obtener solo los cursos (archivos index.mdx)
 const courses = await getCollection("freeCourses");
+
+// Obtener todas las categorías únicas
+const allCategories = [
+  ...new Set(courses.flatMap((course) => course.data.categories)),
+].sort();
 ---
 
 <MainLayout title="Cursos de YouTube | Roelcode">
@@ -67,11 +73,63 @@ const courses = await getCollection("freeCourses");
     </div>
   </section>
 
+  <!-- Cursos disponibles -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2
+          class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+        >
+          Cursos disponibles
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+          Cada curso incluye ejercicios prácticos, proyectos reales y todo el
+          código fuente disponible en GitHub.
+        </p>
+      </div>
+
+      <!-- Filtro por categorías -->
+      <div class="mb-8">
+        <h3
+          class="text-xl font-semibold text-gray-900 dark:text-white mb-4 text-center"
+        >
+          Explorar por categoría
+        </h3>
+        <div class="flex flex-wrap justify-center gap-2">
+          <span
+            class="px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white border border-blue-600"
+          >
+            Todos los cursos
+          </span>
+          {
+            allCategories.map((category: string) => (
+              <a
+                href={getCategoryUrl(category)}
+                class="px-4 py-2 rounded-full text-sm font-medium transition-colors border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white"
+              >
+                {category}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {courses.map((course) => <FreeCourseCard course={course} />)}
+      </div>
+    </div>
+  </section>
+
   <!-- Call to action -->
   <section class="py-16 bg-red-100 dark:bg-gray-900">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-        Primer paso para empezar a aprender
+        ¿Te gusta el contenido?
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600"
+        >
+          ¡Suscríbete al canal!
+        </span>
       </h2>
 
       <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
@@ -88,27 +146,6 @@ const courses = await getCollection("freeCourses");
           <Icon name="tabler:brand-youtube" class="w-5 h-5 mr-2" />
           Suscríbete al canal
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cursos disponibles -->
-  <section class="py-16">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2
-          class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
-        >
-          Cursos disponibles
-        </h2>
-        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Cada curso incluye ejercicios prácticos, proyectos reales y todo el
-          código fuente disponible en GitHub.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {courses.map((course) => <FreeCourseCard course={course} />)}
       </div>
     </div>
   </section>

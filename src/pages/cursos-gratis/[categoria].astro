@@ -1,0 +1,127 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import FreeCourseCard from "@/components/FreeCourseCard.astro";
+import { formatCategorySlug, getCategoryUrl } from "@/consts";
+
+export async function getStaticPaths() {
+  const allCourses = await getCollection("freeCourses");
+
+  // Obtener todas las categorías únicas
+  const categoriesSet = new Set<string>();
+  allCourses.forEach((course) => {
+    course.data.categories.forEach((category) => {
+      categoriesSet.add(category);
+    });
+  });
+
+  // Crear las rutas estáticas para cada categoría
+  const paths = Array.from(categoriesSet).map((category) => ({
+    params: { categoria: formatCategorySlug(category) },
+    props: {
+      category,
+      courses: allCourses.filter((course) =>
+        course.data.categories.includes(category)
+      ),
+    },
+  }));
+
+  return paths;
+}
+
+const { category, courses } = Astro.props;
+
+// Obtener todas las categorías para el menú de navegación
+const allCourses = await getCollection("freeCourses");
+const allCategories = [
+  ...new Set(allCourses.flatMap((course) => course.data.categories)),
+].sort();
+
+const title = `Cursos Gratuitos - ${category}`;
+const description = `Encuentra todos los cursos gratuitos de ${category} en RoelCode. Aprende programación con tutoriales completos y gratuitos.`;
+---
+
+<MainLayout title={title} description={description}>
+  <main class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1
+        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+      >
+        Cursos de <span class="text-blue-600 dark:text-blue-400"
+          >{category}</span
+        >
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Descubre todos nuestros cursos gratuitos de {category}. Aprende a tu
+        ritmo con contenido de calidad.
+      </p>
+    </div>
+
+    <!-- Navegación por categorías -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+        Explorar por categoría:
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        <a
+          href="/cursos-gratis"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-blue-600 hover:text-white border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+        >
+          Todos los cursos
+        </a>
+        {
+          allCategories.map((cat: string) => (
+            <a
+              href={getCategoryUrl(cat)}
+              class={`px-4 py-2 rounded-full text-sm font-medium transition-colors border ${
+                cat === category
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white"
+              }`}
+            >
+              {cat}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Cursos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {courses.map((course) => <FreeCourseCard course={course} />)}
+    </div>
+
+    <!-- Si no hay cursos -->
+    {
+      courses.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-gray-600 dark:text-gray-400 text-lg">
+            No hay cursos disponibles en esta categoría por el momento.
+          </p>
+          <a
+            href="/cursos-gratis"
+            class="mt-4 inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Ver todos los cursos
+          </a>
+        </div>
+      )
+    }
+
+    <!-- Breadcrumb -->
+    <nav class="mt-12 text-sm">
+      <ol class="flex space-x-2 text-gray-500 dark:text-gray-400">
+        <li><a href="/" class="hover:text-blue-600">Inicio</a></li>
+        <li>›</li>
+        <li>
+          <a href="/cursos-gratis" class="hover:text-blue-600"
+            >Cursos Gratuitos</a
+          >
+        </li>
+        <li>›</li>
+        <li class="text-gray-900 dark:text-white">{category}</li>
+      </ol>
+    </nav>
+  </main>
+</MainLayout>

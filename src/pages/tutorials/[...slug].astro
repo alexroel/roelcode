@@ -5,6 +5,7 @@ import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import { render } from "astro:content";
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths() {
   const posts = await getCollection("tutorials");
@@ -21,7 +22,11 @@ const { Content, headings } = await render(post);
 const author = (await getEntry(post.data.author)).data;
 ---
 
-<MainLayout title={post.data.title} description={post.data.description} image={post.data.image.src}>
+<MainLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image.src}
+>
   <main
     class="max-w-7xl mx-auto px-4 py-7 pb-14 lg:px-0 mt-10 grid grid-cols-1 lg:grid-cols-12 gap-20"
   >
@@ -107,7 +112,7 @@ const author = (await getEntry(post.data.author)).data;
     </div>
   </main>
 
-  <!-- <div
+  <div
     id="card-bottom"
     class="fixed bottom-2 bg-slate-800 z-50 flex items-center justify-center gap-5 p-3 px-5 rounded-lg card-bottom"
   >
@@ -136,7 +141,7 @@ const author = (await getEntry(post.data.author)).data;
         data-full
       />
     </button>
-  </div> -->
+  </div>
 </MainLayout>
 
 <style>

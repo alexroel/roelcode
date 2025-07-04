@@ -5,8 +5,10 @@ import {
   getEntry,
   render,
 } from "astro:content";
-import MainLayout from "../../../../layouts/MainLayout.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import CourseProgressIndicator from "@/components/CourseProgressIndicator.astro";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const lessons = await getCollection("freeLessons");
@@ -100,14 +102,14 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
           <div class="flex items-center space-x-2 text-sm">
             <a
               href="/cursos-gratis"
-              class="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              class="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
             >
               Cursos
             </a>
             <Icon name="tabler:chevron-right" class="w-4 h-4 text-gray-400" />
             <a
               href={`/cursos-gratis/${lesson.data.course}`}
-              class="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              class="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
             >
               {course.data.title}
             </a>
@@ -184,67 +186,6 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
             </div>
           </div>
 
-          <!-- Información del curso e instructor -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-            <div class="mb-4">
-              <h2
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {course.data.title}
-              </h2>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
-                {course.data.description}
-              </p>
-            </div>
-
-            <!-- Instructor -->
-            <div
-              class="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
-            >
-              <div
-                class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
-              >
-                {
-                  instructor?.avatar ? (
-                    <img
-                      src={instructor.avatar.src}
-                      alt={instructor.name}
-                      class="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <Icon
-                      name="tabler:user"
-                      class="w-5 h-5 text-blue-600 dark:text-blue-400"
-                    />
-                  )
-                }
-              </div>
-              <div class="min-w-0 flex-1">
-                <a
-                  href={`/authors/${course.data.instructor.id}`}
-                  class="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block"
-                >
-                  {instructor?.name || "Instructor"}
-                </a>
-                <p class="text-xs text-gray-600 dark:text-gray-400">
-                  {instructor?.subtitle || "Instructor y creador de contenido"}
-                </p>
-              </div>
-              <div
-                class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
-              >
-                <div class="flex items-center gap-1">
-                  <Icon name="tabler:clock" class="w-3 h-3" />
-                  <span>{course.data.duration}</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <Icon name="tabler:video" class="w-3 h-3" />
-                  <span>{course.data.totalLessons} lecciones</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Información de la lección -->
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
             <div class="flex items-center justify-between mb-4">
@@ -264,6 +205,49 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
             <p class="text-gray-600 dark:text-gray-400 mb-6">
               {lesson.data.description}
             </p>
+            <!-- Botón para marcar como completada -->
+            <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                  >
+                    <Icon name="tabler:users" class="w-4 h-4" />
+                    <span>Progreso del curso</span>
+                  </div>
+                </div>
+                <button
+                  id="btn-complete-lesson"
+                  class="group relative overflow-hidden px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 complete-lesson-btn shadow-lg hover:shadow-xl"
+                  data-lesson-id={lesson.id}
+                  data-course-id={lesson.data.course}
+                  data-lesson-title={lesson.data.title}
+                >
+                  <!-- Fondo animado -->
+                  <div
+                    class="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient"
+                  >
+                  </div>
+
+                  <!-- Contenido del botón -->
+                  <div class="relative flex items-center gap-2">
+                    <Icon
+                      name="tabler:check"
+                      class="w-5 h-5 check-icon transition-all duration-300"
+                    />
+                    <span class="btn-text transition-all duration-300"
+                      >Marcar como completada</span
+                    >
+                  </div>
+
+                  <!-- Efecto de confeti (solo cuando se completa) -->
+                  <div
+                    class="absolute inset-0 pointer-events-none confetti-container opacity-0"
+                  >
+                  </div>
+                </button>
+              </div>
+            </div>
 
             <!-- Navegación entre lecciones -->
             <div
@@ -273,7 +257,7 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
                 previousLesson ? (
                   <a
                     href={getLessonUrl(previousLesson)}
-                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                    class="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
                   >
                     <Icon name="tabler:arrow-left" class="w-4 h-4" />
                     <div class="text-left">
@@ -294,7 +278,7 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
                 nextLesson && (
                   <a
                     href={getLessonUrl(nextLesson)}
-                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors text-right ml-auto"
+                    class="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors text-right ml-auto"
                   >
                     <div class="text-right">
                       <div class="text-xs text-gray-500 dark:text-gray-400">
@@ -326,7 +310,7 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
           <!-- Recursos -->
           {
             lesson.data.resources && lesson.data.resources.length > 0 && (
-              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                   Recursos adicionales
                 </h3>
@@ -343,7 +327,7 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
                             ? "tabler:code"
                             : "tabler:external-link"
                         }
-                        class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0"
+                        class="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0"
                       />
                       <div>
                         <div class="font-medium text-gray-900 dark:text-white">
@@ -364,171 +348,205 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
             )
           }
 
-          <!-- Progreso y contexto del curso -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-            <h3
-              class="text-lg font-semibold text-gray-900 dark:text-white mb-4"
-            >
-              Tu progreso en el curso
-            </h3>
-
-            <div class="mb-6">
-              <div
-                class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2"
-              >
-                <span>Progreso del curso</span>
-                <span
-                  >{
-                    Math.round(
-                      ((currentIndex + 1) / courseLessons.length) * 100
-                    )
-                  }%</span
-                >
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div
-                  class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                  style={`width: ${((currentIndex + 1) / courseLessons.length) * 100}%`}
-                >
-                </div>
-              </div>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                Has completado {currentIndex + 1} de {courseLessons.length} lecciones
-              </p>
-            </div>
-
-            <div class="space-y-4">
-              <div
-                class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-              >
-                <Icon
-                  name="tabler:target"
-                  class="w-5 h-5 text-green-600 dark:text-green-400"
-                />
-                <div>
-                  <div class="font-medium text-gray-900 dark:text-white">
-                    Objetivo de la sección
-                  </div>
-                  <div class="text-sm text-gray-600 dark:text-gray-400">
-                    {
-                      course.data.sections.find(
-                        (s) => s.slug === lesson.data.section
-                      )?.description
-                    }
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-              >
-                <Icon
-                  name="tabler:users"
-                  class="w-5 h-5 text-blue-600 dark:text-blue-400"
-                />
-                <div>
-                  <div class="font-medium text-gray-900 dark:text-white">
-                    Instructor
-                  </div>
-                  <a
-                    href={`/authors/${course.data.instructor.id}`}
-                    class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    {instructor?.name || "Instructor"}
-                  </a>
-                </div>
-              </div>
-
-              {
-                lesson.data.transcript && (
-                  <div class="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                    <Icon
-                      name="tabler:file-text"
-                      class="w-5 h-5 text-yellow-600 dark:text-yellow-400"
-                    />
-                    <div>
-                      <div class="font-medium text-yellow-900 dark:text-yellow-100">
-                        Transcripción disponible
-                      </div>
-                      <div class="text-sm text-yellow-800 dark:text-yellow-200">
-                        Esta lección incluye transcripción completa
-                      </div>
+          <!-- Información del instructor -->
+          {
+            instructor && (
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                <div class="flex items-center gap-4">
+                  {instructor.avatar && (
+                    <div class="flex-shrink-0">
+                      <Image
+                        src={instructor.avatar}
+                        alt={instructor.name}
+                        width={48}
+                        height={48}
+                        class="w-12 h-12 rounded-full object-cover"
+                      />
                     </div>
+                  )}
+                  <div>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">
+                      {instructor.name}
+                    </h4>
+                    {instructor.bio && (
+                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                        {instructor.bio}
+                      </p>
+                    )}
                   </div>
-                )
-              }
-            </div>
-          </div>
+                </div>
+              </div>
+            )
+          }
         </div>
 
         <!-- Sidebar - Lista de lecciones -->
         <div class="lg:col-span-1">
           <div
-            class="bg-white dark:bg-gray-800 rounded-lg shadow-sm sticky top-24"
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-lg sticky top-24"
           >
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 class="font-semibold text-gray-900 dark:text-white">
-                Contenido del curso
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                {courseLessons.length} lecciones
-              </p>
+            <!-- Header del sidebar -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2 bg-emerald-100 dark:bg-emerald-900 rounded-lg">
+                  <Icon
+                    name="tabler:book"
+                    class="w-5 h-5 text-emerald-600 dark:text-emerald-400"
+                  />
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                  Contenido del curso
+                </h3>
+              </div>
+              <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="bg-white dark:bg-gray-700 rounded-lg p-2 shadow-sm">
+                  <div
+                    class="text-sm font-semibold text-gray-900 dark:text-white"
+                  >
+                    {courseLessons.length}
+                  </div>
+                  <div class="text-xs text-gray-600 dark:text-gray-400">
+                    Lecciones
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-700 rounded-lg p-2 shadow-sm">
+                  <div
+                    class="text-sm font-semibold text-gray-900 dark:text-white"
+                  >
+                    {course.data.duration}
+                  </div>
+                  <div class="text-xs text-gray-600 dark:text-gray-400">
+                    Duración
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div class="max-h-96 overflow-y-auto">
+            <!-- Barra de progreso del curso -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+              <CourseProgressIndicator
+                courseId={lesson.data.course}
+                totalLessons={courseLessons.length}
+                size="medium"
+                showText={true}
+              />
+            </div>
+
+            <!-- Lista de secciones y lecciones -->
+            <div
+              class="max-h-[calc(100vh-28rem)] overflow-y-auto custom-scrollbar"
+            >
               {
                 course.data.sections.map((section, sectionIndex) => {
                   const lessons = sectionLessons.get(section.slug) || [];
+                  const hasActiveLesson = lessons.some(
+                    (l: any) => l.id === lesson.id
+                  );
                   return (
                     <div class="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
                       <button
-                        class="w-full p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors section-toggle"
+                        class="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 section-toggle"
                         data-section={sectionIndex}
                       >
                         <div class="flex items-center justify-between">
-                          <h4 class="text-sm font-medium text-gray-900 dark:text-white">
-                            {section.title}
-                          </h4>
+                          <div class="flex items-center gap-3">
+                            <div
+                              class={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                                hasActiveLesson
+                                  ? "bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400"
+                                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                              }`}
+                            >
+                              {sectionIndex + 1}
+                            </div>
+                            <div>
+                              <h4 class="font-semibold text-gray-900 dark:text-white text-sm">
+                                {section.title}
+                              </h4>
+                              <p class="text-xs text-gray-500 dark:text-gray-400">
+                                {lessons.length} lección
+                                {lessons.length !== 1 ? "es" : ""}
+                              </p>
+                            </div>
+                          </div>
                           <Icon
                             name="tabler:chevron-down"
-                            class="w-4 h-4 text-gray-400 transform transition-transform section-icon"
+                            class={`w-4 h-4 text-gray-400 transform transition-transform section-icon ${hasActiveLesson ? "rotate-180" : ""}`}
                           />
                         </div>
                       </button>
 
                       <div
-                        class={`section-content ${lessons.some((l: any) => l.id === lesson.id) ? "" : "hidden"}`}
+                        class={`section-content ${hasActiveLesson ? "" : "hidden"}`}
                       >
-                        {lessons.map((courseLesson: any) => {
-                          const isActive = courseLesson.id === lesson.id;
-                          return (
-                            <a
-                              href={getLessonUrl(courseLesson)}
-                              class={`block p-2 pl-6 text-sm border-l-2 transition-colors ${
-                                isActive
-                                  ? "bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-300"
-                                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-                              }`}
-                            >
-                              <div class="flex items-center justify-between">
-                                <span class="truncate">
-                                  {courseLesson.data.title}
-                                </span>
-                                {isActive && (
-                                  <Icon
-                                    name="tabler:play"
-                                    class="w-3 h-3 flex-shrink-0 ml-2"
-                                  />
-                                )}
-                              </div>
-                            </a>
-                          );
-                        })}
+                        {lessons.map(
+                          (courseLesson: any, lessonIndex: number) => {
+                            const isActive = courseLesson.id === lesson.id;
+                            return (
+                              <a
+                                href={getLessonUrl(courseLesson)}
+                                class={`block py-3 px-4 pl-16 border-l-2 transition-all duration-200 lesson-item ${
+                                  isActive
+                                    ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-300"
+                                    : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-500"
+                                }`}
+                                data-lesson-id={courseLesson.id}
+                              >
+                                <div class="flex items-center gap-3">
+                                  <div
+                                    class={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-medium lesson-number ${
+                                      isActive
+                                        ? "bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400"
+                                        : "bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                                    }`}
+                                  >
+                                    <Icon
+                                      name="tabler:check"
+                                      class="w-3 h-3 completed-icon hidden"
+                                    />
+                                    <span class="lesson-num">
+                                      {lessonIndex + 1}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span class="text-sm font-medium">
+                                      {courseLesson.data.title}
+                                    </span>
+                                    <div class="flex items-center gap-2 mt-1">
+                                      <Icon
+                                        name="tabler:clock"
+                                        class="w-3 h-3 text-gray-400"
+                                      />
+                                      <span class="text-xs text-gray-500 dark:text-gray-400">
+                                        {courseLesson.data.duration}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </a>
+                            );
+                          }
+                        )}
                       </div>
                     </div>
                   );
                 })
               }
+            </div>
+
+            <!-- Footer del sidebar -->
+            <div
+              class="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700"
+            >
+              <div class="flex items-center justify-center gap-2">
+                <Icon
+                  name="tabler:certificate"
+                  class="w-4 h-4 text-green-500"
+                />
+                <span class="text-sm text-gray-600 dark:text-gray-400">
+                  Certificado gratuito
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -538,37 +556,376 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
 </MainLayout>
 
 <script is:inline>
-  const sectionsToggleButons = () => {
-    // Toggle de secciones
+  // Funciones para notificaciones toast
+  const showSuccessToast = (message) => {
+    createToast(message, "success");
+  };
+
+  const showInfoToast = (message) => {
+    createToast(message, "info");
+  };
+
+  const createToast = (message, type) => {
+    // Crear contenedor de toasts si no existe
+    let toastContainer = document.getElementById("toast-container");
+    if (!toastContainer) {
+      toastContainer = document.createElement("div");
+      toastContainer.id = "toast-container";
+      toastContainer.className = "fixed top-4 right-4 z-50 space-y-2";
+      document.body.appendChild(toastContainer);
+    }
+
+    // Crear toast
+    const toast = document.createElement("div");
+    const bgColor = type === "success" ? "bg-green-500" : "bg-blue-500";
+    toast.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 flex items-center gap-2`;
+
+    const icon = type === "success" ? "✓" : "ℹ";
+    toast.innerHTML = `
+      <span class="text-lg">${icon}</span>
+      <span class="font-medium">${message}</span>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    // Animar entrada
+    setTimeout(() => {
+      toast.classList.remove("translate-x-full");
+    }, 100);
+
+    // Animar salida y remover
+    setTimeout(() => {
+      toast.classList.add("translate-x-full");
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.parentNode.removeChild(toast);
+        }
+      }, 300);
+    }, 3000);
+  };
+
+  // Funciones para manejar el progreso de lecciones
+  const getLessonProgress = () => {
+    const progress = localStorage.getItem("courseProgress");
+    return progress ? JSON.parse(progress) : {};
+  };
+
+  const saveLessonProgress = (progress) => {
+    localStorage.setItem("courseProgress", JSON.stringify(progress));
+  };
+
+  const isLessonCompleted = (lessonId, courseId) => {
+    const progress = getLessonProgress();
+    const courseProgress = progress[courseId];
+    if (!courseProgress) return false;
+
+    return courseProgress.completedLessons.some(
+      (lesson) => lesson.lessonId === lessonId
+    );
+  };
+
+  const toggleLessonCompletion = (lessonId, courseId, lessonTitle) => {
+    const progress = getLessonProgress();
+
+    if (!progress[courseId]) {
+      progress[courseId] = {
+        courseId: courseId,
+        completedLessons: [],
+        totalLessons: 0,
+        progressPercentage: 0,
+      };
+    }
+
+    const courseProgress = progress[courseId];
+    const lessonIndex = courseProgress.completedLessons.findIndex(
+      (lesson) => lesson.lessonId === lessonId
+    );
+
+    let isNowCompleted = false;
+
+    if (lessonIndex > -1) {
+      // Quitar lección de completadas
+      courseProgress.completedLessons.splice(lessonIndex, 1);
+      isNowCompleted = false;
+    } else {
+      // Agregar lección a completadas
+      courseProgress.completedLessons.push({
+        lessonId: lessonId,
+        courseId: courseId,
+        title: lessonTitle,
+        completedAt: new Date().toISOString(),
+      });
+      isNowCompleted = true;
+    }
+
+    // Actualizar el progreso del curso
+    updateCourseProgress(courseId);
+    saveLessonProgress(progress);
+
+    return isNowCompleted;
+  };
+
+  const updateCourseProgress = (courseId) => {
+    const progress = getLessonProgress();
+    const courseProgress = progress[courseId];
+
+    if (courseProgress) {
+      // Obtener el número total de lecciones del DOM
+      const totalLessons = document.querySelectorAll(".lesson-item").length;
+      courseProgress.totalLessons = totalLessons;
+      courseProgress.progressPercentage = Math.round(
+        (courseProgress.completedLessons.length / totalLessons) * 100
+      );
+    }
+  };
+
+  const updateProgressUI = (courseId) => {
+    // Disparar evento para que el componente CourseProgressIndicator se actualice
+    const updateEvent = new CustomEvent("updateCourseProgress", {
+      detail: { courseId },
+    });
+    window.dispatchEvent(updateEvent);
+  };
+
+  const updateLessonUI = (lessonId, isCompleted) => {
+    // Actualizar botón de completar
+    const completeBtn = document.getElementById("btn-complete-lesson");
+    if (completeBtn) {
+      const btnText = completeBtn.querySelector(".btn-text");
+      const checkIcon = completeBtn.querySelector(".check-icon");
+      const confettiContainer = completeBtn.querySelector(
+        ".confetti-container"
+      );
+
+      // Agregar clase completed con animación
+      if (isCompleted) {
+        completeBtn.classList.add("completed");
+        // Efecto de confeti cuando se completa
+        if (confettiContainer) {
+          confettiContainer.classList.add("active");
+          setTimeout(() => {
+            confettiContainer.classList.remove("active");
+          }, 1000);
+        }
+        // Vibración suave en dispositivos móviles
+        if (navigator.vibrate) {
+          navigator.vibrate(100);
+        }
+      } else {
+        completeBtn.classList.remove("completed");
+      }
+
+      // Actualizar texto con animación
+      if (btnText) {
+        btnText.style.opacity = "0";
+        setTimeout(() => {
+          btnText.textContent = isCompleted
+            ? "✓ Lección completada"
+            : "Marcar como completada";
+          btnText.style.opacity = "1";
+        }, 150);
+      }
+
+      // Actualizar icono
+      if (checkIcon) {
+        if (isCompleted) {
+          checkIcon.style.transform = "scale(0)";
+          setTimeout(() => {
+            checkIcon.setAttribute("name", "tabler:check-circle");
+            checkIcon.style.transform = "scale(1)";
+          }, 150);
+        } else {
+          checkIcon.setAttribute("name", "tabler:check");
+        }
+      }
+    }
+
+    // Actualizar sidebar con animación
+    const lessonItem = document.querySelector(`[data-lesson-id="${lessonId}"]`);
+    if (lessonItem) {
+      if (isCompleted) {
+        lessonItem.classList.add("completed");
+        // Añadir un efecto visual temporal
+        lessonItem.style.transform = "scale(1.02)";
+        setTimeout(() => {
+          lessonItem.style.transform = "scale(1)";
+        }, 200);
+      } else {
+        lessonItem.classList.remove("completed");
+      }
+    }
+  };
+
+  const updateAllLessonsUI = (courseId) => {
+    const progress = getLessonProgress();
+    const courseProgress = progress[courseId];
+
+    if (courseProgress) {
+      // Actualizar todas las lecciones en el sidebar
+      document.querySelectorAll(".lesson-item").forEach((item) => {
+        const lessonId = item.getAttribute("data-lesson-id");
+        const isCompleted = courseProgress.completedLessons.some(
+          (lesson) => lesson.lessonId === lessonId
+        );
+
+        if (isCompleted) {
+          item.classList.add("completed");
+        } else {
+          item.classList.remove("completed");
+        }
+      });
+    }
+  };
+
+  // Función para manejar event listeners con limpieza automática
+  const attachEventListener = (element, eventType, handler) => {
+    // Eliminar event listeners existentes para evitar duplicados
+    const existingHandler = element[`__${eventType}Handler`];
+    if (existingHandler) {
+      element.removeEventListener(eventType, existingHandler);
+    }
+
+    // Agregar nuevo event listener y guardarlo en el elemento
+    element[`__${eventType}Handler`] = handler;
+    element.addEventListener(eventType, handler);
+  };
+
+  // Función para limpiar event listeners
+  const removeEventListener = (element, eventType) => {
+    const existingHandler = element[`__${eventType}Handler`];
+    if (existingHandler) {
+      element.removeEventListener(eventType, existingHandler);
+      delete element[`__${eventType}Handler`];
+    }
+  };
+
+  const initializeLessonProgress = () => {
+    const completeBtn = document.getElementById("btn-complete-lesson");
+    if (!completeBtn) return;
+
+    const lessonId = completeBtn.getAttribute("data-lesson-id");
+    const courseId = completeBtn.getAttribute("data-course-id");
+    const lessonTitle = completeBtn.getAttribute("data-lesson-title");
+
+    if (!lessonId || !courseId) return;
+
+    // Configurar el progreso inicial
+    const progress = getLessonProgress();
+    if (!progress[courseId]) {
+      progress[courseId] = {
+        courseId: courseId,
+        completedLessons: [],
+        totalLessons: document.querySelectorAll(".lesson-item").length,
+        progressPercentage: 0,
+      };
+      saveLessonProgress(progress);
+    }
+
+    // Actualizar UI inicial
+    const isCompleted = isLessonCompleted(lessonId, courseId);
+    updateLessonUI(lessonId, isCompleted);
+    updateAllLessonsUI(courseId);
+
+    // Forzar actualización del componente de progreso
+    setTimeout(() => {
+      updateProgressUI(courseId);
+    }, 100);
+
+    // Configurar event listener para el botón
+    const clickHandler = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Efecto visual de clic
+      completeBtn.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        completeBtn.style.transform = "scale(1)";
+      }, 100);
+
+      // Deshabilitar temporalmente para evitar clics múltiples
+      completeBtn.disabled = true;
+      setTimeout(() => {
+        completeBtn.disabled = false;
+      }, 500);
+
+      const newIsCompleted = toggleLessonCompletion(
+        lessonId,
+        courseId,
+        lessonTitle
+      );
+
+      // Actualizar UI con animaciones
+      updateLessonUI(lessonId, newIsCompleted);
+      updateAllLessonsUI(courseId);
+      updateProgressUI(courseId);
+
+      // Mostrar notificación toast (opcional)
+      if (newIsCompleted) {
+        showSuccessToast("¡Lección completada! 🎉");
+      } else {
+        showInfoToast("Lección marcada como pendiente");
+      }
+    };
+
+    attachEventListener(completeBtn, "click", clickHandler);
+  };
+
+  const initSectionToggles = () => {
     document.querySelectorAll(".section-toggle").forEach((button) => {
-      button.addEventListener("click", () => {
+      const clickHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const content = button.nextElementSibling;
         const icon = button.querySelector(".section-icon");
 
-        if (content?.classList.contains("hidden")) {
+        if (content && content.classList.contains("hidden")) {
           content.classList.remove("hidden");
-          icon?.classList.add("rotate-180");
-        } else {
-          content?.classList.add("hidden");
-          icon?.classList.remove("rotate-180");
+          if (icon) icon.classList.add("rotate-180");
+        } else if (content) {
+          content.classList.add("hidden");
+          if (icon) icon.classList.remove("rotate-180");
         }
-      });
-    });
+      };
 
-    // Expandir automáticamente la sección actual
-    document.addEventListener("DOMContentLoaded", () => {
-      const activeLessonSection = document.querySelector(
-        ".section-content:not(.hidden)"
-      );
-      if (activeLessonSection) {
-        const sectionButton = activeLessonSection.previousElementSibling;
-        const icon = sectionButton?.querySelector(".section-icon");
-        icon?.classList.add("rotate-180");
-      }
+      attachEventListener(button, "click", clickHandler);
     });
   };
 
-  document.addEventListener("astro:page-load", sectionsToggleButons);
+  // Limpiar event listeners
+  const cleanupEventListeners = () => {
+    // Limpiar event listeners del botón de completar
+    const completeBtn = document.getElementById("btn-complete-lesson");
+    if (completeBtn) {
+      removeEventListener(completeBtn, "click");
+    }
+
+    // Limpiar event listeners de los toggles de sección
+    document.querySelectorAll(".section-toggle").forEach((button) => {
+      removeEventListener(button, "click");
+    });
+  };
+
+  const handlePageLoad = () => {
+    initSectionToggles();
+    initializeLessonProgress();
+  };
+
+  const handleBeforeSwap = () => {
+    cleanupEventListeners();
+  };
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", handlePageLoad);
+  } else {
+    handlePageLoad();
+  }
+
+  // Para navegación de Astro con ViewTransitions
+  document.addEventListener("astro:page-load", handlePageLoad);
+  document.addEventListener("astro:before-swap", handleBeforeSwap);
+  document.addEventListener("astro:after-swap", handlePageLoad);
 </script>
 
 <style>
@@ -595,5 +952,151 @@ function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
 
   .prose pre code {
     @apply bg-transparent text-gray-100 p-0;
+  }
+
+  /* Scrollbar personalizado */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-700 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+
+  /* Botón de completar lección - Diseño profesional */
+  .complete-lesson-btn {
+    @apply bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-0;
+    @apply hover:from-emerald-600 hover:to-emerald-700;
+    @apply focus:outline-none focus:ring-4 focus:ring-emerald-500/30;
+    @apply active:transform active:scale-95;
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .complete-lesson-btn.completed {
+    @apply bg-gradient-to-r from-green-500 to-green-600 text-white;
+    @apply hover:from-green-600 hover:to-green-700;
+    @apply focus:ring-green-500/30;
+    position: relative;
+  }
+
+  .complete-lesson-btn.completed::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #10b981, #059669, #047857, #10b981);
+    background-size: 300% 300%;
+    border-radius: 12px;
+    z-index: -1;
+    animation: borderGlow 2s ease-in-out infinite;
+  }
+
+  .complete-lesson-btn .check-icon {
+    @apply text-white transition-all duration-300;
+  }
+
+  .complete-lesson-btn.completed .check-icon {
+    @apply text-white;
+    animation: checkBounce 0.6s ease-out;
+  }
+
+  .complete-lesson-btn .bg-gradient {
+    @apply from-emerald-400 to-emerald-500;
+  }
+
+  .complete-lesson-btn.completed .bg-gradient {
+    @apply from-green-400 to-green-500;
+  }
+
+  /* Animaciones */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes borderGlow {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes checkBounce {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes confetti {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100px) rotate(360deg);
+    }
+  }
+
+  /* Efecto de confeti */
+  .confetti-container.active::before,
+  .confetti-container.active::after {
+    content: "🎉";
+    position: absolute;
+    font-size: 1.2rem;
+    animation: confetti 1s ease-out;
+  }
+
+  .confetti-container.active::before {
+    top: 50%;
+    left: 20%;
+    animation-delay: 0.1s;
+  }
+
+  .confetti-container.active::after {
+    top: 50%;
+    right: 20%;
+    animation-delay: 0.3s;
+  }
+
+  /* Lecciones completadas en el sidebar */
+  .lesson-item.completed .lesson-number {
+    @apply bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400;
+  }
+
+  .lesson-item.completed .lesson-number .completed-icon {
+    @apply block;
+  }
+
+  .lesson-item.completed .lesson-number .lesson-num {
+    @apply hidden;
+  }
+
+  .lesson-item.completed {
+    @apply opacity-75;
   }
 </style>

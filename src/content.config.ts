@@ -49,6 +49,7 @@ const freeCourseCollection = defineCollection({
       instructor: reference("authors"),
       youtubePlaylist: z.string(),
       stack: z.array(z.string()),
+      categories: z.array(z.string()),
       image: image(),
       learningObjectives: z.array(z.string()),
       sections: z.array(
