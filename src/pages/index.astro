@@ -1,21 +1,20 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import MainLayout from '@/layouts/MainLayout.astro';
-import CoursesPopulares from '@/sections/CoursesPopulares.astro';
-import Featured from '@/sections/Featured.astro';
-import HomeHero from '@/sections/HomeHero.astro';
-import Testimonials from '@/sections/Testimonials.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import MainLayout from "@/layouts/MainLayout.astro";
+import CoursesPopulares from "@/sections/CoursesPopulares.astro";
+import Featured from "@/sections/Featured.astro";
+import HomeHero from "@/sections/HomeHero.astro";
+import Testimonials from "@/sections/Testimonials.astro";
+import FrerCourses from "@/sections/FreeCourses.astro";
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <HomeHero />
 
-	<HomeHero />
+  <Featured />
 
-	<Featured />
+  <FrerCourses />
+  <CoursesPopulares />
 
-	<CoursesPopulares />
-
-	<Testimonials />
-
+  <Testimonials />
 </MainLayout>
-

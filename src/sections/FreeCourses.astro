@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import FreeCourseCard from "@/components/FreeCourseCard.astro";
+import { Icon } from "astro-icon/components";
+
+const courses = await getCollection("freeCourses");
+const featuredCourses = courses.slice(0, 3); // Mostrar solo los primeros 3 cursos
+---
+
+<section class="py-16 bg-gray-50 dark:bg-gray-800">
+  <div class="container mx-auto px-4">
+    <!-- Header de la sección -->
+    <div class="text-center mb-12">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <Icon name="tabler:brand-youtube" class="w-8 h-8 text-red-600" />
+        <h2
+          class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white"
+        >
+          Cursos Gratuitos en YouTube
+        </h2>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+        Aprende programación completamente gratis con nuestros cursos en
+        YouTube. Contenido de alta calidad desde nivel principiante hasta
+        avanzado.
+      </p>
+    </div>
+
+    <!-- Grid de cursos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {featuredCourses.map((course) => <FreeCourseCard course={course} />)}
+    </div>
+
+    <!-- Call to action -->
+    <div class="text-center">
+      <div
+        class="bg-white dark:bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto"
+      >
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          ¿Listo para empezar a aprender?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">
+          Todos nuestros cursos son completamente gratuitos y están diseñados
+          para llevarte desde cero hasta un nivel profesional.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/cursos-gratis"
+            class="inline-flex items-center justify-center px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors duration-200"
+          >
+            <Icon name="tabler:play" class="w-5 h-5 mr-2" />
+            Ver todos los cursos
+          </a>
+          <a
+            href="https://www.youtube.com/@roelcode"
+            target="_blank"
+            class="inline-flex items-center justify-center px-6 py-3 text-white bg-red-600 hover:bg-red-700 rounded-lg font-medium transition-colors duration-200"
+          >
+            <Icon name="tabler:brand-youtube" class="w-5 h-5 mr-2" />
+            Suscríbete al canal
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,599 @@
+---
+import {
+  getCollection,
+  type CollectionEntry,
+  getEntry,
+  render,
+} from "astro:content";
+import MainLayout from "../../../../layouts/MainLayout.astro";
+import { Icon } from "astro-icon/components";
+
+export async function getStaticPaths() {
+  const lessons = await getCollection("freeLessons");
+  return lessons.map((lesson) => {
+    const pathParts = lesson.id.split("/");
+    const course = pathParts[0];
+    const section = pathParts[1];
+    const lessonSlug = pathParts[2]?.replace(".mdx", "");
+
+    return {
+      params: {
+        course,
+        section,
+        lesson: lessonSlug,
+      },
+      props: { lesson },
+    };
+  });
+}
+
+interface Props {
+  lesson: CollectionEntry<"freeLessons">;
+}
+
+const { lesson } = Astro.props;
+
+// Renderizar el contenido de la lección
+const { Content } = await render(lesson);
+
+// Obtener información del curso
+const courses = await getCollection("freeCourses");
+const course = courses.find(
+  (c) => c.id.replace("/index", "") === lesson.data.course
+);
+
+if (!course) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Curso no encontrado",
+  });
+}
+
+// Obtener datos del instructor
+const instructor = (await getEntry(course.data.instructor))?.data;
+
+// Obtener todas las lecciones del curso para navegación
+const allLessons = await getCollection("freeLessons");
+const courseLessons = allLessons
+  .filter((l) => l.data.course === lesson.data.course)
+  .sort((a, b) => {
+    if (a.data.section === b.data.section) {
+      return a.data.order - b.data.order;
+    }
+    return a.data.section.localeCompare(b.data.section);
+  });
+
+// Encontrar lección anterior y siguiente
+const currentIndex = courseLessons.findIndex((l) => l.id === lesson.id);
+const previousLesson =
+  currentIndex > 0 ? courseLessons[currentIndex - 1] : null;
+const nextLesson =
+  currentIndex < courseLessons.length - 1
+    ? courseLessons[currentIndex + 1]
+    : null;
+
+// Organizar lecciones por secciones para el sidebar
+const sectionLessons = new Map();
+course.data.sections.forEach((section) => {
+  const lessons = courseLessons.filter((l) => l.data.section === section.slug);
+  sectionLessons.set(section.slug, lessons);
+});
+
+function getLessonUrl(lessonData: CollectionEntry<"freeLessons">) {
+  const pathParts = lessonData.id.split("/");
+  const course = pathParts[0];
+  const section = pathParts[1];
+  const lessonSlug = pathParts[2]?.replace(".mdx", "");
+  return `/cursos-gratis/${course}/${section}/${lessonSlug}`;
+}
+---
+
+<MainLayout title={`${lesson.data.title} | ${course.data.title} | Roelcode`}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Header de navegación -->
+    <div
+      class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Breadcrumb -->
+          <div class="flex items-center space-x-2 text-sm">
+            <a
+              href="/cursos-gratis"
+              class="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+            >
+              Cursos
+            </a>
+            <Icon name="tabler:chevron-right" class="w-4 h-4 text-gray-400" />
+            <a
+              href={`/cursos-gratis/${lesson.data.course}`}
+              class="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+            >
+              {course.data.title}
+            </a>
+            <Icon name="tabler:chevron-right" class="w-4 h-4 text-gray-400" />
+            <span class="text-gray-600 dark:text-gray-400 truncate max-w-48">
+              {lesson.data.title}
+            </span>
+          </div>
+
+          <!-- Navegación de lecciones -->
+          <div class="flex items-center gap-2">
+            {
+              previousLesson && (
+                <a
+                  href={getLessonUrl(previousLesson)}
+                  class="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                  title="Lección anterior"
+                >
+                  <Icon name="tabler:chevron-left" class="w-5 h-5" />
+                </a>
+              )
+            }
+            {
+              nextLesson && (
+                <a
+                  href={getLessonUrl(nextLesson)}
+                  class="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                  title="Siguiente lección"
+                >
+                  <Icon name="tabler:chevron-right" class="w-5 h-5" />
+                </a>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Contenido principal -->
+        <div class="lg:col-span-3">
+          <!-- Video del curso -->
+          <div
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden mb-8"
+          >
+            <div
+              class="aspect-video bg-gray-100 dark:bg-gray-700 flex items-center justify-center"
+            >
+              {
+                lesson.data.videoId ? (
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={`https://www.youtube.com/embed/${lesson.data.videoId}`}
+                    title={lesson.data.title}
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="w-full h-full"
+                  />
+                ) : (
+                  <div class="text-center">
+                    <Icon
+                      name="tabler:video"
+                      class="w-16 h-16 text-gray-400 mx-auto mb-4"
+                    />
+                    <p class="text-gray-600 dark:text-gray-400">
+                      Video no disponible
+                    </p>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+
+          <!-- Información del curso e instructor -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+            <div class="mb-4">
+              <h2
+                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
+              >
+                {course.data.title}
+              </h2>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
+                {course.data.description}
+              </p>
+            </div>
+
+            <!-- Instructor -->
+            <div
+              class="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700"
+            >
+              <div
+                class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
+              >
+                {
+                  instructor?.avatar ? (
+                    <img
+                      src={instructor.avatar.src}
+                      alt={instructor.name}
+                      class="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Icon
+                      name="tabler:user"
+                      class="w-5 h-5 text-blue-600 dark:text-blue-400"
+                    />
+                  )
+                }
+              </div>
+              <div class="min-w-0 flex-1">
+                <a
+                  href={`/authors/${course.data.instructor.id}`}
+                  class="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block"
+                >
+                  {instructor?.name || "Instructor"}
+                </a>
+                <p class="text-xs text-gray-600 dark:text-gray-400">
+                  {instructor?.subtitle || "Instructor y creador de contenido"}
+                </p>
+              </div>
+              <div
+                class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400"
+              >
+                <div class="flex items-center gap-1">
+                  <Icon name="tabler:clock" class="w-3 h-3" />
+                  <span>{course.data.duration}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <Icon name="tabler:video" class="w-3 h-3" />
+                  <span>{course.data.totalLessons} lecciones</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información de la lección -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+              <h1
+                class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white"
+              >
+                {lesson.data.title}
+              </h1>
+              <div
+                class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+              >
+                <Icon name="tabler:clock" class="w-4 h-4" />
+                <span>{lesson.data.duration}</span>
+              </div>
+            </div>
+
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+              {lesson.data.description}
+            </p>
+
+            <!-- Navegación entre lecciones -->
+            <div
+              class="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-200 dark:border-gray-700"
+            >
+              {
+                previousLesson ? (
+                  <a
+                    href={getLessonUrl(previousLesson)}
+                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                  >
+                    <Icon name="tabler:arrow-left" class="w-4 h-4" />
+                    <div class="text-left">
+                      <div class="text-xs text-gray-500 dark:text-gray-400">
+                        Anterior
+                      </div>
+                      <div class="font-medium truncate max-w-48">
+                        {previousLesson.data.title}
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <div />
+                )
+              }
+
+              {
+                nextLesson && (
+                  <a
+                    href={getLessonUrl(nextLesson)}
+                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors text-right ml-auto"
+                  >
+                    <div class="text-right">
+                      <div class="text-xs text-gray-500 dark:text-gray-400">
+                        Siguiente
+                      </div>
+                      <div class="font-medium truncate max-w-48">
+                        {nextLesson.data.title}
+                      </div>
+                    </div>
+                    <Icon name="tabler:arrow-right" class="w-4 h-4" />
+                  </a>
+                )
+              }
+            </div>
+          </div>
+
+          <!-- Contenido completo de la lección -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+            <h2
+              class="text-xl font-semibold text-gray-900 dark:text-white mb-6"
+            >
+              Contenido de la lección
+            </h2>
+            <div class="prose prose-lg dark:prose-invert max-w-none">
+              <Content />
+            </div>
+          </div>
+
+          <!-- Recursos -->
+          {
+            lesson.data.resources && lesson.data.resources.length > 0 && (
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Recursos adicionales
+                </h3>
+                <div class="space-y-3">
+                  {lesson.data.resources.map((resource) => (
+                    <a
+                      href={resource.url}
+                      target="_blank"
+                      class="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      <Icon
+                        name={
+                          resource.type === "code"
+                            ? "tabler:code"
+                            : "tabler:external-link"
+                        }
+                        class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0"
+                      />
+                      <div>
+                        <div class="font-medium text-gray-900 dark:text-white">
+                          {resource.title}
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                          {resource.type === "link"
+                            ? "Enlace externo"
+                            : resource.type === "code"
+                              ? "Código fuente"
+                              : "Archivo"}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          <!-- Progreso y contexto del curso -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h3
+              class="text-lg font-semibold text-gray-900 dark:text-white mb-4"
+            >
+              Tu progreso en el curso
+            </h3>
+
+            <div class="mb-6">
+              <div
+                class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2"
+              >
+                <span>Progreso del curso</span>
+                <span
+                  >{
+                    Math.round(
+                      ((currentIndex + 1) / courseLessons.length) * 100
+                    )
+                  }%</span
+                >
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div
+                  class="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  style={`width: ${((currentIndex + 1) / courseLessons.length) * 100}%`}
+                >
+                </div>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                Has completado {currentIndex + 1} de {courseLessons.length} lecciones
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div
+                class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <Icon
+                  name="tabler:target"
+                  class="w-5 h-5 text-green-600 dark:text-green-400"
+                />
+                <div>
+                  <div class="font-medium text-gray-900 dark:text-white">
+                    Objetivo de la sección
+                  </div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">
+                    {
+                      course.data.sections.find(
+                        (s) => s.slug === lesson.data.section
+                      )?.description
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <Icon
+                  name="tabler:users"
+                  class="w-5 h-5 text-blue-600 dark:text-blue-400"
+                />
+                <div>
+                  <div class="font-medium text-gray-900 dark:text-white">
+                    Instructor
+                  </div>
+                  <a
+                    href={`/authors/${course.data.instructor.id}`}
+                    class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    {instructor?.name || "Instructor"}
+                  </a>
+                </div>
+              </div>
+
+              {
+                lesson.data.transcript && (
+                  <div class="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                    <Icon
+                      name="tabler:file-text"
+                      class="w-5 h-5 text-yellow-600 dark:text-yellow-400"
+                    />
+                    <div>
+                      <div class="font-medium text-yellow-900 dark:text-yellow-100">
+                        Transcripción disponible
+                      </div>
+                      <div class="text-sm text-yellow-800 dark:text-yellow-200">
+                        Esta lección incluye transcripción completa
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar - Lista de lecciones -->
+        <div class="lg:col-span-1">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-sm sticky top-24"
+          >
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="font-semibold text-gray-900 dark:text-white">
+                Contenido del curso
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                {courseLessons.length} lecciones
+              </p>
+            </div>
+
+            <div class="max-h-96 overflow-y-auto">
+              {
+                course.data.sections.map((section, sectionIndex) => {
+                  const lessons = sectionLessons.get(section.slug) || [];
+                  return (
+                    <div class="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+                      <button
+                        class="w-full p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors section-toggle"
+                        data-section={sectionIndex}
+                      >
+                        <div class="flex items-center justify-between">
+                          <h4 class="text-sm font-medium text-gray-900 dark:text-white">
+                            {section.title}
+                          </h4>
+                          <Icon
+                            name="tabler:chevron-down"
+                            class="w-4 h-4 text-gray-400 transform transition-transform section-icon"
+                          />
+                        </div>
+                      </button>
+
+                      <div
+                        class={`section-content ${lessons.some((l: any) => l.id === lesson.id) ? "" : "hidden"}`}
+                      >
+                        {lessons.map((courseLesson: any) => {
+                          const isActive = courseLesson.id === lesson.id;
+                          return (
+                            <a
+                              href={getLessonUrl(courseLesson)}
+                              class={`block p-2 pl-6 text-sm border-l-2 transition-colors ${
+                                isActive
+                                  ? "bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-300"
+                                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                              }`}
+                            >
+                              <div class="flex items-center justify-between">
+                                <span class="truncate">
+                                  {courseLesson.data.title}
+                                </span>
+                                {isActive && (
+                                  <Icon
+                                    name="tabler:play"
+                                    class="w-3 h-3 flex-shrink-0 ml-2"
+                                  />
+                                )}
+                              </div>
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<script is:inline>
+  const sectionsToggleButons = () => {
+    // Toggle de secciones
+    document.querySelectorAll(".section-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector(".section-icon");
+
+        if (content?.classList.contains("hidden")) {
+          content.classList.remove("hidden");
+          icon?.classList.add("rotate-180");
+        } else {
+          content?.classList.add("hidden");
+          icon?.classList.remove("rotate-180");
+        }
+      });
+    });
+
+    // Expandir automáticamente la sección actual
+    document.addEventListener("DOMContentLoaded", () => {
+      const activeLessonSection = document.querySelector(
+        ".section-content:not(.hidden)"
+      );
+      if (activeLessonSection) {
+        const sectionButton = activeLessonSection.previousElementSibling;
+        const icon = sectionButton?.querySelector(".section-icon");
+        icon?.classList.add("rotate-180");
+      }
+    });
+  };
+
+  document.addEventListener("astro:page-load", sectionsToggleButons);
+</script>
+
+<style>
+  .prose {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply text-gray-900 dark:text-white;
+  }
+
+  .prose code {
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-1 py-0.5 rounded text-sm;
+  }
+
+  .prose pre {
+    @apply bg-gray-900 dark:bg-gray-950 rounded-lg;
+  }
+
+  .prose pre code {
+    @apply bg-transparent text-gray-100 p-0;
+  }
+</style>

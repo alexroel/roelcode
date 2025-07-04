@@ -1,0 +1,79 @@
+---
+title: "Instalación de Python"
+description: "Aprende cómo instalar Python en Windows, Mac y Linux. Configuración del entorno de desarrollo."
+videoId: "dQw4w9WgXcQ"
+duration: "12m 15s"
+order: 2
+section: "01-introduccion-python"
+course: "python-desde-cero"
+previousLesson: "01-que-es-python"
+nextLesson: "03-primer-programa"
+resources:
+  - title: "Descargar Python"
+    url: "https://www.python.org/downloads/"
+    type: "link"
+  - title: "Visual Studio Code"
+    url: "https://code.visualstudio.com/"
+    type: "link"
+transcript: true
+---
+
+# Instalación de Python
+
+En esta lección aprenderás cómo instalar Python en tu sistema operativo y configurar tu entorno de desarrollo.
+
+## 📥 Descarga e Instalación
+
+### Windows
+1. Ve a [python.org](https://www.python.org/downloads/)
+2. Descarga la versión más reciente
+3. Ejecuta el instalador
+4. **¡Importante!** Marca "Add Python to PATH"
+
+### Mac
+```bash
+# Usando Homebrew (recomendado)
+brew install python3
+
+# O descargar desde python.org
+```
+
+### Linux (Ubuntu/Debian)
+```bash
+sudo apt update
+sudo apt install python3 python3-pip
+```
+
+## 🛠️ Editor de Código
+
+Recomendamos **Visual Studio Code** con estas extensiones:
+
+- Python (Microsoft)
+- Python Docstring Generator
+- Pylint
+
+## ✅ Verificar Instalación
+
+Abre la terminal y ejecuta:
+
+```bash
+python --version
+# o
+python3 --version
+```
+
+Deberías ver algo como: `Python 3.11.0`
+
+## 🎯 Configuración Inicial
+
+Crear un entorno virtual (buena práctica):
+
+```bash
+python -m venv mi_proyecto
+# Activar en Windows:
+mi_proyecto\Scripts\activate
+# Activar en Mac/Linux:
+source mi_proyecto/bin/activate
+```
+
+¡Ya tienes Python listo para programar!
