@@ -8,12 +8,7 @@ interface Props {
   showNextLessonTip?: boolean;
 }
 
-const {
-  courseId,
-  totalLessons,
-  courseName,
-  showNextLessonTip = true,
-} = Astro.props;
+const { courseId, totalLessons, showNextLessonTip = true } = Astro.props;
 ---
 
 <div
@@ -152,8 +147,7 @@ const {
     }
   });
 
-  // Crear un evento personalizado para actualizar el progreso
-  const updateProgressEvent = new CustomEvent("updateCourseProgress");
+  // Escuchar evento personalizado para actualizar el progreso
   window.addEventListener(
     "updateCourseProgress",
     updateCourseProgressComponent

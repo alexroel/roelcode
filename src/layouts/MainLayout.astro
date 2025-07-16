@@ -5,7 +5,7 @@ import Footer from "@/sections/Footer.astro";
 import ButtonScroll from "@/components/ButtonScroll.astro";
 import { ClientRouter } from "astro:transitions";
 
-const { title, description, image = '/open-graph-reolcode.jpg' } = Astro.props;
+const { title, description, image = "/open-graph-reolcode.jpg" } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,27 +13,52 @@ const { title, description, image = '/open-graph-reolcode.jpg' } = Astro.props;
   <head>
     <BaseHead title={title} description={description} image={image} />
     <script is:inline>
-      // Ejecutar esto lo antes posible para evitar parpadeo
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+      // Inicialización segura de tema para evitar parpadeo
+      try {
+        const getInitialTheme = () => {
+          try {
+            if (
+              typeof localStorage !== "undefined" &&
+              localStorage.getItem("theme")
+            ) {
+              const savedTheme = localStorage.getItem("theme");
+              if (savedTheme === "dark" || savedTheme === "light") {
+                return savedTheme;
+              }
+            }
+          } catch (error) {
+            console.warn("Error al acceder a localStorage:", error);
+          }
+
+          try {
+            if (
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+              return "dark";
+            }
+          } catch (error) {
+            console.warn("Error al verificar preferencia del sistema:", error);
+          }
+
+          return "light";
+        };
+
+        const theme = getInitialTheme();
+
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
-    
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+      } catch (error) {
+        console.error("Error en inicialización de tema:", error);
+        // Fallback seguro
+        document.documentElement.classList.remove("dark");
       }
     </script>
-    <script src="../scripts/theme-toggle.js"> </script>
 
     <ClientRouter />
-
   </head>
   <body>
     <header>
@@ -47,7 +72,9 @@ const { title, description, image = '/open-graph-reolcode.jpg' } = Astro.props;
     <!-- Botón de Scroll con Progreso -->
     <ButtonScroll />
 
-    <script src="../scripts/copy-btn.js"></script>
+    <!-- Scripts principales -->
+    <script>
+      import "../scripts/main.js";
+    </script>
   </body>
 </html>
-
