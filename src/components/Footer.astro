@@ -1,0 +1,103 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+import { SITE_TITLE } from "../consts";
+import Logo from "../assets/logos/logo-roelcode.svg";
+
+const today = new Date();
+
+const footerLinks = {
+  navegacion: [
+    { href: "/", text: "Inicio" },
+    { href: "/cursos-udemy", text: "Cursos de Udemy" },
+    { href: "/about", text: "Acerca de" },
+    { href: "/blog", text: "Blog" },
+  ],
+  recursos: [
+    { href: "/politica-privacidad", text: "Política de Privacidad" },
+    { href: "/terminos-condiciones", text: "Términos y Condiciones" },
+    { href: "/contacto", text: "Contacto" },
+    { href: "/faq", text: "Preguntas Frecuentes" },
+  ],
+};
+---
+
+<footer class="bg-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Logo y descripción -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center space-x-3 mb-4">
+          <img src={Logo.src} alt="RoelCode Logo" class="h-10 w-auto" />
+          <span class="text-2xl font-bold text-white">{SITE_TITLE}</span>
+        </div>
+        <p class="text-gray-400 mb-6 max-w-md">
+          Aprende programación y desarrollo web con cursos prácticos y de
+          calidad. Desde principiante hasta experto, te acompañamos en tu camino
+          como desarrollador.
+        </p>
+
+        <!-- Redes sociales -->
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-3">Sígueme en</h3>
+          <SocialLinks />
+        </div>
+      </div>
+
+      <!-- Enlaces de navegación -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Navegación</h3>
+        <ul class="space-y-2">
+          {
+            footerLinks.navegacion.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Enlaces de recursos -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Recursos</h3>
+        <ul class="space-y-2">
+          {
+            footerLinks.recursos.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  {link.text}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-12 pt-8 border-t border-gray-800">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          &copy; {today.getFullYear()}
+          {SITE_TITLE}. Todos los derechos reservados.
+        </p>
+        <p class="text-gray-400 text-sm mt-2 md:mt-0">
+          Hecho con ❤️ y <a
+            href="https://astro.build"
+            target="_blank"
+            class="text-emerald-400 hover:text-emerald-300 transition-colors"
+            >Astro</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

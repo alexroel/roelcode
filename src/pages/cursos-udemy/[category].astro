@@ -1,0 +1,175 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import CourseCard from "@/components/CourseCard.astro";
+import { getCategoryTitle } from "@/consts";
+
+export async function getStaticPaths() {
+  const allCourses = await getCollection("udemyCourses");
+
+  // Obtener todas las categorías únicas de los tags
+  const categoriesSet = new Set<string>();
+  allCourses.forEach((course) => {
+    course.data.tag.forEach((tag) => {
+      categoriesSet.add(tag);
+    });
+  });
+
+  // Agregar categorías especiales
+  categoriesSet.add("popular");
+  categoriesSet.add("nuevos");
+  categoriesSet.add("todos");
+
+  // Crear las rutas estáticas para cada categoría
+  const paths = Array.from(categoriesSet).map((category) => {
+    let filteredCourses;
+
+    if (category === "popular") {
+      filteredCourses = allCourses.filter((course) => course.data.popular);
+    } else if (category === "nuevos") {
+      filteredCourses = allCourses.filter((course) => course.data.new);
+    } else if (category === "todos") {
+      filteredCourses = allCourses;
+    } else {
+      filteredCourses = allCourses.filter((course) =>
+        course.data.tag.includes(category)
+      );
+    }
+
+    return {
+      params: { category },
+      props: {
+        category,
+        courses: filteredCourses,
+      },
+    };
+  });
+
+  return paths;
+}
+
+const { category, courses } = Astro.props;
+
+const categoryTitle = getCategoryTitle(category);
+const title = `${categoryTitle} - Cursos de Udemy`;
+const description = `Encuentra todos los cursos de ${categoryTitle.toLowerCase()} en nuestra plataforma. Aprende programación con instructores expertos.`;
+
+// Filtros de navegación
+const filters = [
+  { name: "Todos", path: "/cursos-udemy/todos" },
+  { name: "Popular", path: "/cursos-udemy/popular" },
+  { name: "Nuevos", path: "/cursos-udemy/nuevos" },
+  { name: "Web", path: "/cursos-udemy/web" },
+  { name: "Python", path: "/cursos-udemy/python" },
+  { name: "JavaScript", path: "/cursos-udemy/javascript" },
+  { name: "Go", path: "/cursos-udemy/go" },
+  { name: "Java", path: "/cursos-udemy/java" },
+];
+---
+
+<MainLayout
+  title={`${categoryTitle} - Cursos de Udemy`}
+  description={`Explora nuestros cursos de ${categoryTitle.toLowerCase()}. Aprende con instructores expertos y contenido de alta calidad.`}
+>
+  <div class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+          <li><a href="/" class="hover:text-emerald-500">Inicio</a></li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <a href="/cursos-udemy" class="hover:text-emerald-500"
+              >Cursos Udemy</a
+            >
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-gray-900">{categoryTitle}</span>
+          </li>
+        </ol>
+      </nav>
+
+      <section class="mb-12">
+        <div class="text-center mb-8">
+          <h1 class="text-4xl font-bold text-gray-900 mb-4">{categoryTitle}</h1>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            {courses.length} curso{courses.length !== 1 ? "s" : ""} disponible{
+              courses.length !== 1 ? "s" : ""
+            }
+            {
+              category !== "todos" &&
+                ` en la categoría ${categoryTitle.toLowerCase()}`
+            }
+          </p>
+        </div>
+
+        <!-- Filtros de navegación -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+          {
+            filters.map((filter) => (
+              <a
+                href={filter.path}
+                class={`px-4 py-2 rounded-lg transition-colors ${category === filter.name.toLowerCase() ? "bg-emerald-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+              >
+                {filter.name}
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Grid de cursos -->
+      {
+        courses.length > 0 ? (
+          <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {courses.map((course) => (
+              <CourseCard course={course} />
+            ))}
+          </section>
+        ) : (
+          <div class="text-center py-12">
+            <div class="text-gray-400 mb-4">
+              <svg
+                class="w-16 h-16 mx-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0118 12a8 8 0 01-8 8 8 8 0 01-8-8 8 8 0 018-8c2.343 0 4.47 1.009 5.93 2.622"
+                />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              No hay cursos en esta categoría
+            </h3>
+            <p class="text-gray-600 mb-6">
+              Explora otras categorías o revisa todos nuestros cursos
+              disponibles.
+            </p>
+            <a
+              href="/cursos-udemy/todos"
+              class="px-6 py-3 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600 transition-colors"
+            >
+              Ver todos los cursos
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</MainLayout>

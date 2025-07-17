@@ -1,0 +1,54 @@
+---
+// Componente para los iconos de redes sociales
+import { Icon } from "astro-icon/components";
+
+const socialLinks = [
+  {
+    name: "GitHub",
+    href: "https://github.com/alexroel",
+    icon: "github-icon",
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@roelcode",
+    icon: "youtube-icon",
+  },
+  {
+    name: "TikTok",
+    href: "https://www.tiktok.com/@roelcode",
+    icon: "tiktok-icon",
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/alexroelcode",
+    icon: "facebook-icon",
+  },
+  {
+    name: "Udemy",
+    href: "https://www.udemy.com/user/alex-roel/",
+    icon: "udemy-icon",
+  },
+];
+---
+
+<div class="flex items-center space-x-3">
+  {
+    socialLinks.map((social) => (
+      <a
+        href={social.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="p-2 rounded-lg hover:bg-gray-100 transition-colors dark:hover:bg-gray-700"
+        aria-label={social.name}
+      >
+        <Icon name={social.icon} class="icon w-5 h-5 text-gray-700 " />
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  a:hover .icon {
+    color: #10b981; /* Emerald color */
+  }
+</style>

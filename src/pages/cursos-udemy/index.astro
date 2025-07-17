@@ -1,0 +1,72 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import CourseCard from "../../components/CourseCard.astro";
+import { getCollection } from "astro:content";
+
+const courses = await getCollection("udemyCourses");
+---
+
+<MainLayout
+  title="Cursos de Udemy - Programación y Desarrollo Web"
+  description="Descubre nuestra colección de cursos profesionales de programación y desarrollo web. Aprende con los mejores instructores y tecnologías más demandadas del mercado."
+>
+  <div class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <section class="mb-12">
+        <div class="text-center mb-8">
+          <h1 class="text-4xl font-bold text-gray-900 mb-4">Cursos de Udemy</h1>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Descubre nuestra colección de cursos profesionales de programación y
+            desarrollo web. Aprende con los mejores instructores y tecnologías
+            más demandadas del mercado.
+          </p>
+        </div>
+
+        <!-- Filtros -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+          <a
+            href="/cursos-udemy/todos"
+            class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
+          >
+            Todos
+          </a>
+          <a
+            href="/cursos-udemy/popular"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Popular
+          </a>
+          <a
+            href="/cursos-udemy/nuevos"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Nuevos
+          </a>
+          <a
+            href="/cursos-udemy/web"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Web
+          </a>
+          <a
+            href="/cursos-udemy/python"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Python
+          </a>
+          <a
+            href="/cursos-udemy/javascript"
+            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            JavaScript
+          </a>
+        </div>
+      </section>
+
+      <!-- Grid de cursos -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {courses.map((course) => <CourseCard course={course} />)}
+      </section>
+    </div>
+  </div>
+</MainLayout>

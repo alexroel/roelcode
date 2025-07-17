@@ -1,20 +1,165 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import MainLayout from "@/layouts/MainLayout.astro";
-import CoursesPopulares from "@/sections/CoursesPopulares.astro";
-import Featured from "@/sections/Featured.astro";
-import HomeHero from "@/sections/HomeHero.astro";
-import Testimonials from "@/sections/Testimonials.astro";
-import FrerCourses from "@/sections/FreeCourses.astro";
+import CourseCard from "@/components/CourseCard.astro";
+import PopularCourses from "../sections/PopularCourses.astro";
+import HeroSection from "../sections/HeroSection.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import { getCollection } from "astro:content";
+
+// Obtener algunos cursos destacados
+const allCourses = await getCollection("udemyCourses");
+const featuredCourses = allCourses
+  .filter((course) => course.data.popular)
+  .slice(0, 3);
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <HomeHero />
+  <!-- Hero Section (sección reutilizable) -->
+  <HeroSection />
 
-  <Featured />
+  <!-- Estadísticas -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-blue-600 mb-2">
+            {allCourses.length}+
+          </div>
+          <div class="text-gray-600">Cursos Disponibles</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-green-600 mb-2">10k+</div>
+          <div class="text-gray-600">Estudiantes</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-purple-600 mb-2">50+</div>
+          <div class="text-gray-600">Horas de Contenido</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-orange-600 mb-2">4.5★</div>
+          <div class="text-gray-600">Rating Promedio</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <FrerCourses />
-  <CoursesPopulares />
+  <!-- Tecnologías -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Tecnologías que Enseño
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Aprende las tecnologías más demandadas en el mercado laboral actual
+        </p>
+      </div>
 
-  <Testimonials />
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+        <!-- JavaScript -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-yellow-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-yellow-600">JS</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">JavaScript</h3>
+        </div>
+
+        <!-- Python -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-emerald-500">Py</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Python</h3>
+        </div>
+
+        <!-- Go -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-cyan-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-cyan-600">Go</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Golang</h3>
+        </div>
+
+        <!-- Java -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-red-600">Java</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Java</h3>
+        </div>
+
+        <!-- HTML/CSS -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-orange-600">Web</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">HTML/CSS</h3>
+        </div>
+
+        <!-- Flask -->
+        <div
+          class="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center"
+          >
+            <span class="text-2xl font-bold text-gray-600">Flask</span>
+          </div>
+          <h3 class="font-semibold text-gray-900">Flask</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cursos Más Populares (sección reutilizable) -->
+  <PopularCourses />
+
+  <!-- CTA Section -->
+  <section
+    class="py-20 bg-gradient-to-r from-emerald-400 to-green-500 text-white"
+  >
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">
+        ¿Listo para Comenzar tu Carrera en Tech?
+      </h2>
+      <p class="text-xl mb-8 text-blue-100">
+        Únete a miles de estudiantes que ya están transformando sus carreras con
+        nuestros cursos.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/cursos-udemy"
+          class="px-8 py-4 bg-white text-emerald-500 font-bold rounded-lg hover:bg-gray-100 transition-colors text-lg"
+        >
+          Explorar Cursos
+        </a>
+        <a
+          href="/about"
+          class="px-8 py-4 border-2 border-white hover:bg-white hover:text-emerald-500 text-white font-bold rounded-lg transition-colors text-lg"
+        >
+          Conocer al Instructor
+        </a>
+      </div>
+    </div>
+  </section>
 </MainLayout>
