@@ -1,9 +1,9 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_TITLE = "Reolcode";
+export const SITE_TITLE = "Roelcode";
 export const SITE_DESCRIPTION =
-  "¡Bienvenido a Reolcode! Tu sitio web de desarrollo web y programación.";
+  "¡Bienvenido a Roelcode! Tu sitio web de desarrollo web y programación.";
 
 // Funciones para manejar categorías de cursos
 export function formatCategorySlug(category: string): string {
