@@ -1,0 +1,194 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import type { UdemyCourse } from "@/data/udemy-courses";
+
+export interface Props {
+  courses: UdemyCourse[];
+  title?: string;
+}
+
+const { courses, title = "Cursos Nuevos" } = Astro.props;
+---
+
+<div class="compact-carousel-wrapper bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-slate-700">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+      <Icon name="star" class="w-5 h-5 text-emerald-500" />
+      {title}
+    </h3>
+    <div class="flex gap-1">
+      <button
+        id="compactPrev"
+        class="p-1.5 rounded-lg bg-gray-100 dark:bg-slate-700 hover:bg-emerald-100 dark:hover:bg-emerald-900/20 transition-colors"
+        aria-label="Curso anterior"
+      >
+        <Icon name="arrow-left" class="w-4 h-4 text-gray-600 dark:text-gray-400" />
+      </button>
+      <button
+        id="compactNext"
+        class="p-1.5 rounded-lg bg-gray-100 dark:bg-slate-700 hover:bg-emerald-100 dark:hover:bg-emerald-900/20 transition-colors"
+        aria-label="Siguiente curso"
+      >
+        <Icon name="arrow-right" class="w-4 h-4 text-gray-600 dark:text-gray-400" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Carousel Container (similar al original) -->
+  <div class="overflow-hidden rounded-lg" id="embla-compact">
+    <div class="flex gap-2" id="embla-compact__container">
+      {
+        courses.map((course) => (
+          <div class="embla__slide-compact flex-shrink-0 w-full">
+            <!-- Tarjeta compacta personalizada en lugar de CourseCard -->
+            <div class="compact-course-card">
+              <div class="relative mb-3">
+                <Image
+                  src={course.image}
+                  alt={course.title}
+                  class="w-full h-32 object-cover rounded-lg"
+                />
+                
+                <!-- Badges similares al CourseCard original -->
+                <div class="absolute top-2 left-2 flex gap-1">
+                  {course.newCourse && (
+                    <span class="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-medium">
+                      Nuevo
+                    </span>
+                  )}
+                  {course.popular && (
+                    <span class="bg-yellow-500 text-white px-2 py-0.5 rounded-full text-xs font-medium">
+                      Popular
+                    </span>
+                  )}
+                </div>
+
+                <div class="absolute top-2 right-2 bg-black/70 text-white px-1.5 py-0.5 rounded text-xs">
+                  <Icon name="star" class="w-3 h-3 inline text-yellow-400 mr-0.5" />
+                  {course.rating.toFixed(1)}
+                </div>
+              </div>
+
+              <!-- Contenido compacto -->
+              <div class="space-y-2">
+                <h4 class="font-semibold text-lg text-slate-900 dark:text-white line-clamp-2 py-2">
+                  {course.title}
+                </h4>
+                <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mt-2">
+                  {course.headline}
+                </p>
+                
+                <div class="flex items-center justify-between text-md text-slate-600 dark:text-slate-400 py-2">
+                  <span class="flex items-center gap-1">
+                    <Icon name="instructor" class="w-3 h-3" />
+                    {course.hours}h
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <Icon name="courses" class="w-3 h-3" />
+                    {course.numClass} clases
+                  </span>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                  <div class="flex items-center gap-1">
+                    {course.priceDiscount && (
+                      <span class="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                        ${course.priceDiscount} - 
+                      </span>
+                    )}
+                    <span class={`text-lg ${course.priceDiscount ? 'line-through text-gray-500' : 'font-bold text-slate-900 dark:text-white'}`}>
+                      ${course.price}
+                    </span>
+                  </div>
+                  
+                  <a
+                    href={course.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 bg-purple-700 hover:bg-purple-800 text-white px-3 py-1.5 rounded-lg text-[14px] font-medium transition-colors"
+                  >
+                    <Icon name="udemy" class="w-4 h-4" />
+                    Ver curso
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Dots indicator -->
+  <div class="flex justify-center mt-4 gap-1" id="compact-dots">
+    <!-- Generados por JavaScript -->
+  </div>
+</div>
+
+<!-- Script similar al original pero con IDs únicos -->
+<script type="module">
+  import EmblaCarousel from "https://cdn.skypack.dev/embla-carousel@7.0.0";
+  
+  const emblaNode = document.getElementById("embla-compact");
+  const dotsContainer = document.getElementById("compact-dots");
+  
+  if (emblaNode) {
+    const embla = EmblaCarousel(emblaNode, {
+      loop: true,
+      align: "start",
+      slidesToScroll: 1
+    });
+
+    // Navegación (similar al original)
+    const prevBtn = document.getElementById("compactPrev");
+    const nextBtn = document.getElementById("compactNext");
+
+    prevBtn?.addEventListener("click", () => embla.scrollPrev());
+    nextBtn?.addEventListener("click", () => embla.scrollNext());
+
+    // Dots functionality
+    function createDots() {
+      const slides = embla.slideNodes();
+      dotsContainer.innerHTML = "";
+      
+      slides.forEach((_, index) => {
+        const dot = document.createElement("button");
+        dot.className = "w-1.5 h-1.5 rounded-full transition-all duration-300 bg-gray-300 dark:bg-gray-600";
+        dot.addEventListener("click", () => embla.scrollTo(index));
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function updateDots() {
+      const dots = dotsContainer.querySelectorAll("button");
+      const selectedIndex = embla.selectedScrollSnap();
+      
+      dots.forEach((dot, index) => {
+        if (index === selectedIndex) {
+          dot.className = "w-4 h-1.5 rounded-full transition-all duration-300 bg-emerald-600 dark:bg-emerald-400";
+        } else {
+          dot.className = "w-1.5 h-1.5 rounded-full transition-all duration-300 bg-gray-300 dark:bg-gray-600 hover:bg-emerald-500 dark:hover:bg-emerald-400";
+        }
+      });
+    }
+
+    createDots();
+    updateDots();
+    embla.on("select", updateDots);
+  }
+</script>
+
+<style>
+  .embla__slide-compact {
+    @apply flex-shrink-0;
+    width: 100% !important; /* Solo un slide visible en el formato compacto */
+  }
+
+  .compact-course-card {
+    @apply transition-all duration-300;
+  }
+
+
+</style>

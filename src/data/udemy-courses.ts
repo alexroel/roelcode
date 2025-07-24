@@ -110,7 +110,7 @@ export const udemyCourses: UdemyCourse[] = [
     headline:
       "Crea sitios web modernos con HTML y CSS, Domina Flexbox, CSS Grid y BEM. Crea diseños responsivos y optimiza con BEM.",
     popular: false,
-    newCourse: false,
+    newCourse: true,
     rating: 4.9,
     numReviews: 20,
     hours: 27,

@@ -4,6 +4,7 @@ import { udemyCourses } from "@/data/udemy-courses";
 import { testimonials } from "@/data/testimonials";
 import CourseCard from "@/components/courses/CourseCard.astro";
 import CourseFilter from "@/components/courses/CourseFilter.astro";
+import CompactCourseCarousel from "@/components/courses/CompactCourseCarousel.astro";
 import TestimonialGrid from "@/components/sections/TestimonialGrid.astro";
 import { Icon } from "astro-icon/components";
 import UdemyInfoSection from "@/components/sections/UdemyInfoSection.astro";
@@ -11,6 +12,9 @@ import UdemyInfoSection from "@/components/sections/UdemyInfoSection.astro";
 const pageTitle = "Cursos de Programación | Roel Code";
 const pageDescription =
   "Descubre todos nuestros cursos de programación y desarrollo web. Aprende Python, Go, Java, JavaScript, HTML, CSS y más con proyectos prácticos.";
+
+// Filtrar cursos nuevos para el carousel
+const newCourses = udemyCourses.filter((course) => course.newCourse === true);
 
 // Schema markup avanzado para cursos
 const coursesSchema = {
@@ -101,72 +105,91 @@ const pageSchema = {
     class="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16 lg:py-24"
   >
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <!-- Badge -->
-        <div
-          class="inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6"
-        >
-          <Icon name="courses" class="w-4 h-4 mr-2" />
-          Cursos Profesionales
+      <div class="grid lg:grid-cols-7 gap-12 items-center">
+        <!-- Left Content -->
+        <div class="lg:col-span-4">
+          <!-- Badge -->
+          <div
+            class="inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6"
+          >
+            <Icon name="courses" class="w-4 h-4 mr-2" />
+            Cursos Profesionales
+          </div>
+
+          <!-- Title -->
+          <h1
+            class="text-4xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6"
+          >
+            Cursos de
+            <span
+              class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent"
+            >
+              Programación
+            </span>
+          </h1>
+
+          <!-- Description -->
+          <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
+            Descubre nuestra colección completa de cursos de programación y
+            desarrollo web. Desde principiante hasta avanzado, con proyectos
+            prácticos y certificaciones.
+          </p>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center">
+              <div
+                class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+              >
+                {udemyCourses.length}
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Cursos
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+              >
+                {udemyCourses.reduce((acc, course) => acc + course.hours, 0)}+
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Horas
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+              >
+                180K+
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Estudiantes
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+              >
+                4.6
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Rating
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Title -->
-        <h1
-          class="text-4xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6"
-        >
-          Cursos de
-          <span
-            class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent"
-          >
-            Programación
-          </span>
-        </h1>
-
-        <!-- Description -->
-        <p
-          class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-8"
-        >
-          Descubre nuestra colección completa de cursos de programación y
-          desarrollo web. Desde principiante hasta avanzado, con proyectos
-          prácticos y certificaciones.
-        </p>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
-          <div class="text-center">
-            <div
-              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
-            >
-              {udemyCourses.length}
-            </div>
-            <div class="text-sm text-slate-600 dark:text-slate-400">Cursos</div>
-          </div>
-          <div class="text-center">
-            <div
-              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
-            >
-              {udemyCourses.reduce((acc, course) => acc + course.hours, 0)}+
-            </div>
-            <div class="text-sm text-slate-600 dark:text-slate-400">Horas</div>
-          </div>
-          <div class="text-center">
-            <div
-              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
-            >
-              180K+
-            </div>
-            <div class="text-sm text-slate-600 dark:text-slate-400">
-              Estudiantes
-            </div>
-          </div>
-          <div class="text-center">
-            <div
-              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
-            >
-              4.6
-            </div>
-            <div class="text-sm text-slate-600 dark:text-slate-400">Rating</div>
-          </div>
+        <!-- Right Content - Compact Carousel -->
+        <div class="lg:col-span-3">
+          {
+            newCourses.length > 0 && (
+              <CompactCourseCarousel
+                courses={newCourses}
+                title="Últimos Cursos"
+              />
+            )
+          }
         </div>
       </div>
     </div>
