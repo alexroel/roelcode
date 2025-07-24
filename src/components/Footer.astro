@@ -69,23 +69,35 @@ import { Image } from "astro:assets";
           Contacto
         </h3>
         <ul class="space-y-3">
-          <li
-            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
-          >
-            <Icon name="udemy" class="h-4 w-4" />
-            <span class="text-sm">Cursos en Udemy</span>
+          <li class="text-slate-600 dark:text-slate-400">
+            <a
+              href="https://www.udemy.com/user/roel-code/"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center space-x-2"
+            >
+              <Icon name="udemy" class="h-4 w-4 text-purple-600" />
+              <span class="text-sm">Cursos en Udemy</span>
+            </a>
           </li>
-          <li
-            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
-          >
-            <Icon name="youtube" class="h-4 w-4" />
-            <span class="text-sm">Tutoriales gratuitos</span>
+          <li class="text-slate-600 dark:text-slate-400">
+            <a
+              href="https://www.youtube.com/channel/UC5775243233333333333333333333333"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center space-x-2"
+            >
+              <Icon name="youtube" class="h-4 w-4 text-red-600" />
+              <span class="text-sm">Tutoriales gratuitos</span>
+            </a>
           </li>
-          <li
-            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
-          >
-            <Icon name="github" class="h-4 w-4" />
-            <span class="text-sm">Código fuente</span>
+          <li class="text-slate-600 dark:text-slate-400">
+            <a
+              href="https://github.com/roelcode"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center space-x-2"
+            >
+              <Icon
+                name="github"
+                class="h-4 w-4 text-gray-950 dark:text-gray-100"
+              />
+              <span class="text-sm">Código fuente</span>
+            </a>
           </li>
         </ul>
       </div>
@@ -95,7 +107,7 @@ import { Image } from "astro:assets";
     <div class="border-t border-slate-200 dark:border-slate-700 mt-8 pt-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-slate-600 dark:text-slate-400 text-sm">
-          © {new Date().getFullYear()} RoelCode. Todos los derechos reservados.
+          © {new Date().getFullYear()} RoelCode. Casi todos los derechos reservados.
         </p>
         <p class="text-slate-600 dark:text-slate-400 text-sm mt-2 md:mt-0">
           Hecho con ❤️ y <a

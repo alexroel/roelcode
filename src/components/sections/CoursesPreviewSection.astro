@@ -1,191 +1,27 @@
 ---
-import Button from "../utils/Button.astro";
-import { Icon } from "astro-icon/components";
-import { udemyCourses } from "../../data/udemy-courses";
-import CourseCard from "../courses/CourseCard.astro";
+import CourseCarousel from "@/components/courses/CourseCarousel.astro";
+import { udemyCourses } from "@/data/udemy-courses";
 
-// Combinar cursos populares y nuevos en una sola lista
-const featuredCourses = [
-  ...udemyCourses.filter((course) => course.newCourse),
-  ...udemyCourses.filter((course) => course.popular),
-];
+const popularCourses = udemyCourses
+  .filter((course) => course.newCourse === true || course.popular === true)
+  .sort((a, b) => {
+    // Primero los nuevos, luego los populares
+    if (a.newCourse && !b.newCourse) return -1;
+    if (!a.newCourse && b.newCourse) return 1;
+    // Si ambos son nuevos o ambos son populares, mantener orden original
+    return 0;
+  });
 ---
 
-<section class="py-20 bg-white dark:bg-gray-900">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-16">
-      <h2
-        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
-      >
-        Cursos Destacados
-      </h2>
-      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        Aprende desarrollo web con mis cursos más populares y nuevos en Udemy
-      </p>
-    </div>
-
-    <!-- Carrusel con botones de navegación -->
-    <div class="relative flex items-center gap-4 mb-12">
-      <!-- Botón anterior -->
-      <button
-        class="bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg z-10 flex-shrink-0"
-        id="prevBtn"
-        aria-label="Cursos anteriores"
-      >
-        <Icon name="arrow-line-left" class="text-gray-600 dark:text-gray-300" />
-      </button>
-
-      <!-- Contenedor del carrusel -->
-      <div class="flex-1 overflow-hidden rounded-xl">
-        <div
-          class="carousel-track flex transition-transform duration-500 ease-in-out gap-6 py-8 px-4"
-          id="carouselTrack"
-        >
-          {
-            featuredCourses.map((course, index) => (
-              <div
-                class="carousel-slide flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-                data-index={index}
-              >
-                <CourseCard course={course} />
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
-      <!-- Botón siguiente -->
-      <button
-        class="bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg z-10 flex-shrink-0"
-        id="nextBtn"
-        aria-label="Siguientes cursos"
-      >
-        <Icon
-          name="arrow-line-right"
-          class="text-gray-600 dark:text-gray-300"
-        />
-      </button>
-    </div>
-
-    <!-- Indicadores de puntos -->
-    <div class="flex justify-center gap-2 mb-8" id="carouselIndicators">
-      <!-- Los indicadores se generarán dinámicamente con JavaScript -->
-    </div>
-
-    <div class="text-center">
-      <Button variant="outline" size="lg" href="/cursos">
-        <Icon name="courses" slot="icon" />
-        Ver Todos los Cursos
-      </Button>
-    </div>
+<section class="py-16 bg-gray-100 dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-black dark:text-white mb-8 text-center">
+      Cursos Nuevos y Más Destacados
+    </h2>
+    <p class="text-center text-gray-800 mb-8 dark:text-gray-300">
+      Los cursos más populares son los que más estudiantes han elegido. Aquí
+      podrás ver los cursos más populares y los que más estudiantes han elegido.
+    </p>
+    <CourseCarousel courses={popularCourses} />
   </div>
 </section>
-
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", function () {
-    const track = document.getElementById("carouselTrack");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const indicatorsContainer = document.getElementById("carouselIndicators");
-    const slides = document.querySelectorAll(".carousel-slide");
-
-    let currentSlide = 0;
-    let slidesToShow = 1;
-    let totalSlides = slides.length;
-
-    // Función para determinar cuántos slides mostrar según el tamaño de pantalla
-    function getSlidesToShow() {
-      if (window.innerWidth >= 1024) {
-        return 3; // Pantallas grandes
-      } else if (window.innerWidth >= 768) {
-        return 2; // Pantallas medianas
-      } else {
-        return 1; // Pantallas pequeñas
-      }
-    }
-
-    // Función para crear indicadores dinámicamente
-    function createIndicators() {
-      indicatorsContainer.innerHTML = "";
-      const maxSlides = Math.ceil(totalSlides / slidesToShow);
-
-      for (let i = 0; i < maxSlides; i++) {
-        const indicator = document.createElement("button");
-        indicator.className = `indicator ${i === 0 ? "active" : ""}`;
-        indicator.setAttribute("data-slide", i);
-        indicator.setAttribute("aria-label", `Ir al grupo ${i + 1}`);
-        indicator.addEventListener("click", () => goToSlide(i));
-        indicatorsContainer.appendChild(indicator);
-      }
-    }
-
-    function updateCarousel() {
-      const slideWidth = 100 / slidesToShow;
-      const translateX = -currentSlide * slideWidth;
-      track.style.transform = `translateX(${translateX}%)`;
-
-      // Actualizar indicadores
-      const indicators = document.querySelectorAll(".indicator");
-      indicators.forEach((indicator, index) => {
-        indicator.classList.toggle("active", index === currentSlide);
-      });
-
-      // Actualizar estado de botones
-      const maxSlides = Math.ceil(totalSlides / slidesToShow);
-      prevBtn.disabled = currentSlide === 0;
-      nextBtn.disabled = currentSlide >= maxSlides - 1;
-    }
-
-    function goToSlide(slideIndex) {
-      const maxSlides = Math.ceil(totalSlides / slidesToShow);
-      currentSlide = Math.max(0, Math.min(slideIndex, maxSlides - 1));
-      updateCarousel();
-    }
-
-    function nextSlide() {
-      const maxSlides = Math.ceil(totalSlides / slidesToShow);
-      if (currentSlide < maxSlides - 1) {
-        currentSlide++;
-        updateCarousel();
-      }
-    }
-
-    function prevSlide() {
-      if (currentSlide > 0) {
-        currentSlide--;
-        updateCarousel();
-      }
-    }
-
-    function handleResize() {
-      const newSlidesToShow = getSlidesToShow();
-      if (newSlidesToShow !== slidesToShow) {
-        slidesToShow = newSlidesToShow;
-        currentSlide = 0; // Reset al primer slide
-        createIndicators();
-        updateCarousel();
-      }
-    }
-
-    // Event listeners
-    nextBtn.addEventListener("click", nextSlide);
-    prevBtn.addEventListener("click", prevSlide);
-
-    // Navegación con teclado
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") {
-        prevSlide();
-      } else if (e.key === "ArrowRight") {
-        nextSlide();
-      }
-    });
-
-    // Listener para cambios de tamaño de ventana
-    window.addEventListener("resize", handleResize);
-
-    // Inicializar
-    slidesToShow = getSlidesToShow();
-    createIndicators();
-    updateCarousel();
-  });
-</script>

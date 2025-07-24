@@ -1,0 +1,186 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import Button from "@/components/utils/Button.astro";
+
+// Schema markup para página 404
+const errorSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Página no encontrada - Error 404",
+  description: "La página que buscas no existe o ha sido movida.",
+  url: "https://roelcode.com/404",
+  mainEntity: {
+    "@type": "Thing",
+    name: "Error 404",
+    description: "Página no encontrada",
+  },
+};
+---
+
+<Layout
+  title="Página no encontrada - Error 404 | Roel Code"
+  description="La página que buscas no existe o ha sido movida. Explora nuestros cursos de programación y contenido educativo."
+  type="website"
+  schema={[errorSchema]}
+  keywords="error 404, página no encontrada, Roel Code"
+  author="Roel Code"
+>
+  <!-- Error 404 Section -->
+  <section
+    class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center py-16"
+  >
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Error Code -->
+      <div class="mb-6">
+        <h1
+          class="text-8xl lg:text-9xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent mb-4"
+          style="font-size: 200px;"
+        >
+          404
+        </h1>
+        <h2
+          class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+        >
+          ¡Oops! Página no encontrada
+        </h2>
+      </div>
+
+      <!-- Error Description -->
+      <div class="mb-8">
+        <p
+          class="text-xl text-slate-600 dark:text-slate-300 mb-6 leading-relaxed max-w-2xl mx-auto"
+        >
+          La página que estás buscando no existe, ha sido movida o el enlace
+          está roto. No te preocupes, te ayudamos a encontrar lo que necesitas.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <Button href="/" variant="primary" size="lg" icon="arrow-left">
+          Volver al Inicio
+        </Button>
+
+        <Button href="/cursos" variant="secondary" size="lg" icon="courses">
+          Ver Cursos
+        </Button>
+      </div>
+
+      <!-- Quick Links -->
+      <div
+        class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 max-w-2xl mx-auto"
+      >
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6">
+          Enlaces útiles
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a
+            href="/"
+            class="flex items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200 group"
+          >
+            <Icon
+              name="user"
+              class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-3 group-hover:scale-110 transition-transform duration-200"
+            />
+            <div class="text-left">
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Inicio
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Página principal
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="/cursos"
+            class="flex items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200 group"
+          >
+            <Icon
+              name="courses"
+              class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-3 group-hover:scale-110 transition-transform duration-200"
+            />
+            <div class="text-left">
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Cursos
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Todos los cursos
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="/acerca-de"
+            class="flex items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200 group"
+          >
+            <Icon
+              name="instructor"
+              class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-3 group-hover:scale-110 transition-transform duration-200"
+            />
+            <div class="text-left">
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Acerca de
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Mi historia
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="https://www.udemy.com/user/alex-roel/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200 group"
+          >
+            <Icon
+              name="udemy"
+              class="w-5 h-5 text-emerald-600 dark:text-emerald-400 mr-3 group-hover:scale-110 transition-transform duration-200"
+            />
+            <div class="text-left">
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Udemy
+              </div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">
+                Perfil instructor
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Search Suggestion -->
+      <div
+        class="mt-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-700 max-w-xl mx-auto"
+      >
+        <Icon
+          name="heart"
+          class="w-6 h-6 text-emerald-600 dark:text-emerald-400 mx-auto mb-3"
+        />
+        <p class="text-emerald-800 dark:text-emerald-200 font-medium mb-2">
+          ¿Buscabas algo específico?
+        </p>
+        <p class="text-emerald-700 dark:text-emerald-300 text-sm">
+          Puedes explorar nuestros cursos de programación o contactarme
+          directamente en mis redes sociales.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  // Analytics para páginas 404 (opcional)
+  if (typeof gtag !== "undefined") {
+    gtag("event", "page_view", {
+      page_title: "404 - Página no encontrada",
+      page_location: window.location.href,
+      custom_map: {
+        dimension1: "404_error",
+      },
+    });
+  }
+</script>

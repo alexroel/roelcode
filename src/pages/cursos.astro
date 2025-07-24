@@ -16,80 +16,80 @@ const pageDescription =
 const coursesSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Cursos de Programación",
-  "description": pageDescription,
-  "numberOfItems": udemyCourses.length,
-  "itemListElement": udemyCourses.map((course, index) => ({
+  name: "Cursos de Programación",
+  description: pageDescription,
+  numberOfItems: udemyCourses.length,
+  itemListElement: udemyCourses.map((course, index) => ({
     "@type": "Course",
-    "position": index + 1,
-    "name": course.title,
-    "description": course.headline,
-    "provider": {
+    position: index + 1,
+    name: course.title,
+    description: course.headline,
+    provider: {
       "@type": "Organization",
-      "name": "Udemy",
-      "url": "https://www.udemy.com",
-      "logo": {
+      name: "Udemy",
+      url: "https://www.udemy.com",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg"
-      }
+        url: "https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg",
+      },
     },
-    "instructor": {
+    instructor: {
       "@type": "Person",
-      "name": "Roel Code",
-      "url": "https://roelcode.github.io",
-      "image": "https://roelcode.github.io/open-graph-reolcode.jpg"
+      name: "Roel Code",
+      url: "https://roelcode.github.io",
+      image: "https://roelcode.github.io/open-graph-reolcode.jpg",
     },
-    "aggregateRating": {
+    aggregateRating: {
       "@type": "AggregateRating",
-      "ratingValue": course.rating,
-      "reviewCount": course.numReviews,
-      "bestRating": 5,
-      "worstRating": 1
+      ratingValue: course.rating,
+      reviewCount: course.numReviews,
+      bestRating: 5,
+      worstRating: 1,
     },
-    "offers": {
+    offers: {
       "@type": "Offer",
-      "price": course.priceDiscount || course.price,
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "validFrom": new Date().toISOString(),
-      "url": course.url
+      price: course.priceDiscount || course.price,
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      validFrom: new Date().toISOString(),
+      url: course.url,
     },
-    "image": course.image,
-    "url": course.url,
-    "courseMode": "online",
-    "educationalLevel": "beginner",
-    "teaches": course.tag,
-    "timeRequired": `PT${course.hours}H`,
-    "numberOfCredits": course.numClass,
-    "inLanguage": "es",
-    "isAccessibleForFree": false,
-    "hasCourseInstance": {
+    image: course.image,
+    url: course.url,
+    courseMode: "online",
+    educationalLevel: "beginner",
+    teaches: course.tag,
+    timeRequired: `PT${course.hours}H`,
+    numberOfCredits: course.numClass,
+    inLanguage: "es",
+    isAccessibleForFree: false,
+    hasCourseInstance: {
       "@type": "CourseInstance",
-      "courseMode": "online",
-      "instructor": {
+      courseMode: "online",
+      instructor: {
         "@type": "Person",
-        "name": "Roel Code"
-      }
-    }
-  }))
+        name: "Roel Code",
+      },
+    },
+  })),
 };
 
 // Schema para la página de cursos
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": pageTitle,
-  "description": pageDescription,
-  "url": "https://roelcode.github.io/cursos",
-  "mainEntity": {
+  name: pageTitle,
+  description: pageDescription,
+  url: "https://roelcode.github.io/cursos",
+  mainEntity: {
     "@type": "ItemList",
-    "numberOfItems": udemyCourses.length
-  }
+    numberOfItems: udemyCourses.length,
+  },
 };
 ---
 
-<Layout 
-  title={pageTitle} 
+<Layout
+  title={pageTitle}
   description={pageDescription}
   type="website"
   schema={[coursesSchema, pageSchema]}
@@ -153,11 +153,7 @@ const pageSchema = {
             <div
               class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
             >
-              {
-                udemyCourses
-                  .reduce((acc, course) => acc + course.numReviews, 0)
-                  .toLocaleString()
-              }+
+              180K+
             </div>
             <div class="text-sm text-slate-600 dark:text-slate-400">
               Estudiantes

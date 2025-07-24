@@ -88,6 +88,9 @@ const skillsSchema = {
     },
   ],
 };
+
+import { Image } from "astro:assets";
+import AlexAvatar from "@/assets/images/alex-avatar.png";
 ---
 
 <Layout
@@ -110,7 +113,11 @@ const skillsSchema = {
           <div
             class="inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6"
           >
-            <Icon name="user" class="w-4 h-4 mr-2" />
+            <Image
+              src={AlexAvatar}
+              alt="Roel Code Avatar"
+              class="w-6 h-6 rounded-full mr-2"
+            />
             Instructor & Desarrollador
           </div>
 
@@ -122,7 +129,7 @@ const skillsSchema = {
             <span
               class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent"
             >
-              Roel Code
+              Alex Roel
             </span>
           </h1>
 
@@ -144,12 +151,12 @@ const skillsSchema = {
               Ver Mis Cursos
               <Icon name="arrow-right" class="ml-2 w-4 h-4" />
             </a>
-            <a
+            <!-- <a
               href="/contacto"
               class="inline-flex items-center px-8 py-3 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-semibold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200"
             >
               Contactar
-            </a>
+            </a> -->
           </div>
         </div>
 
@@ -161,7 +168,11 @@ const skillsSchema = {
               <div
                 class="w-80 h-80 mx-auto bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center"
               >
-                <Icon name="user" class="w-32 h-32 text-white" />
+                <Image
+                  src={AlexAvatar}
+                  alt="Roel Code Avatar"
+                  class="w-[310px] h-[310px] rounded-full object-cover"
+                />
               </div>
 
               <!-- Floating Elements -->
@@ -467,13 +478,17 @@ const skillsSchema = {
           </blockquote>
           <div class="flex items-center gap-4">
             <div
-              class="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center"
+              class="w-12 h-12 bg-green-600 dark:bg-green-700 rounded-full flex items-center justify-center"
             >
-              <span class="text-white font-bold">R</span>
+              <Image
+                src={AlexAvatar}
+                alt="Roel Code Avatar"
+                class="w-10 h-10 rounded-full object-cover"
+              />
             </div>
             <div>
               <div class="font-semibold text-gray-900 dark:text-white">
-                Roel
+                Alex Roel
               </div>
               <div class="text-sm text-gray-600 dark:text-slate-400">
                 Instructor & Desarrollador
