@@ -1,0 +1,96 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  name: string;
+  description: string;
+  value: number;
+  icon: string;
+  class?: string;
+}
+
+const { name, description, value, icon, class: className = "" } = Astro.props;
+
+// Formatear el valor según el tipo
+const formatValue = (val: number, statName: string) => {
+  if (statName.toLowerCase().includes("estudiantes")) {
+    return `${val}K+`;
+  }
+  if (statName.toLowerCase().includes("calificación")) {
+    return `${val}/5`;
+  }
+  if (statName.toLowerCase().includes("experiencia")) {
+    return `${val}+ años`;
+  }
+  if (statName.toLowerCase().includes("cursos")) {
+    return `${val}+`;
+  }
+  return val.toString();
+};
+
+// Determinar colores según el tipo de estadística
+const getIconColors = (statName: string) => {
+  const name = statName.toLowerCase();
+
+  if (name.includes("experiencia")) {
+    return {
+      bg: "bg-green-100 dark:bg-green-900/20",
+      icon: "text-green-500",
+    };
+  }
+  if (name.includes("cursos")) {
+    return {
+      bg: "bg-blue-100 dark:bg-blue-900/20",
+      icon: "text-blue-500",
+    };
+  }
+  if (name.includes("estudiantes")) {
+    return {
+      bg: "bg-purple-100 dark:bg-purple-900/20",
+      icon: "text-purple-500",
+    };
+  }
+  if (name.includes("calificación")) {
+    return {
+      bg: "bg-orange-100 dark:bg-orange-900/20",
+      icon: "text-orange-500",
+    };
+  }
+
+  // Color por defecto
+  return {
+    bg: "bg-gray-100 dark:bg-gray-900/20",
+    icon: "text-gray-500",
+  };
+};
+
+const colors = getIconColors(name);
+---
+
+<div
+  class={`bg-white dark:bg-slate-800 rounded-xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300 text-center ${className}`}
+>
+  <!-- Icono grande arriba -->
+  <div class="flex justify-center mb-6">
+    <div
+      class={`w-20 h-20 ${colors.bg} rounded-2xl flex items-center justify-center`}
+    >
+      <Icon name={icon} class={`h-10 w-10 ${colors.icon}`} />
+    </div>
+  </div>
+
+  <!-- Valor grande -->
+  <div class="text-4xl font-bold text-slate-900 dark:text-white mb-3">
+    {formatValue(value, name)}
+  </div>
+
+  <!-- Nombre de la estadística -->
+  <div class="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-3">
+    {name}
+  </div>
+
+  <!-- Descripción -->
+  <div class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+    {description}
+  </div>
+</div>

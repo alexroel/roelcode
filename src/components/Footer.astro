@@ -1,0 +1,110 @@
+---
+import { Icon } from "astro-icon/components";
+import SocialLinks from "@/components/utils/SocialLinks.astro";
+
+import logoRC from "@/assets/logo-roelcode.svg";
+import { Image } from "astro:assets";
+---
+
+<footer
+  class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700"
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Logo y descripción -->
+      <div class="md:col-span-2">
+        <div class="flex items-center space-x-2 mb-4">
+          <Image src={logoRC} alt="RoelCode" class="h-8 w-auto" />
+          <span class="text-xl font-bold text-slate-900 dark:text-white"
+            >RoelCode</span
+          >
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 max-w-md">
+          Instructor de programación especializado en desarrollo web. Más de 8
+          años de experiencia en tecnología y 4 años formando desarrolladores.
+        </p>
+        <SocialLinks variant="footer" />
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div>
+        <h3
+          class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4"
+        >
+          Enlaces
+        </h3>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href="/"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+            >
+              Inicio
+            </a>
+          </li>
+          <li>
+            <a
+              href="/cursos"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+            >
+              Cursos
+            </a>
+          </li>
+          <li>
+            <a
+              href="/acerca-de"
+              class="text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+            >
+              Acerca de
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3
+          class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4"
+        >
+          Contacto
+        </h3>
+        <ul class="space-y-3">
+          <li
+            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
+          >
+            <Icon name="udemy" class="h-4 w-4" />
+            <span class="text-sm">Cursos en Udemy</span>
+          </li>
+          <li
+            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
+          >
+            <Icon name="youtube" class="h-4 w-4" />
+            <span class="text-sm">Tutoriales gratuitos</span>
+          </li>
+          <li
+            class="flex items-center space-x-2 text-slate-600 dark:text-slate-400"
+          >
+            <Icon name="github" class="h-4 w-4" />
+            <span class="text-sm">Código fuente</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-slate-200 dark:border-slate-700 mt-8 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-slate-600 dark:text-slate-400 text-sm">
+          © {new Date().getFullYear()} RoelCode. Todos los derechos reservados.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 text-sm mt-2 md:mt-0">
+          Hecho con ❤️ y <a
+            href="https://astro.build"
+            class="text-emerald-500 hover:text-emerald-600 transition-colors"
+            >Astro</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

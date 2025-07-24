@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+import { socialLinks } from "@/data/social-links";
+
+export interface Props {
+  variant?: "header" | "footer" | "mobile";
+  showLabels?: boolean;
+}
+
+const { variant = "header", showLabels = false } = Astro.props;
+
+const baseClasses = "p-2 transition-colors";
+const variantClasses = {
+  header:
+    "text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400",
+  footer:
+    "bg-white dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20",
+  mobile:
+    "text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400",
+};
+---
+
+<div
+  class={`flex ${variant === "mobile" ? "justify-center space-x-4" : "space-x-3"} items-center`}
+>
+  {
+    socialLinks.map((social) => (
+      <a
+        href={social.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={`${baseClasses} ${variantClasses[variant]}`}
+        title={social.name}
+      >
+        <Icon
+          name={social.icon}
+          class={`${variant === "mobile" ? "h-6 w-6" : "h-5 w-5"}`}
+        />
+        {showLabels && <span class="ml-2 text-sm">{social.name}</span>}
+      </a>
+    ))
+  }
+</div>

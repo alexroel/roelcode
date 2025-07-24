@@ -1,0 +1,57 @@
+---
+import Badge from "../utils/Badge.astro";
+import { techStacks } from "../../data/tech-stack";
+
+// Duplicar las tecnologías para crear un loop infinito
+const duplicatedTechs = [...techStacks, ...techStacks];
+---
+
+<section class="py-20 bg-gray-50 dark:bg-gray-800 overflow-hidden">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+      >
+        Tecnologías que Domino
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Las herramientas y frameworks que uso para crear aplicaciones modernas,
+        tambien la tecnologias y herramientas que enseño a mis estudiantes.
+      </p>
+    </div>
+
+    <!-- Slider Container -->
+    <div class="relative">
+      <div class="tech-slider-wrapper">
+        <div class="tech-slider">
+          {
+            duplicatedTechs.map((tech, index) => (
+              <div class="tech-item py-8" key={`${tech.name}-${index}`}>
+                <Badge
+                  variant="tech"
+                  size="lg"
+                  icon={tech.icon}
+                  textColor={tech.textColor}
+                  bgColor={tech.bgColor}
+                  vertical={true}
+                >
+                  {tech.name}
+                </Badge>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Gradientes para efecto fade -->
+      <div
+        class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800 pointer-events-none z-10"
+      >
+      </div>
+      <div
+        class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 to-transparent dark:from-gray-800 pointer-events-none z-10"
+      >
+      </div>
+    </div>
+  </div>
+</section>

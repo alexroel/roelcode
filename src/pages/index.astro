@@ -1,11 +1,184 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/utils/Button.astro";
+import { Icon } from "astro-icon/components";
+import StatsSection from "../components/sections/StatsSection.astro";
+import TechStackSection from "../components/sections/TechStackSection.astro";
+import CoursesPreviewSection from "../components/sections/CoursesPreviewSection.astro";
+import TestimonialGrid from "../components/sections/TestimonialGrid.astro";
+import UdemyInfoSection from "@/components/sections/UdemyInfoSection.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Roelcode | Desarrollador Full Stack & Instructor">
+  <main>
+    <!-- Hero Section - Integrado directamente -->
+    <section
+      class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      <!-- Background con gradiente animado -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950"
+      >
+      </div>
+
+      <!-- Elementos decorativos de fondo -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div
+          class="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl animate-pulse"
+        >
+        </div>
+        <div
+          class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl animate-pulse delay-1000"
+        >
+        </div>
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-500"
+        >
+        </div>
+      </div>
+
+      <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="max-w-5xl mx-auto text-center">
+          <!-- Badge profesional -->
+          <div
+            class="inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-full px-4 py-2 mb-8 shadow-lg"
+          >
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Disponible para proyectos</span
+            >
+          </div>
+
+          <!-- Título principal con animación -->
+          <div class="mb-8 space-y-4">
+            <h1
+              class="text-3xl md:text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
+            >
+              Hola, Bienvenido a
+              <span
+                class="bg-gradient-to-r from-blue-600 via-emerald-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x"
+              >
+                Roelcode.com
+              </span>
+            </h1>
+          </div>
+
+          <!-- Descripción profesional mejorada -->
+          <div class="max-w-4xl mx-auto mb-12">
+            <p
+              class="text-md md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-center"
+            >
+              Descubre mis cursos de Udemy, tutoriales en YouTube y contenido
+              exclusivo en Facebook y TikTok. Conviértete en un experto en
+              programación y desarrollo web con recursos creados especialmente
+              para ti.
+            </p>
+          </div>
+
+          <!-- CTA Buttons simplificados -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Button variant="primary" size="lg" href="/cursos" class="group">
+              <Icon
+                name="courses"
+                slot="icon"
+                class="group-hover:scale-110 transition-transform"
+              />
+              Explorar Cursos
+              <span
+                class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                >→</span
+              >
+            </Button>
+            <Button variant="outline" size="lg" href="/acerca-de" class="group">
+              <Icon
+                name="user"
+                slot="icon"
+                class="group-hover:scale-110 transition-transform"
+              />
+              Conoce mi Historia
+            </Button>
+          </div>
+
+          <!-- Métricas rápidas -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto mb-16"
+          >
+            <div class="text-center">
+              <div
+                class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2"
+              >
+                8+
+              </div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                Cursos disponibles
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2"
+              >
+                180K+
+              </div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                Estudiantes en Udemy
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2"
+              >
+                8+
+              </div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                Años de Experiencia
+              </div>
+            </div>
+          </div>
+
+          <!-- Scroll Indicator mejorado -->
+          <div class="animate-bounce">
+            <div class="flex flex-col items-center gap-2">
+              <span class="text-sm text-gray-500 dark:text-gray-400 font-medium"
+                >Descubre más</span
+              >
+              <Icon name="arrow-line-down" class="w-6 h-6 text-gray-400" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <StatsSection />
+
+    <!-- Tech Stack Section -->
+    <TechStackSection />
+
+    <!-- Courses Preview Section -->
+    <CoursesPreviewSection />
+
+    <!-- Testimonials Section -->
+    <TestimonialGrid />
+
+    <!-- Info de Udemy -->
+    <UdemyInfoSection />
+  </main>
 </Layout>
+
+<style>
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
+  }
+</style>

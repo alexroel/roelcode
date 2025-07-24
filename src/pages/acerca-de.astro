@@ -1,0 +1,442 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { stats } from "@/data/stats";
+import { techStacks } from "@/data/tech-stack";
+import { socialLinks } from "@/data/social-links";
+import { Icon } from "astro-icon/components";
+import StatsSection from "@/components/sections/StatsSection.astro";
+import TechStackSection from "@/components/sections/TechStackSection.astro";
+
+const pageTitle = "Acerca de Mí | Roel Code";
+const pageDescription =
+  "Conoce más sobre mi experiencia como instructor de programación, mis especialidades en desarrollo web y mi filosofía de enseñanza.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <section
+    class="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16 lg:py-24"
+  >
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Content -->
+        <div>
+          <!-- Badge -->
+          <div
+            class="inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6"
+          >
+            <Icon name="user" class="w-4 h-4 mr-2" />
+            Instructor & Desarrollador
+          </div>
+
+          <!-- Title -->
+          <h1
+            class="text-4xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6"
+          >
+            Hola, soy
+            <span
+              class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent"
+            >
+              Roel Code
+            </span>
+          </h1>
+
+          <!-- Description -->
+          <p
+            class="text-xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed"
+          >
+            Instructor de programación apasionado por enseñar y compartir
+            conocimiento. Con más de 8 años de experiencia en tecnología y 4
+            años formando desarrolladores.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href="/cursos"
+              class="inline-flex items-center px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg transition-colors duration-200"
+            >
+              Ver Mis Cursos
+              <Icon name="arrow-right" class="ml-2 w-4 h-4" />
+            </a>
+            <a
+              href="/contacto"
+              class="inline-flex items-center px-8 py-3 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-semibold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200"
+            >
+              Contactar
+            </a>
+          </div>
+        </div>
+
+        <!-- Profile Image Placeholder -->
+        <div class="relative">
+          <div class="w-full max-w-md mx-auto">
+            <!-- Profile Image Container -->
+            <div class="relative">
+              <div
+                class="w-80 h-80 mx-auto bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center"
+              >
+                <Icon name="user" class="w-32 h-32 text-white" />
+              </div>
+
+              <!-- Floating Elements -->
+              <div
+                class="absolute -top-4 -right-4 w-16 h-16 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center"
+              >
+                <Icon name="tech/python" class="w-8 h-8 text-blue-500" />
+              </div>
+              <div
+                class="absolute -bottom-4 -left-4 w-16 h-16 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center"
+              >
+                <Icon name="tech/golang" class="w-8 h-8 text-cyan-500" />
+              </div>
+              <div
+                class="absolute top-1/2 -left-8 w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-lg flex items-center justify-center"
+              >
+                <Icon name="tech/javascript" class="w-6 h-6 text-yellow-500" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Biography Section -->
+  <section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2
+          class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+        >
+          Mi Historia
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Un viaje de aprendizaje continuo y pasión por la enseñanza
+        </p>
+      </div>
+
+      <div class="prose prose-lg dark:prose-invert mx-auto">
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+          Mi pasión por la programación comenzó hace más de 8 años, cuando
+          descubrí el poder de crear soluciones tecnológicas que pueden impactar
+          positivamente la vida de las personas. Desde entonces, he dedicado mi
+          carrera a dominar múltiples tecnologías y lenguajes de programación.
+        </p>
+
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+          Como instructor, he tenido el privilegio de formar a más de 180,000
+          estudiantes a través de mis cursos en Udemy. Mi enfoque se centra en
+          hacer que conceptos complejos sean accesibles y prácticos, siempre con
+          proyectos del mundo real.
+        </p>
+
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          Creo firmemente que la mejor manera de aprender programación es a
+          través de la práctica constante y proyectos que resuelvan problemas
+          reales. Esta filosofía guía cada uno de mis cursos y contenidos
+          educativos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Stats Section -->
+  <StatsSection />
+  <!-- Technologies Section -->
+  <TechStackSection />
+
+  <!-- Specialties Section -->
+  <section class="py-16 lg:py-24 bg-slate-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2
+          class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+        >
+          Mis Especialidades
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Áreas donde puedo ayudarte a crecer profesionalmente
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Frontend Development -->
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200"
+        >
+          <div
+            class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-6"
+          >
+            <Icon
+              name="tech/html"
+              class="w-6 h-6 text-blue-600 dark:text-blue-400"
+            />
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">
+            Frontend Development
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4">
+            Creación de interfaces modernas y responsivas con HTML, CSS,
+            JavaScript y frameworks modernos.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              HTML5 & CSS3
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              JavaScript ES6+
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Responsive Design
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Tailwind CSS
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Astro
+            </li>
+          </ul>
+        </div>
+
+        <!-- Backend Development -->
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200"
+        >
+          <div
+            class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-6"
+          >
+            <Icon
+              name="tech/python"
+              class="w-6 h-6 text-green-600 dark:text-green-400"
+            />
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">
+            Backend Development
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4">
+            Desarrollo de APIs robustas y aplicaciones del lado del servidor con
+            múltiples tecnologías.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Python (Flask & Django)
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Go (Golang)
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Java
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              APIs RESTful
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              JavaScript (Expres)
+            </li>
+          </ul>
+        </div>
+
+        <!-- Other Technologies -->
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow duration-200"
+        >
+          <div
+            class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-6"
+          >
+            <Icon
+              name="courses"
+              class="w-6 h-6 text-purple-600 dark:text-purple-400"
+            />
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">
+            Otras Tecnologías
+          </h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-4">
+            Herramientas adicionales que complementan el desarrollo full-stack
+            moderno.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Bases de Datos
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Git & GitHub
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Docker
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="w-4 h-4 text-emerald-500 mr-2" />
+              Linux/Terminal
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mi Filosofía -->
+  <!-- Mi Filosofía -->
+  <section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Mi Filosofía de Enseñanza
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+              >
+                <span class="text-blue-600 dark:text-blue-400 font-bold text-sm"
+                  >1</span
+                >
+              </div>
+              <div>
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  Aprendizaje Práctico
+                </h3>
+                <p class="text-gray-600 dark:text-slate-300">
+                  Creo firmemente en aprender haciendo. Todos mis cursos
+                  incluyen proyectos reales que puedes agregar a tu portafolio.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+              >
+                <span
+                  class="text-green-600 dark:text-green-400 font-bold text-sm"
+                  >2</span
+                >
+              </div>
+              <div>
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  Desde Cero
+                </h3>
+                <p class="text-gray-600 dark:text-slate-300">
+                  No importa tu nivel actual, mis cursos están diseñados para
+                  llevarte desde los fundamentos hasta el nivel profesional.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+              >
+                <span
+                  class="text-purple-600 dark:text-purple-400 font-bold text-sm"
+                  >3</span
+                >
+              </div>
+              <div>
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  Soporte Continuo
+                </h3>
+                <p class="text-gray-600 dark:text-slate-300">
+                  Estoy aquí para ayudarte en tu journey. Respondo dudas y
+                  proporciono feedback personalizado a mis estudiantes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 p-8 rounded-2xl border border-blue-200 dark:border-blue-700"
+        >
+          <blockquote
+            class="text-lg text-gray-700 dark:text-slate-300 italic mb-6"
+          >
+            "La programación no es solo escribir código, es resolver problemas y
+            crear soluciones que impacten positivamente en el mundo. Mi objetivo
+            es enseñarte no solo la sintaxis, sino también a pensar como un
+            desarrollador."
+          </blockquote>
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 bg-blue-600 dark:bg-blue-500 rounded-full flex items-center justify-center"
+            >
+              <span class="text-white font-bold">R</span>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 dark:text-white">
+                Roel
+              </div>
+              <div class="text-sm text-gray-600 dark:text-slate-400">
+                Instructor & Desarrollador
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links Section -->
+  <section
+    class="py-16 lg:py-24 bg-gradient-to-r from-emerald-600 to-emerald-500"
+  >
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">
+        Conecta Conmigo
+      </h2>
+      <p class="text-xl text-emerald-100 mb-8">
+        Sígueme en mis redes sociales para contenido educativo y actualizaciones
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        {
+          socialLinks.map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors duration-200 backdrop-blur-sm"
+            >
+              <Icon name={social.icon} class="w-5 h-5 mr-2" />
+              {social.name}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- <div class="mt-8">
+        <a
+          href="/contacto"
+          class="inline-flex items-center px-8 py-3 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors duration-200"
+        >
+          Contactar Directamente
+          <Icon name="arrow-right" class="ml-2 w-4 h-4" />
+        </a>
+      </div> -->
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,61 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  target?: '_blank' | '_self';
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  class?: string;
+  disabled?: boolean;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  target = '_self',
+  icon,
+  iconPosition = 'left',
+  class: className = '',
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+
+const variantClasses = {
+  primary: 'bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-500',
+  secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
+  outline: 'border border-emerald-500 text-emerald-500 hover:bg-emerald-50 focus:ring-emerald-500 dark:hover:bg-emerald-900/20',
+  ghost: 'text-slate-700 hover:bg-slate-100 focus:ring-slate-500 dark:text-slate-300 dark:hover:bg-slate-800'
+};
+
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm rounded-md',
+  md: 'px-4 py-2 text-sm rounded-lg',
+  lg: 'px-6 py-3 text-base rounded-lg'
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+
+const Component = href ? 'a' : 'button';
+---
+
+<Component
+  class={classes}
+  href={href}
+  target={href ? target : undefined}
+  disabled={disabled}
+  {...rest}
+>
+  {icon && iconPosition === 'left' && (
+    <Icon name={icon} class={`${size === 'sm' ? 'h-4 w-4' : size === 'lg' ? 'h-5 w-5' : 'h-4 w-4'} ${Astro.slots.default ? 'mr-2' : ''}`} />
+  )}
+  <slot />
+  {icon && iconPosition === 'right' && (
+    <Icon name={icon} class={`${size === 'sm' ? 'h-4 w-4' : size === 'lg' ? 'h-5 w-5' : 'h-4 w-4'} ${Astro.slots.default ? 'ml-2' : ''}`} />
+  )}
+</Component>

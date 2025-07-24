@@ -1,0 +1,70 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  variant?: "button" | "select";
+}
+
+const { variant = "button" } = Astro.props;
+---
+
+{
+  variant === "button" ? (
+    <button
+      id="theme-toggle"
+      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors hover:cursor-pointer"
+      title="Cambiar tema"
+    >
+      <Icon name="sun" class="h-5 w-5 hidden dark:block" />
+      <Icon name="moon" class="h-5 w-5 block dark:hidden" />
+    </button>
+  ) : (
+    <select
+      id="theme-select"
+      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-600 text-sm"
+    >
+      <option value="system">Sistema</option>
+      <option value="light">Claro</option>
+      <option value="dark">Oscuro</option>
+    </select>
+  )
+}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeSelect = document.getElementById(
+      "theme-select"
+    ) as HTMLSelectElement;
+
+    // Get current theme state
+    const savedTheme = localStorage.getItem("theme");
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+
+    // Initialize select if present
+    if (themeSelect) {
+      themeSelect.value = savedTheme || "system";
+    }
+
+    // Toggle theme (for button variant)
+    themeToggle?.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      // Use the global setTheme function
+      if (typeof window.setTheme === "function") {
+        window.setTheme(newTheme);
+      }
+    });
+
+    // Select theme (for select variant)
+    themeSelect?.addEventListener("change", (e) => {
+      const theme = (e.target as HTMLSelectElement).value;
+
+      // Use the global setTheme function
+      if (typeof window.setTheme === "function") {
+        window.setTheme(theme);
+      }
+    });
+  });
+</script>

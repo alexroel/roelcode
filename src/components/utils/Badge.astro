@@ -1,0 +1,90 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  variant?: "default" | "tech" | "success" | "warning" | "error";
+  size?: "sm" | "md" | "lg";
+  icon?: string;
+  textColor?: string;
+  bgColor?: string;
+  class?: string;
+  vertical?: boolean;
+}
+
+const {
+  variant = "default",
+  size = "md",
+  icon,
+  textColor,
+  bgColor,
+  vertical = false,
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+const baseClasses = vertical 
+  ? "inline-flex flex-col items-center justify-center font-medium rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
+  : "inline-flex items-center font-medium rounded-full";
+
+const variantClasses = {
+  default: "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200",
+  tech: bgColor && textColor 
+    ? `${bgColor} ${textColor} dark:${bgColor} dark:${textColor}` 
+    : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-md border border-slate-200 dark:border-slate-700",
+  success: "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400",
+  warning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400",
+  error: "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400",
+};
+
+const sizeClasses = vertical ? {
+  sm: "p-3 min-w-[80px] min-h-[80px]",
+  md: "p-4 min-w-[100px] min-h-[100px]",
+  lg: "p-6 min-w-[120px] min-h-[120px]",
+} : {
+  sm: "px-2 py-1 text-xs",
+  md: "px-2.5 py-1.5 text-sm",
+  lg: "px-3 py-2 text-base",
+};
+
+const iconSizeClasses = vertical ? {
+  sm: "h-6 w-6 mb-2",
+  md: "h-8 w-8 mb-3",
+  lg: "h-10 w-10 mb-3",
+} : {
+  sm: "h-3 w-3",
+  md: "h-4 w-4",
+  lg: "h-5 w-5",
+};
+
+const textSizeClasses = vertical ? {
+  sm: "text-xs",
+  md: "text-sm",
+  lg: "text-base font-semibold",
+} : {
+  sm: "text-xs",
+  md: "text-sm",
+  lg: "text-base",
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+const iconClasses = `${iconSizeClasses[size]} ${!vertical && Astro.slots.default ? "mr-1" : ""} ${textColor || ""}`;
+const textClasses = `${textSizeClasses[size]} text-center`;
+---
+
+<div class={classes} {...rest}>
+  {
+    icon && (
+      <Icon
+        name={icon}
+        class={iconClasses}
+      />
+    )
+  }
+  {vertical ? (
+    <span class={textClasses}>
+      <slot />
+    </span>
+  ) : (
+    <slot />
+  )}
+</div>

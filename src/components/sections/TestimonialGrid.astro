@@ -1,0 +1,163 @@
+---
+import TestimonialCard from "../utils/TestimonialCard.astro";
+import { testimonials } from "../../data/testimonials";
+
+// Duplicar testimonios para crear un loop infinito
+const duplicatedTestimonials = [...testimonials, ...testimonials];
+---
+
+<section class="py-20 bg-white dark:bg-gray-900">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
+      >
+        Lo que Dicen Mis Estudiantes
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Testimonios reales de estudiantes que han transformado sus carreras con
+        mis cursos
+      </p>
+    </div>
+
+    <!-- Slider de Testimonios -->
+    <div class="testimonials-slider-container mb-12">
+      <div class="testimonials-slider flex items-center py-4">
+        {
+          duplicatedTestimonials.map((testimonial) => (
+            <div class="testimonial-slide">
+              <TestimonialCard
+                name={testimonial.name}
+                description={testimonial.description}
+                calification={testimonial.calification}
+                userIcon={testimonial.userIcon}
+                iconQuote={testimonial.iconQuote}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Estadísticas de Testimonios -->
+    <div
+      class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div>
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+            4.6/5
+          </div>
+          <div class="text-slate-600 dark:text-slate-400">
+            Calificación Promedio
+          </div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+            12K+
+          </div>
+          <div class="text-slate-600 dark:text-slate-400">
+            Reseñas Positivas
+          </div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+            180K+
+          </div>
+          <div class="text-slate-600 dark:text-slate-400">
+            Estudiantes Satisfechos
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-slider-container {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .testimonials-slider {
+    display: flex;
+    gap: 2rem;
+    animation: testimonials-scroll 60s linear infinite;
+    width: max-content;
+  }
+
+  .testimonial-slide {
+    flex-shrink: 0;
+    width: 350px;
+  }
+
+  .testimonials-slider:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+  }
+
+  @keyframes testimonials-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .testimonial-slide {
+      width: 300px;
+    }
+
+    .testimonials-slider {
+      gap: 1.5rem;
+      animation-duration: 45s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .testimonial-slide {
+      width: 280px;
+    }
+
+    .testimonials-slider {
+      gap: 1rem;
+      animation-duration: 40s;
+    }
+  }
+
+  /* Accessibility: Pause animation for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials-slider {
+      animation: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+    }
+
+    .testimonial-slide {
+      scroll-snap-align: start;
+    }
+
+    .testimonials-slider-container {
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+  }
+</style>

@@ -1,4 +1,6 @@
-# 📋 Requerimientos del Proyecto - Web Personal de Cursos
+# 📋 Requerimientos del Proyecto - Web Personal `Roel Code`
+
+REQUIREMENTS.md
 
 ## 🎯 Objetivo Principal
 
@@ -9,7 +11,7 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 ### 1. **Página de Inicio** (`/`)
 
 - Hero section con presentación personal
-- Estadísticas (cursos, estudiantes, calificaciones)
+- Estadísticas (Experiencia ,cursos, estudiantes, calificaciones)
 - Tecnologías (HTML, CSS, Tailwind CSS, JavaScript, Python, Flask, Java, Go)
 - Resumen de cursos destacados
 - Call-to-action para explorar cursos
@@ -42,8 +44,10 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 
 - Hero de Acerca de
 - Biografía personal
+- Mi Experiencia (Educación, Experiencia y Estudiantes)
 - Tecnologías que dominas
-- Misión y visión como instructor
+- Mis Especialidades (Frontend Development, Backend Development, Otras Tecnologías)
+- Misión y visión como instructor (Mi Filosofía de Enseñanza)
 - Sección de redes sociales (GitHub, YouTube, Facebook, TikTok)
 
 ## 🛠️ Stack Tecnológico
@@ -72,7 +76,11 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 
 ### Layout y Navegación
 
-- `Header.astro` - Navegación principal `logo     menu      social`
+- `Header.astro` - Navegación principal
+  - Logo
+  - Menú
+  - Para selecionar el modo oscuro (Sitema, Claro y Oscuro)
+  - Redes sociales
 - `Footer.astro` - Pie de página
 - `Layout.astro` - Layout base (actualizar el existente)
 
@@ -90,6 +98,8 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 - `TestimonialCard.astro` - Tarjeta de testimonio
 - `SocialLinks.astro` - Enlaces sociales (Github, Facebook, Youtube, Tiktok)
 - `StatsCard.astro` - Tarjeta de estadísticas
+- `ModeToggle.astro` - Botón para cambiar entre modo claro y oscuro
+- `ThemeProvider.astro` - Proveedor de temas para cambiar entre modo claro y oscuro
 
 ### Componentes Generales `components/sections/`
 
@@ -113,6 +123,13 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 - Proyecto de astro echo
 - Instalar Tailwind CSS 4
 - Instalar Astro Icon
+- Colores principales:
+  - Fondo: slate-100 y en dark mode slate-900
+  - Texto: black o slate-950 y en dark mode white o slate-50
+  - Botones: emerald-500
+  - Hover: emerald-600
+  - Links: emerald-500
+  - Borders: emerald-500
 
 ## 📊 Estructura de Datos
 
@@ -147,8 +164,9 @@ Desarrollar una web personal para compartir y promocionar cursos de Udemy con un
 ### Fase 1: Configuración Base
 
 1. Instalar y configurar Tailwind CSS 4
-2. Crear estructura de carpetas
-3. Configurar TypeScript interfaces
+2. Instalar o agregar una fuente (Iter Variable)
+3. Crear estructura de carpetas
+4. Configurar TypeScript interfaces
 
 ### Fase 2: Layout y Navegación
 

@@ -1,0 +1,237 @@
+---
+import { Icon } from "astro-icon/components";
+import Button from "../utils/Button.astro";
+---
+
+<section class="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-slate-800">
+  <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-3 bg-white dark:bg-gray-800 rounded-full px-6 py-3 shadow-lg mb-6">
+          <Icon name="udemy" class="w-8 h-8 text-purple-600" />
+          <span class="text-xl font-bold text-gray-900 dark:text-white">Udemy</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          ¿Por qué elegir Udemy?
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          Conoce todo sobre la plataforma líder en educación online que ha transformado 
+          la vida de millones de estudiantes en todo el mundo.
+        </p>
+      </div>
+
+      <!-- Información principal -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <!-- Historia y datos -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-xl">
+              <Icon name="courses" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Historia y Alcance
+            </h3>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Fundada en 2010</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Más de 13 años transformando la educación online
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">57+ millones de estudiantes</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Comunidad global de aprendizaje activa
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">213,000+ cursos</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  En más de 2,000 temas diferentes
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <div class="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">75+ idiomas</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Accesible para estudiantes de todo el mundo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seguridad y confianza -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-xl">
+              <Icon name="check" class="w-6 h-6 text-green-600 dark:text-green-400" />
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Seguridad y Confianza
+            </h3>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <Icon name="check" class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Pagos seguros</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Encriptación SSL y procesamiento seguro de pagos
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <Icon name="check" class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Instructores verificados</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Proceso de revisión y calidad de contenido
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <Icon name="check" class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Certificados oficiales</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Certificados de finalización verificables
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <Icon name="check" class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white">Soporte 24/7</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                  Atención al cliente en múltiples idiomas
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Política de reembolso y garantías -->
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-12">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-8">
+            <Icon name="heart" class="w-12 h-12 mx-auto mb-4 opacity-90" />
+            <h3 class="text-2xl md:text-3xl font-bold mb-4">
+              Garantía de Satisfacción
+            </h3>
+            <p class="text-blue-100 text-lg">
+              Tu inversión está protegida con nuestra política de reembolso
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="bg-white/20 rounded-xl p-6">
+                <div class="text-3xl font-bold mb-2">30</div>
+                <div class="text-sm opacity-90">Días de garantía</div>
+                <div class="text-xs opacity-75 mt-2">Reembolso completo sin preguntas</div>
+              </div>
+            </div>
+            
+            <div class="text-center">
+              <div class="bg-white/20 rounded-xl p-6">
+                <div class="text-3xl font-bold mb-2">100%</div>
+                <div class="text-sm opacity-90">Reembolso</div>
+                <div class="text-xs opacity-75 mt-2">Si no estás satisfecho</div>
+              </div>
+            </div>
+            
+            <div class="text-center">
+              <div class="bg-white/20 rounded-xl p-6">
+                <div class="text-3xl font-bold mb-2">∞</div>
+                <div class="text-sm opacity-90">Acceso de por vida</div>
+                <div class="text-xs opacity-75 mt-2">Una vez comprado, siempre tuyo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Características adicionales -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+          <div class="bg-yellow-100 dark:bg-yellow-900/30 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Icon name="star" class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Calidad Garantizada</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Todos los cursos pasan por un proceso de revisión de calidad
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+          <div class="bg-blue-100 dark:bg-blue-900/30 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Icon name="courses" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Aprende a tu ritmo</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Acceso desde cualquier dispositivo, cuando quieras
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+          <div class="bg-green-100 dark:bg-green-900/30 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Icon name="user" class="w-6 h-6 text-green-600 dark:text-green-400" />
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Comunidad activa</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Interactúa con instructores y otros estudiantes
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+          <div class="bg-purple-100 dark:bg-purple-900/30 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Icon name="check" class="w-6 h-6 text-purple-600 dark:text-purple-400" />
+          </div>
+          <h4 class="font-bold text-gray-900 dark:text-white mb-2">Certificación</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Obtén certificados al completar los cursos
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA final -->
+      <div class="text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg inline-block">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            ¿Listo para comenzar tu aprendizaje?
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
+            Únete a millones de estudiantes que ya están transformando sus carreras
+          </p>
+          <Button variant="primary" size="lg" href="/cursos" class="group">
+            <Icon name="courses" slot="icon" class="group-hover:scale-110 transition-transform" />
+            Explorar Cursos
+            <span class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

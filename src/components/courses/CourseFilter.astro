@@ -1,0 +1,122 @@
+---
+// Este componente manejará los filtros del lado del cliente
+---
+
+<div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
+  <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">
+    <!-- Búsqueda -->
+    <div class="flex-1">
+      <label for="search" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+        Buscar cursos
+      </label>
+      <div class="relative">
+        <input
+          type="text"
+          id="search"
+          placeholder="Buscar por título, tecnología..."
+          class="w-full px-4 py-2 pl-10 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+        />
+        <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Filtro por categoría -->
+    <div class="lg:w-48">
+      <label for="category" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+        Categoría
+      </label>
+      <select
+        id="category"
+        class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+      >
+        <option value="">Todas las categorías</option>
+        <option value="web">Desarrollo Web</option>
+        <option value="programing">Programación</option>
+        <option value="backend">Backend</option>
+        <option value="frontend">Frontend</option>
+      </select>
+    </div>
+
+    <!-- Filtro por tecnología -->
+    <div class="lg:w-48">
+      <label for="technology" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+        Tecnología
+      </label>
+      <select
+        id="technology"
+        class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+      >
+        <option value="">Todas las tecnologías</option>
+        <option value="python">Python</option>
+        <option value="go">Go</option>
+        <option value="java">Java</option>
+        <option value="javascript">JavaScript</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="tailwind">Tailwind CSS</option>
+        <option value="flask">Flask</option>
+      </select>
+    </div>
+
+    <!-- Botón de limpiar filtros -->
+    <div class="lg:w-auto flex items-end">
+      <button
+        id="clearFilters"
+        class="px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-200"
+      >
+        Limpiar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Funcionalidad de filtros del lado del cliente
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    const categorySelect = document.getElementById('category') as HTMLSelectElement;
+    const technologySelect = document.getElementById('technology') as HTMLSelectElement;
+    const clearButton = document.getElementById('clearFilters') as HTMLButtonElement;
+    const courseGrid = document.querySelector('[data-course-grid]') as HTMLElement;
+    const courseCards = document.querySelectorAll('[data-course-card]');
+
+    function filterCourses() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = categorySelect.value;
+      const selectedTechnology = technologySelect.value;
+
+      courseCards.forEach((card) => {
+        const cardElement = card as HTMLElement;
+        const title = cardElement.dataset.title?.toLowerCase() || '';
+        const tags = cardElement.dataset.tags?.split(',') || [];
+        
+        const matchesSearch = title.includes(searchTerm) || 
+                            tags.some(tag => tag.toLowerCase().includes(searchTerm));
+        const matchesCategory = !selectedCategory || tags.includes(selectedCategory);
+        const matchesTechnology = !selectedTechnology || tags.includes(selectedTechnology);
+
+        if (matchesSearch && matchesCategory && matchesTechnology) {
+          cardElement.style.display = 'block';
+        } else {
+          cardElement.style.display = 'none';
+        }
+      });
+    }
+
+    function clearFilters() {
+      searchInput.value = '';
+      categorySelect.value = '';
+      technologySelect.value = '';
+      courseCards.forEach((card) => {
+        (card as HTMLElement).style.display = 'block';
+      });
+    }
+
+    searchInput.addEventListener('input', filterCourses);
+    categorySelect.addEventListener('change', filterCourses);
+    technologySelect.addEventListener('change', filterCourses);
+    clearButton.addEventListener('click', clearFilters);
+  });
+</script>

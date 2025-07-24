@@ -1,0 +1,183 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { udemyCourses } from "@/data/udemy-courses";
+import { testimonials } from "@/data/testimonials";
+import CourseCard from "@/components/courses/CourseCard.astro";
+import CourseFilter from "@/components/courses/CourseFilter.astro";
+import TestimonialGrid from "@/components/sections/TestimonialGrid.astro";
+import { Icon } from "astro-icon/components";
+import UdemyInfoSection from "@/components/sections/UdemyInfoSection.astro";
+
+const pageTitle = "Cursos de Programación | Roel Code";
+const pageDescription =
+  "Descubre todos nuestros cursos de programación y desarrollo web. Aprende Python, Go, Java, JavaScript, HTML, CSS y más con proyectos prácticos.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <section
+    class="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16 lg:py-24"
+  >
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <!-- Badge -->
+        <div
+          class="inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6"
+        >
+          <Icon name="courses" class="w-4 h-4 mr-2" />
+          Cursos Profesionales
+        </div>
+
+        <!-- Title -->
+        <h1
+          class="text-4xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6"
+        >
+          Cursos de
+          <span
+            class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent"
+          >
+            Programación
+          </span>
+        </h1>
+
+        <!-- Description -->
+        <p
+          class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-8"
+        >
+          Descubre nuestra colección completa de cursos de programación y
+          desarrollo web. Desde principiante hasta avanzado, con proyectos
+          prácticos y certificaciones.
+        </p>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+          <div class="text-center">
+            <div
+              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+            >
+              {udemyCourses.length}
+            </div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">Cursos</div>
+          </div>
+          <div class="text-center">
+            <div
+              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+            >
+              {udemyCourses.reduce((acc, course) => acc + course.hours, 0)}+
+            </div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">Horas</div>
+          </div>
+          <div class="text-center">
+            <div
+              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+            >
+              {
+                udemyCourses
+                  .reduce((acc, course) => acc + course.numReviews, 0)
+                  .toLocaleString()
+              }+
+            </div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">
+              Estudiantes
+            </div>
+          </div>
+          <div class="text-center">
+            <div
+              class="text-2xl lg:text-3xl font-bold text-emerald-600 dark:text-emerald-400"
+            >
+              4.6
+            </div>
+            <div class="text-sm text-slate-600 dark:text-slate-400">Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="py-16 lg:py-24 bg-white dark:bg-slate-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2
+          class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4"
+        >
+          Todos los Cursos
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          Explora nuestra biblioteca completa de cursos y encuentra el perfecto
+          para tu nivel y objetivos.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <CourseFilter />
+
+      <!-- Course Grid -->
+      <div data-course-grid>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        >
+          {
+            udemyCourses.map((course) => (
+              <div
+                data-course-card
+                data-title={course.title}
+                data-tags={course.tag.join(",")}
+              >
+                <CourseCard course={course} />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- No results message -->
+      <div id="noResults" class="hidden text-center py-12">
+        <Icon name="courses" class="w-16 h-16 text-slate-400 mx-auto mb-4" />
+        <h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+          No se encontraron cursos
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400">
+          Intenta ajustar tus filtros de búsqueda.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <TestimonialGrid testimonials={testimonials} />
+
+  <!-- Informacion de Umdey -->
+  <UdemyInfoSection />
+</Layout>
+
+<script>
+  // Mejorar la funcionalidad de filtros
+  document.addEventListener("DOMContentLoaded", function () {
+    const courseCards = document.querySelectorAll("[data-course-card]");
+    const noResultsMessage = document.getElementById("noResults");
+
+    function updateNoResultsVisibility() {
+      const visibleCards = Array.from(courseCards).filter(
+        (card) => (card as HTMLElement).style.display !== "none"
+      );
+
+      if (visibleCards.length === 0) {
+        noResultsMessage?.classList.remove("hidden");
+      } else {
+        noResultsMessage?.classList.add("hidden");
+      }
+    }
+
+    // Observer para cambios en la visibilidad de las tarjetas
+    const observer = new MutationObserver(updateNoResultsVisibility);
+
+    courseCards.forEach((card) => {
+      observer.observe(card as HTMLElement, {
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+    });
+  });
+</script>

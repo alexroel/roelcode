@@ -1,0 +1,21 @@
+---
+import StatsCard from "@/components/utils/StatsCard.astro";
+import { stats } from "@/data/stats";
+---
+
+<section class="py-20 bg-white dark:bg-gray-900">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {
+        stats.map((stat) => (
+          <StatsCard
+            name={stat.name}
+            description={stat.description}
+            value={stat.value}
+            icon={stat.icon}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
