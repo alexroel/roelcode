@@ -1,64 +1,11 @@
 ---
-import MainLayout from "@/layouts/MainLayout.astro";
-import PopularCourses from "../sections/PopularCourses.astro";
-import HeroSection from "../sections/HeroSection.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
-import { getCollection } from "astro:content";
-import Tegnologis from "@/sections/Tegnologis.astro";
-import Statistics from "@/sections/Statistics.astro";
+import Welcome from '../components/Welcome.astro';
+import Layout from '../layouts/Layout.astro';
 
-// Obtener algunos cursos destacados
-const allCourses = await getCollection("udemyCourses");
-const featuredCourses = allCourses
-  .filter((course) => course.data.popular)
-  .slice(0, 3);
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <!-- Hero Section (sección reutilizable) -->
-  <HeroSection />
-
-  <!-- Estadísticas -->
-  <section class="py-16 bg-gray-50">
-    <Statistics />
-  </section>
-
-  <!-- Tecnologías -->
-  <section class="py-20 bg-white">
-    <Tegnologis />
-  </section>
-
-  <section class="py-20">
-    <!-- Cursos Más Populares (sección reutilizable) -->
-    <PopularCourses />
-
-    <!-- CTA Section -->
-    <section
-      class="py-20 bg-gradient-to-r from-emerald-400 to-green-500 text-white"
-    >
-      <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-4xl font-bold mb-6">
-          ¿Listo para Comenzar tu Carrera en Tech?
-        </h2>
-        <p class="text-xl mb-8 text-blue-100">
-          Únete a miles de estudiantes que ya están transformando sus carreras
-          con nuestros cursos.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="/cursos-udemy"
-            class="px-8 py-4 bg-white text-emerald-500 font-bold rounded-lg hover:bg-gray-100 transition-colors text-lg"
-          >
-            Explorar Cursos
-          </a>
-          <a
-            href="/about"
-            class="px-8 py-4 border-2 border-white hover:bg-white hover:text-emerald-500 text-white font-bold rounded-lg transition-colors text-lg"
-          >
-            Conocer al Instructor
-          </a>
-        </div>
-      </div>
-    </section>
-  </section>
-</MainLayout>
+<Layout>
+	<Welcome />
+</Layout>

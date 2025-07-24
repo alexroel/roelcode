@@ -1,45 +1,46 @@
-# Roelcode website
+# Astro Starter Kit: Basics
 
-Este es el sitio web de Roelcode, una página personal donde comparto mis cursos de Udemy, tutoriales, artículos y más.
-
-## 🚀 Estructura del proyecto 
-
-Este proyecto está construido con [Astro](https://astro.build), un marco de trabajo moderno para la creación de sitios web. 
-
-Dentro de tu proyecto Astro, verás las siguientes carpetas y archivos:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```sh
+bun create astro@latest -- --template basics
 ```
 
-Astro busca archivos `.astro` o `.md` en el directorio `src/pages/`. Cada página se expone como una ruta basada en su nombre de archivo.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-No hay nada especial en `src/components/`, pero ahí es donde nos gusta poner cualquier componente de Astro/React/Vue/Svelte/Preact.
+## 🚀 Project Structure
 
-El directorio `src/content/` contiene "colecciones" de documentos relacionados en Markdown y MDX. Utiliza `getCollection()` para recuperar publicaciones de `src/content/blog/`, y verifica el tipo de tu metadatos utilizando un esquema opcional. Consulta la [documentación de Astro sobre colecciones de contenido](https://docs.astro.build/en/guides/content-collections/) para obtener más información.
+Inside of your Astro project, you'll see the following folders and files:
 
-## 🧞 Comandos
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
+└── package.json
+```
 
-Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal:
+To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
-- `bun install` - Instala las dependencias
-- `bun run dev` - Inicia el servidor de desarrollo local en `localhost:4321`
-- `bun run build` - Construye tu sitio de producción en `./dist/`
-- `bun run preview` - Previsualiza tu construcción localmente, antes de implementar.
-- `bun run astro ...` - Ejecuta comandos de la CLI como `astro add`, `astro check`
-- `bun run astro -- --help` - Obtén ayuda usando la CLI de Astro
+## 🧞 Commands
 
-## 👀 ¿Quieres aprender más?
+All commands are run from the root of the project, from a terminal:
 
-Consulta [nuestra documentación](https://docs.astro.build) o únete a nuestro [servidor de Discord](https://astro.build/chat).
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `bun install`             | Installs dependencies                            |
+| `bun dev`             | Starts local dev server at `localhost:4321`      |
+| `bun build`           | Build your production site to `./dist/`          |
+| `bun preview`         | Preview your build locally, before deploying     |
+| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun astro -- --help` | Get help using the Astro CLI                     |
 
+## 👀 Want to learn more?
 
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
