@@ -7,9 +7,62 @@ import TechStackSection from "../components/sections/TechStackSection.astro";
 import CoursesPreviewSection from "../components/sections/CoursesPreviewSection.astro";
 import TestimonialGrid from "../components/sections/TestimonialGrid.astro";
 import UdemyInfoSection from "@/components/sections/UdemyInfoSection.astro";
+
+// Schema markup para la página principal
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Roel Code",
+  "url": "https://roelcode.github.io",
+  "description": "Instructor de programación especializado en desarrollo web. Cursos de HTML, CSS, JavaScript, Python, Go, Java y más.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://roelcode.github.io/cursos?search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Roel Code",
+    "jobTitle": "Desarrollador Full Stack & Instructor",
+    "url": "https://roelcode.github.io/acerca-de"
+  },
+  "mainEntity": {
+    "@type": "EducationalOrganization",
+    "name": "Roel Code Academy",
+    "description": "Plataforma educativa especializada en programación y desarrollo web",
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Certificados de Programación",
+      "credentialCategory": "certificate"
+    }
+  }
+};
+
+// Schema para organización
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Roel Code",
+  "url": "https://roelcode.github.io",
+  "logo": "https://roelcode.github.io/favicon.svg",
+  "description": "Instructor de programación con más de 8 años de experiencia",
+  "founder": {
+    "@type": "Person",
+    "name": "Roel Code"
+  },
+  "numberOfEmployees": 1,
+  "foundingDate": "2016",
+  "areaServed": "Worldwide",
+  "serviceType": "Educación en Programación"
+};
 ---
 
-<Layout title="Roelcode | Desarrollador Full Stack & Instructor">
+<Layout 
+  title="Roelcode | Desarrollador Full Stack & Instructor"
+  schema={[homeSchema, organizationSchema]}
+  keywords="Roel Code, programación, desarrollo web, instructor, cursos online, JavaScript, Python, Go, Java"
+  type="website"
+>
   <main>
     <!-- Hero Section - Integrado directamente -->
     <section

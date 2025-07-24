@@ -1,7 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { stats } from "@/data/stats";
-import { techStacks } from "@/data/tech-stack";
 import { socialLinks } from "@/data/social-links";
 import { Icon } from "astro-icon/components";
 import StatsSection from "@/components/sections/StatsSection.astro";
@@ -10,9 +8,96 @@ import TechStackSection from "@/components/sections/TechStackSection.astro";
 const pageTitle = "Acerca de Mí | Roel Code";
 const pageDescription =
   "Conoce más sobre mi experiencia como instructor de programación, mis especialidades en desarrollo web y mi filosofía de enseñanza.";
+
+// Schema markup para la página acerca de
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  dateCreated: "2024-01-01",
+  dateModified: new Date().toISOString(),
+  mainEntity: {
+    "@type": "Person",
+    name: "Roel Code",
+    jobTitle: "Desarrollador Full Stack & Instructor",
+    description:
+      "Desarrollador Full Stack con más de 8 años de experiencia especializado en tecnologías web modernas y educación en programación.",
+    knowsAbout: [
+      "JavaScript",
+      "Python",
+      "Go",
+      "Java",
+      "HTML",
+      "CSS",
+      "React",
+      "Node.js",
+      "Flask",
+      "TailwindCSS",
+    ],
+    hasOccupation: {
+      "@type": "Occupation",
+      name: "Instructor de Programación",
+      occupationLocation: {
+        "@type": "Place",
+        name: "Online",
+      },
+      skills:
+        "Desarrollo Web, Programación, Enseñanza Online, Creación de Cursos",
+      experienceRequirements: "8+ años de experiencia",
+    },
+    alumniOf: {
+      "@type": "EducationalOrganization",
+      name: "Autodidacta en Programación",
+    },
+    award: [
+      "Instructor destacado en Udemy",
+      "Más de 180K estudiantes formados",
+      "Promedio de 4.6 estrellas en cursos",
+    ],
+    memberOf: {
+      "@type": "Organization",
+      name: "Udemy Instructor Community",
+    },
+  },
+};
+
+// Schema para habilidades profesionales
+const skillsSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Habilidades Técnicas de Roel Code",
+  itemListElement: [
+    {
+      "@type": "DefinedTerm",
+      name: "JavaScript",
+      description: "Lenguaje de programación para desarrollo web",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Python",
+      description: "Lenguaje de programación versátil",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Go",
+      description: "Lenguaje de programación de Google",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Java",
+      description: "Lenguaje de programación orientado a objetos",
+    },
+  ],
+};
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout
+  title="Acerca de Roel Code | Desarrollador Full Stack & Instructor"
+  description="Conoce la historia de Roel Code, desarrollador Full Stack con más de 8 años de experiencia y instructor especializado en tecnologías web modernas."
+  type="profile"
+  schema={[aboutSchema, skillsSchema]}
+  keywords="Roel Code, desarrollador, instructor, programación, experiencia, biografía, full stack"
+  author="Roel Code"
+>
   <!-- Hero Section -->
   <section
     class="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16 lg:py-24"
