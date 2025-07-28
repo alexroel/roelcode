@@ -4,6 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 
+import starlight from "@astrojs/starlight";
+import { sidebar } from "./src/config/sidebar.ts";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://roelcode.com",
@@ -32,6 +35,29 @@ export default defineConfig({
         }
         return item;
       },
+    }),
+    starlight({
+      title: "Programación con IA",
+      defaultLocale: "root",
+      locales: {
+        root: {
+          label: "Español",
+          lang: "es",
+        },
+        en: {
+          label: "English",
+          lang: "en",
+        },
+      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/withastro/starlight",
+        },
+      ],
+      customCss: ["./src/styles/custom.css"],
+      sidebar: sidebar,
     }),
   ],
   vite: {
